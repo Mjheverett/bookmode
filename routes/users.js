@@ -4,40 +4,6 @@ const express = require('express'),
     bcrypt = require('bcryptjs');
 
 const usersList = require('../models/usersModel');
-/* GET users listing. */
-router.get('/', (req, res) => {
-    res.redirect('/users/login');
-});
-// how do we store session details?
-// router.get('/logout', (req, res) => {
-//     req.session.destroy();
-//     res.redirect('/');
-// });
-/* GET users login */
-router.post('/login', async (req, res) => {
-    const {
-        email,
-        password
-    } = req.body;
-    const userInstance = new usersList(null, null, email, password);
-    userInstance.login().then(response => {
-        console.log(response);
-        req.session.is_logged_in = response.isValid;
-        if (!!response.isValid) {
-            const {
-                email,
-                name,
-                user_id
-            } = response;
-            // req.session.email = email
-            // req.session.user_id = user_id
-            // req.session.name = name
-            res.redirect('/')
-        } else {
-            res.sendStatus(401)
-        }
-    })
-})
 /* POST new user */
 router.post('/signup', (req, res) => {
     const {
