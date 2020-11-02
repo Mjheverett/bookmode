@@ -1,6 +1,6 @@
 import React from 'react'
-import AuthenticationButton from './AuthenticationButton';
-import SignupButton from './SignUpButton';
+import AuthenticationButton from './Auth0/AuthenticationButton';
+import SignupButton from './Auth0/SignUpButton';
 
 const Home = () => {
     return (
