@@ -13,13 +13,13 @@ router.get('/', (req, res) => {
 //     req.session.destroy();
 //     res.redirect('/');
 // });
-/* GET users listing. */
+/* GET users login */
 router.post('/login', async (req, res) => {
     const {
-        name,
+        email,
         password
     } = req.body;
-    const userInstance = new usersList(null, name, email, password);
+    const userInstance = new usersList(null, null, email, password);
     userInstance.login().then(response => {
         console.log(response);
         req.session.is_logged_in = response.isValid;
@@ -29,18 +29,19 @@ router.post('/login', async (req, res) => {
                 name,
                 user_id
             } = response;
-            req.session.email = email
-            req.session.user_id = user_id
-            req.session.name = name
+            // req.session.email = email
+            // req.session.user_id = user_id
+            // req.session.name = name
             res.redirect('/')
         } else {
             res.sendStatus(401)
         }
     })
 })
+/* POST new user */
 router.post('/signup', (req, res) => {
     const {
-        username,
+        name,
         email,
         password
     } = req.body;
@@ -48,7 +49,7 @@ router.post('/signup', (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const userInstance = new usersList(null, username, email, hash);
+    const userInstance = new usersList(null, name, email, hash);
 
     userInstance.save().then(response => {
         if (response.id !== undefined) {
@@ -58,5 +59,4 @@ router.post('/signup', (req, res) => {
         }
     });
 });
-module.exports = router;
 module.exports = router;

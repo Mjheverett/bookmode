@@ -2,9 +2,9 @@ const db = require("./conn"),
     bcrypt = require('bcryptjs');
 
 class UsersList {
-    constructor(id, username, email, password) {
+    constructor(id, name, email, password) {
         this.id = id
-        this.username = username
+        this.name = name
         this.email = email
         this.password = password
     }
@@ -16,7 +16,7 @@ class UsersList {
     async save() {
         try {
             console.log('Issue');
-            const response = await db.one(`INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id;`, [this.username, this.email, this.password]);
+            const response = await db.one(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id;`, [this.name, this.email, this.password]);
             return response;
         } catch (error) {
             console.error('ERROR:', error.message);
@@ -26,16 +26,16 @@ class UsersList {
     //login USER
     async login() {
         try {
-            const response = await db.one(`SELECT id, username, email, password FROM users WHERE username = $1;`, [this.username]);
+            const response = await db.one(`SELECT id, name, email, password FROM users WHERE name = $1;`, [this.name]);
             const isValid = await this.checkPassword(response.password)
             if (!!isValid) {
                 const {
-                    username,
+                    name,
                     id
                 } = response;
                 return {
                     isValid,
-                    username,
+                    name,
                     user_id: id
                 };
             } else {

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from './auth/ProtectedRoute';
-import AuthenticationButton from './components/AuthenticationButton';
-import SignupButton from './components/SignUpButton';
+import Home from './components/Home';
 
 function App() {
   return (
@@ -13,7 +12,7 @@ function App() {
           <Home />
         </Route>
         <ProtectedRoute path="/profile">
-          
+
         </ProtectedRoute>
       </Switch>
     </div>
