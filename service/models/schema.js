@@ -16,10 +16,12 @@ CREATE TABLE my_schema.books(
     ISBN VARCHAR (13)   NOT NULL,
     GENRE_ID INT,
     AUTHOR_ID INT      NOT NULL,
+    READER_ID INT,
     SERIES BOOLEAN,
     PRIMARY KEY (ID),
     FOREIGN KEY (GENRE_ID),
-    FOREIGN KEY (AUTHOR_ID)
+    FOREIGN KEY (AUTHOR_ID),
+    FOREIGN KEY (READER_ID)
 );
 CREATE TABLE my_schema.genres(
     ID   INT              NOT NULL,
@@ -29,6 +31,11 @@ CREATE TABLE my_schema.genres(
 CREATE TABLE my_schema.authors(
     ID   INT              NOT NULL,
     AUTHOR VARCHAR (50)      NOT NULL,
+    PRIMARY KEY (ID)
+);
+CREATE TABLE my_schema.readers(
+    ID   INT              NOT NULL,
+    READER VARCHAR (50)      NOT NULL,
     PRIMARY KEY (ID)
 );
 CREATE TABLE my_schema.shelves(
@@ -55,4 +62,4 @@ CREATE TABLE my_schema.ratings(
     PRIMARY KEY (ID),
     FOREIGN KEY (USER_ID),
     FOREIGN KEY (BOOK_ID)
-)
+);
