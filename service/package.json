@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "PORT=3001 nodemon ./bin/www"
+    "dev": "PORT=3000 nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
