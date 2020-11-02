@@ -40,7 +40,7 @@ router.post('/login', async (req, res) => {
 })
 router.post('/signup', (req, res) => {
     const {
-        username,
+        name,
         email,
         password
     } = req.body;
@@ -48,7 +48,7 @@ router.post('/signup', (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const userInstance = new usersList(null, username, email, hash);
+    const userInstance = new usersList(null, name, email, hash);
 
     userInstance.save().then(response => {
         if (response.id !== undefined) {
@@ -59,4 +59,4 @@ router.post('/signup', (req, res) => {
     });
 });
 module.exports = router;
-module.exports = router;
+
