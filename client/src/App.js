@@ -1,14 +1,21 @@
 import React from 'react';
+import { Switch } from 'react-router-dom';
 import './App.css';
-import LoginButton from './components/LoginButton';
-import LogoutButton from './components/LogoutButton';
+import ProtectedRoute from './auth/ProtectedRoute';
+import AuthenticationButton from './components/AuthenticationButton';
+import SignupButton from './components/SignUpButton';
 
 function App() {
   return (
     <div className="App">
-      <h1>Book Club App</h1>
-      <LoginButton />
-      <LogoutButton />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <ProtectedRoute path="/profile">
+          
+        </ProtectedRoute>
+      </Switch>
     </div>
   );
 }

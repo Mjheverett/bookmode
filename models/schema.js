@@ -17,25 +17,42 @@ CREATE TABLE my_schema.books(
     GENRE_ID INT,
     AUTHOR_ID INT      NOT NULL,
     SERIES BOOLEAN,
-    INFO VARCHAR (250),
     PRIMARY KEY (ID),
     FOREIGN KEY (GENRE_ID),
     FOREIGN KEY (AUTHOR_ID)
-)
+);
 CREATE TABLE my_schema.genres(
     ID   INT              NOT NULL,
     GENRE VARCHAR (50)      NOT NULL,
     PRIMARY KEY (ID)
-)
+);
 CREATE TABLE my_schema.authors(
     ID   INT              NOT NULL,
     AUTHOR VARCHAR (50)      NOT NULL,
     PRIMARY KEY (ID)
-)
+);
 CREATE TABLE my_schema.shelves(
     ID   INT              NOT NULL,
-    AUTHOR VARCHAR (50)      NOT NULL,
+    NAME VARCHAR (50)      NOT NULL,
+    USER_ID INT              NOT NULL,
+    BOOK_ID INT              NOT NULL,
     PRIMARY KEY (ID),
-    FOREIGN KEY (GENRE_ID),
-    FOREIGN KEY (AUTHOR_ID)
+    FOREIGN KEY (USER_ID),
+    FOREIGN KEY (BOOK_ID)
+);
+CREATE TABLE my_schema.groups(
+    ID   INT              NOT NULL,
+    NAME VARCHAR (50)      NOT NULL,
+    USER_ID INT              NOT NULL,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (USER_ID)
+);
+CREATE TABLE my_schema.ratings(
+    ID   INT              NOT NULL,
+    RATING INT      NOT NULL,
+    USER_ID INT              NOT NULL,
+    BOOK_ID INT              NOT NULL,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (USER_ID),
+    FOREIGN KEY (BOOK_ID)
 )
