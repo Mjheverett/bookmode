@@ -1,21 +1,28 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from './auth/ProtectedRoute';
-import AuthenticationButton from './components/AuthenticationButton';
-import SignupButton from './components/SignUpButton';
+import Home from './components/Home';
+import LightDarkToggle from './components/LightDark/LightDarkToggle';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <div className="App">
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <ProtectedRoute path="/profile">
-          
-        </ProtectedRoute>
-      </Switch>
+      <LightDarkToggle />
+      <Navbar />
+      <div>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <ProtectedRoute path="/profile">
+
+          </ProtectedRoute>
+        </Switch>
+      </div>
+      <Footer />
     </div>
   );
 }
