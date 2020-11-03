@@ -7,12 +7,13 @@ import Profile from './components/Profile/Profile';
 import Library from './components/Library/Library';
 import Groups from './components/Groups/Groups';
 import Footer from './components/Footer/Footer';
+import './App.css'
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <div>
+      <div className="app-container">
         <Switch>
           <Route exact path="/">
             <Home />

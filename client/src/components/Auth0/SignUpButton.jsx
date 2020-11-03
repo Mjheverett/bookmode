@@ -7,6 +7,8 @@ const SignupButton = () => {
     
     return (
         <Button
+            variant="contained" 
+            color="primary"
             onClick={() =>
                 loginWithRedirect({
                 screen_hint: "signup",

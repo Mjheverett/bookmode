@@ -5,8 +5,7 @@ import SignupButton from '../Auth0/SignUpButton';
 const Home = () => {
     return (
         <>
-            <h1>Book Club App</h1>
-            
+            <br />
             <AuthenticationButton />
             <SignupButton />
         </>
