@@ -141,6 +141,12 @@ export default function PrimarySearchAppBar() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
+                <Link to="/" className="link">Home</Link>
+                <Link to="/library" className="link">Library</Link>
+                <Link to="/groups" className="link">Groups</Link>
+                <Link to="/results" className="link">Results</Link>
+            </MenuItem>
+            <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="secondary">
                         <MailIcon />
