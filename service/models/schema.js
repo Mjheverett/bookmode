@@ -19,9 +19,9 @@ CREATE TABLE my_schema.books(
     READER_ID INT,
     SERIES BOOLEAN,
     PRIMARY KEY (ID),
-    FOREIGN KEY (GENRE_ID),
-    FOREIGN KEY (AUTHOR_ID),
-    FOREIGN KEY (READER_ID)
+    FOREIGN KEY (GENRE_ID) REFERENCES my_schema.genres(id),
+    FOREIGN KEY (AUTHOR_ID) REFERENCES my_schema.authors(id),
+    FOREIGN KEY (READER_ID) REFERENCES my_schema.readers(id)
 );
 CREATE TABLE my_schema.genres(
     ID   INT              NOT NULL,
@@ -38,21 +38,21 @@ CREATE TABLE my_schema.readers(
     READER VARCHAR (50)      NOT NULL,
     PRIMARY KEY (ID)
 );
-CREATE TABLE my_schema.shelves(
+CREATE TABLE my_schema.libraries(
     ID   INT              NOT NULL,
     NAME VARCHAR (50)      NOT NULL,
     USER_ID INT              NOT NULL,
     BOOK_ID INT              NOT NULL,
     PRIMARY KEY (ID),
-    FOREIGN KEY (USER_ID),
-    FOREIGN KEY (BOOK_ID)
+    FOREIGN KEY (USER_ID) REFERENCES my_schema.users(id),
+    FOREIGN KEY (BOOK_ID) REFERENCES my_schema.books(id)
 );
 CREATE TABLE my_schema.groups(
     ID   INT              NOT NULL,
     NAME VARCHAR (50)      NOT NULL,
     USER_ID INT              NOT NULL,
     PRIMARY KEY (ID),
-    FOREIGN KEY (USER_ID)
+    FOREIGN KEY (USER_ID) REFERENCES my_schema.users(id)
 );
 CREATE TABLE my_schema.ratings(
     ID   INT              NOT NULL,
@@ -60,6 +60,6 @@ CREATE TABLE my_schema.ratings(
     USER_ID INT              NOT NULL,
     BOOK_ID INT              NOT NULL,
     PRIMARY KEY (ID),
-    FOREIGN KEY (USER_ID),
-    FOREIGN KEY (BOOK_ID)
+    FOREIGN KEY (USER_ID) REFERENCES my_schema.users(id),
+    FOREIGN KEY (BOOK_ID) REFERENCES my_schema.books(id)
 );
