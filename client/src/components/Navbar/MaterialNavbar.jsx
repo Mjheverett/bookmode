@@ -15,8 +15,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
 import bookmodeLogo from '../../images/bookmode.png';
-
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { loadData } from '../../utils/loadData';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -86,10 +86,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [input, setInput] = React.useState('');
+    const [data, setData] = React.useState([]);
+    const [fireRedirect, setRedirect] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -139,6 +142,12 @@ export default function PrimarySearchAppBar() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
+                <Link to="/" className="link">Home</Link>
+                <Link to="/library" className="link">Library</Link>
+                <Link to="/groups" className="link">Groups</Link>
+                <Link to="/results" className="link">Results</Link>
+            </MenuItem>
+            <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                     <Badge badgeContent={4} color="secondary">
                         <MailIcon />
@@ -169,9 +178,25 @@ export default function PrimarySearchAppBar() {
     );
 
     const _handleChange = (searchTerm) => {
+        console.log(searchTerm)
         setInput(searchTerm);
     }
 
+    const _handleSubmit = (e) => {
+        e.preventDefault();
+        setRedirect(true)
+        const key = process.env.REACT_APP_GOODREADS_KEY
+        const parseString = require('xml2js').parseString;
+        const url =
+    `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${key}&q=${input}&page=1&search=all`
+    fetch(url, {
+        headers: {"X-Requested-With" : "XMLHttpRequest"}
+    })
+        .then(response => response.text())
+        .then(data => {
+            setData(data)
+        }).catch(err => console.error(err));
+    };
     return (
         <div className={classes.grow}>
             <AppBar position="static">
@@ -181,14 +206,26 @@ export default function PrimarySearchAppBar() {
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                        }}
-                        inputProps={{ 'aria-label': 'search' }}
-                        />
+                        <form onSubmit={e => _handleSubmit(e)}>
+                            <InputBase
+                                placeholder="Search…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{ 'aria-label': 'search' }}
+                                onChange={(event) => _handleChange(event.target.value)}
+                                
+                            />
+                        </form>
+                        {fireRedirect && data && (
+                            <Redirect 
+                                to={{
+                                    pathname: '/results',
+                                    state: {data: data}
+                                }}
+                            />
+                        )}
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
