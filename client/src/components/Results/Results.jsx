@@ -28,17 +28,27 @@ const useStyles = makeStyles((theme) => ({
         'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
 }));
-const Results = ({searchResults}) => {
+const Results = (props) => {
     const [data, setData] = useState([]);
     const [clicked, setClicked] = useState(false);
-    useEffect(() => {
-        loadData();
-    }, []);
+    const { input } = props.location.state
     const loadData = async () => {
-        const response = await fetch(`https://www.goodreads.com/search/index.xml?key=QnRlqTAwNNNukr2gd8Q&q=${this.props.searchTerm}&page=1&search=all`);
-        const data = await response.json();
+        console.log('your props are', input)
+        const key = process.env.REACT_APP_GOODREADS_KEY
+        const xml2js = require('xml2js');
+        await fetch(`https://www.goodreads.com/search/index.xml?key=${key}&q=${input}&page=1&search=all`)
+
+            .then(response => response.text())
+            .then((response) => {
+                xml2js.parseString(response, function (err, data) {
+                console.log(data)
+            })
+                }).catch(err => console.error(err));
         setData(data)
     }
+    useEffect(() => {
+        loadData();
+    }, [loadData]);
     const classes = useStyles();
     const _handleAddLibrary = (stateItem) =>{
         setClicked(true)
@@ -57,7 +67,7 @@ const Results = ({searchResults}) => {
     return (
         <div className={classes.root}>
             <GridList className={classes.gridList} cols={2.5}>
-                {this.state.data.map((result) => (
+                {data.map((result) => (
                 <GridListTile key={result.img}>
                     <img src={result.img} alt={result.title} />
                     <GridListTileBar
