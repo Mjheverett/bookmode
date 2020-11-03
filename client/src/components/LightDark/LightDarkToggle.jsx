@@ -7,7 +7,7 @@ import NightsStayIcon from '@material-ui/icons/NightsStay';
 const LightDarkToggle = () => {
   const [theme, setTheme] = useState({ mode: "light" });
   return (
-    <div>
+    <div className="lightDarkToggle">
       <ThemeProvider theme={theme}>
         <LightDarkMode />
         
