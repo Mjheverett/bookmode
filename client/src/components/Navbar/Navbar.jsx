@@ -17,6 +17,7 @@ const Navbar = () => {
                 <Link to="/library" className="link">Library</Link>
                 <br />
                 <Link to="/groups" className="link">Groups</Link>
+                <Link to="/results" className="link">Results</Link>
                 <LightDarkToggle />
             </div>
         </div>
