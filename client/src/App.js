@@ -1,21 +1,19 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import './App.css';
 import ProtectedRoute from './auth/ProtectedRoute';
-import Navbar from './components/Navbar';
-import LightDarkToggle from './components/LightDark/LightDarkToggle';
-import Home from './components/Home';
+import Navbar from './components/Navbar/Navbar';
+import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
 import Library from './components/Library/Library';
 import Groups from './components/Groups/Groups';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
+import './App.css'
 
 function App() {
   return (
     <div className="App">
-      <LightDarkToggle />
       <Navbar />
-      <div>
+      <div className="app-container">
         <Switch>
           <Route exact path="/">
             <Home />
