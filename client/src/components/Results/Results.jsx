@@ -6,6 +6,8 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
+import { loadData } from '../../utils/loadData';
+import { parseData } from '../../utils/parseData';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,27 +31,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Results = (props) => {
-    const [data, setData] = useState([]);
     const [clicked, setClicked] = useState(false);
-    const { input } = props.location.state
-    const loadData = async () => {
-        console.log('your props are', input)
-        const key = process.env.REACT_APP_GOODREADS_KEY
-        const xml2js = require('xml2js');
-        await fetch(`https://www.goodreads.com/search/index.xml?key=${key}&q=${input}&page=1&search=all`)
-
-            .then(response => response.text())
-            .then((response) => {
-                xml2js.parseString(response, function (err, data) {
-                console.log(data)
-            })
-                }).catch(err => console.error(err));
-        setData(data)
-    }
+    const [input, setInput] = useState([]);
+    const { data } = props.location.state
+    
+    console.log(props);
+    
     useEffect(() => {
-        loadData();
-    }, [loadData]);
+        parseData(data)
+        console.log(parseData(data))
+    }, [input]);
+    
     const classes = useStyles();
+    
     const _handleAddLibrary = (stateItem) =>{
         setClicked(true)
         // console.log("state", JSON.stringify(stateItem));
@@ -64,6 +58,7 @@ const Results = (props) => {
         //         console.log('data:', data)
         //     });
         }
+
     return (
         <div className={classes.root}>
             <GridList className={classes.gridList} cols={2.5}>

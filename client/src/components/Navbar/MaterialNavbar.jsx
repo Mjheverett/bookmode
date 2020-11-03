@@ -17,6 +17,7 @@ import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
 import bookmodeLogo from '../../images/bookmode.png';
 import { Link, Redirect } from 'react-router-dom';
+import { loadData } from '../../utils/loadData';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -91,6 +92,7 @@ export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [input, setInput] = React.useState('');
+    const [data, setData] = React.useState([]);
     const [fireRedirect, setRedirect] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
@@ -183,9 +185,18 @@ export default function PrimarySearchAppBar() {
 
     const _handleSubmit = (e) => {
         e.preventDefault();
-        console.log("handle submit is running");
-        console.log('state input is: ', {input})
         setRedirect(true)
+        const key = process.env.REACT_APP_GOODREADS_KEY
+        const parseString = require('xml2js').parseString;
+        const url =
+    `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${key}&q=${input}&page=1&search=all`
+    fetch(url, {
+        headers: {"X-Requested-With" : "XMLHttpRequest"}
+    })
+        .then(response => response.text())
+        .then(data => {
+            setData(data)
+        }).catch(err => console.error(err));
     };
     return (
         <div className={classes.grow}>
@@ -216,11 +227,11 @@ export default function PrimarySearchAppBar() {
                                 
                             />
                         </form>
-                        {fireRedirect && (
+                        {fireRedirect && data && (
                             <Redirect 
                                 to={{
                                     pathname: '/results',
-                                    state: {input: input}
+                                    state: {data: data}
                                 }}
                             />
                         )}

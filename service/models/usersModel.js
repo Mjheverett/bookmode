@@ -16,7 +16,7 @@ class UsersList {
     async save() {
         try {
             console.log('Issue');
-            const response = await db.one(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id;`, [this.name, this.email, this.password]);
+            const response = await db.one(`INSERT INTO users (name, email) VALUES ($1, $2) RETURNING id;`, [this.name, this.email]);
             return response;
         } catch (error) {
             console.error('ERROR:', error.message);
