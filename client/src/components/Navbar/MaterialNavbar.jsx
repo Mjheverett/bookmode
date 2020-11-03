@@ -91,6 +91,7 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const [input, setInput] = React.useState('');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -168,6 +169,10 @@ export default function PrimarySearchAppBar() {
             </MenuItem>
         </Menu>
     );
+
+    const _handleChange = (searchTerm) => {
+        setInput(searchTerm);
+    }
 
     return (
         <div className={classes.grow}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Results = ({searchResults}) => {
+    const [data, setData] = useState([]);
+    const [clicked, setClicked] = useState(false);
     useEffect(() => {
         loadData();
     }, []);
@@ -36,7 +38,7 @@ const Results = ({searchResults}) => {
         const response = await fetch(`https://www.goodreads.com/search/index.xml?key=QnRlqTAwNNNukr2gd8Q&q=${this.props.searchTerm}&page=1&search=all`);
         const data = await response.json();
         setData(data)
-    const [clicked, setClicked] = useState(false);
+    }
     const classes = useStyles();
     const _handleAddLibrary = (stateItem) =>{
         setClicked(true)
@@ -55,7 +57,7 @@ const Results = ({searchResults}) => {
     return (
         <div className={classes.root}>
             <GridList className={classes.gridList} cols={2.5}>
-                {searchResults.map((result) => (
+                {this.state.data.map((result) => (
                 <GridListTile key={result.img}>
                     <img src={result.img} alt={result.title} />
                     <GridListTileBar
