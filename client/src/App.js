@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
-import Navbar from './components/Navbar/Navbar';
 import MaterialNavbar from './components/Navbar/MaterialNavbar';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
@@ -29,9 +28,7 @@ function App() {
           <ProtectedRoute path="/groups">
             <Groups />
           </ProtectedRoute>
-          <ProtectedRoute path="/results">
-            <Results />
-          </ProtectedRoute>
+          <Route path="/results" render={(props) => <Results {...props}/>}/>
         </Switch>
       </div>
       <Footer />

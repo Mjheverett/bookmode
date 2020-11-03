@@ -6,6 +6,8 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
+import { loadData } from '../../utils/loadData';
+import { parseData } from '../../utils/parseData';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,18 +30,20 @@ const useStyles = makeStyles((theme) => ({
         'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
 }));
-const Results = ({searchResults}) => {
-    const [data, setData] = useState([]);
+const Results = (props) => {
     const [clicked, setClicked] = useState(false);
+    const [input, setInput] = useState([]);
+    const { data } = props.location.state
+    
+    console.log(props);
+    
     useEffect(() => {
-        loadData();
-    }, []);
-    const loadData = async () => {
-        const response = await fetch(`https://www.goodreads.com/search/index.xml?key=QnRlqTAwNNNukr2gd8Q&q=${this.props.searchTerm}&page=1&search=all`);
-        const data = await response.json();
-        setData(data)
-    }
+        parseData(data)
+        console.log(parseData(data))
+    }, [input]);
+    
     const classes = useStyles();
+    
     const _handleAddLibrary = (stateItem) =>{
         setClicked(true)
         // console.log("state", JSON.stringify(stateItem));
@@ -54,10 +58,11 @@ const Results = ({searchResults}) => {
         //         console.log('data:', data)
         //     });
         }
+
     return (
         <div className={classes.root}>
             <GridList className={classes.gridList} cols={2.5}>
-                {this.state.data.map((result) => (
+                {data.map((result) => (
                 <GridListTile key={result.img}>
                     <img src={result.img} alt={result.title} />
                     <GridListTileBar
