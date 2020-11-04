@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from "styled-components";
 import { makeStyles } from '@material-ui/core/styles';
@@ -238,9 +238,10 @@ const Library = () => {
                     <LibraryDiv>
                         <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                             <GridListTile cellHeight={'auto'}>
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
-                                </div>
+                                <br />
+                                    <div width={'auto'} className={classes.div}>
+                                        <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
+                                    </div>
                                 <br />
                                 <div>
                                     <Button aria-describedby={id} variant="contained" onClick={handleClick}>
@@ -252,11 +253,11 @@ const Library = () => {
                                         anchorEl={anchorEl}
                                         onClose={handleClose}
                                         anchorOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                         transformOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                     >
@@ -274,11 +275,13 @@ const Library = () => {
                                         </Typography>
                                     </Popover>
                                 </div>
+                                <br />
                             </GridListTile>
                             <GridListTile cellHeight={'auto'}>
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
-                                </div>
+                                <br />
+                                    <div width={'auto'} className={classes.div}>
+                                        <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
+                                    </div>
                                 <br />
                                 <div>
                                     <Button aria-describedby={id} variant="contained" onClick={handleClick}>
@@ -290,11 +293,11 @@ const Library = () => {
                                         anchorEl={anchorEl}
                                         onClose={handleClose}
                                         anchorOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                         transformOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                     >
@@ -312,11 +315,13 @@ const Library = () => {
                                         </Typography>
                                     </Popover>
                                 </div>
+                                <br />
                             </GridListTile>
                             <GridListTile cellHeight={'auto'}>
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
-                                </div>
+                                <br />
+                                    <div width={'auto'} className={classes.div}>
+                                        <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
+                                    </div>
                                 <br />
                                 <div>
                                     <Button aria-describedby={id} variant="contained" onClick={handleClick}>
@@ -328,11 +333,11 @@ const Library = () => {
                                         anchorEl={anchorEl}
                                         onClose={handleClose}
                                         anchorOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                         transformOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                     >
@@ -350,15 +355,17 @@ const Library = () => {
                                         </Typography>
                                     </Popover>
                                 </div>
+                                <br />
                             </GridListTile>
                         </GridList> 
                     </LibraryDiv>
                     <LibraryDiv>
                         <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                             <GridListTile cellHeight={'auto'}>
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
-                                </div>
+                                <br />
+                                    <div width={'auto'} className={classes.div}>
+                                        <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
+                                    </div>
                                 <br />
                                 <div>
                                     <Button aria-describedby={id} variant="contained" onClick={handleClick}>
@@ -370,11 +377,11 @@ const Library = () => {
                                         anchorEl={anchorEl}
                                         onClose={handleClose}
                                         anchorOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                         transformOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                     >
@@ -392,11 +399,13 @@ const Library = () => {
                                         </Typography>
                                     </Popover>
                                 </div>
+                                <br />
                             </GridListTile>
                             <GridListTile cellHeight={'auto'}>
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
-                                </div>
+                                <br />
+                                    <div width={'auto'} className={classes.div}>
+                                        <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
+                                    </div>
                                 <br />
                                 <div>
                                     <Button aria-describedby={id} variant="contained" onClick={handleClick}>
@@ -408,11 +417,11 @@ const Library = () => {
                                         anchorEl={anchorEl}
                                         onClose={handleClose}
                                         anchorOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                         transformOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                     >
@@ -430,11 +439,13 @@ const Library = () => {
                                         </Typography>
                                     </Popover>
                                 </div>
+                                <br />
                             </GridListTile>
                             <GridListTile cellHeight={'auto'}>
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
-                                </div>
+                                <br />
+                                    <div width={'auto'} className={classes.div}>
+                                        <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
+                                    </div>
                                 <br />
                                 <div>
                                     <Button aria-describedby={id} variant="contained" onClick={handleClick}>
@@ -446,11 +457,11 @@ const Library = () => {
                                         anchorEl={anchorEl}
                                         onClose={handleClose}
                                         anchorOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                         transformOrigin={{
-                                            vertical: 'center',
+                                            vertical: 'bottom',
                                             horizontal: 'center',
                                         }}
                                     >
@@ -468,6 +479,7 @@ const Library = () => {
                                         </Typography>
                                     </Popover>
                                 </div>
+                                <br />
                             </GridListTile>
                         </GridList> 
                     </LibraryDiv>
