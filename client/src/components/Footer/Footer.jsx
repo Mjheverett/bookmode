@@ -1,14 +1,17 @@
-import React from 'react'
+import React from 'react';
+import styled from "styled-components";
+
+const FooterDiv = styled.div`
+    margin-top: calc(5% + 60px);
+    bottom: 0;
+    position: absolute;
+`;
 
 const Footer = () => {
     return (
-        <div className="footer">
-            <p>Find us on social media:  <a className="footer-link" href="https://instagram.com"><icon className="fab fa-instagram fa-lg"></icon></a>  <a className="footer-link" href="https://www.facebook.com/EverettBeachProperties" target="_blank" rel="noreferrer"><icon className="fab fa-facebook fa-lg"></icon></a>
-            </p>
-            <p>
-                Made with <icon hasTextColor="danger" className="fa fa-heart"></icon> by <a href="#" className="footer-link">Team Lee</a>
-            </p>
-        </div>
+        <FooterDiv>
+            Made with <span className="fa fa-heart" /> by Team Lee
+        </FooterDiv>
     )
 };
 

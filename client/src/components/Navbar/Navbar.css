@@ -1,4 +1,4 @@
-.header {
+/* .header {
     background-color: rgb(7, 54, 66);
     color: white;
     align-self: flex-start;
@@ -17,6 +17,10 @@
     margin-right: 5px;
     padding: 10px;
     font-size: 1.5rem;
+} */
+
+.lightDarkToggle {
+    padding-left: 20px;
 }
 
 .link {
@@ -28,11 +32,11 @@
     color: rgb(0, 162, 255);
 }
 
-.navbar-title {
+/* .navbar-title {
     color: white;
-}
+} */
 
-@media screen and (max-device-width: 600px) {
+/* @media screen and (max-device-width: 600px) {
     .header-nav {
         font-size: .8rem;
     }
@@ -88,4 +92,4 @@
         margin-right: 15px;
         width: 60px;
     }
-}
+} */
