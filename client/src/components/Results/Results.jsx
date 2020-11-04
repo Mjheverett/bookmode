@@ -8,6 +8,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import { loadData } from '../../utils/loadData';
 import { parseData } from '../../utils/parseData';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,8 +39,13 @@ const Results = (props) => {
     console.log(props);
     
     useEffect(() => {
-        parseData(data)
-        console.log(parseData(data))
+        const key = process.env.REACT_APP_GOODREADS_KEY;
+        axios.get(`https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${key}&q=${input}&page=1&search=all`)
+            .then(res => {
+                const data = res.data;
+                console.log("data is:", data);
+            })
+        
     }, [input]);
     
     const classes = useStyles();
@@ -62,7 +68,7 @@ const Results = (props) => {
     return (
         <div className={classes.root}>
             <GridList className={classes.gridList} cols={2.5}>
-                {data.map((result) => (
+                {/* {data.map((result) => (
                 <GridListTile key={result.img}>
                     <img src={result.img} alt={result.title} />
                     <GridListTileBar
@@ -79,7 +85,7 @@ const Results = (props) => {
                     }
                     />
                 </GridListTile>
-                ))}
+                ))} */}
             </GridList>
         </div>
     );
