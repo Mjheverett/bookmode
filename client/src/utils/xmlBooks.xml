@@ -1,0 +1,62 @@
+<results>
+    <work>
+        <id type="integer">849585</id>
+        <books_count type="integer">403</books_count>
+        <ratings_count type="integer">1129530</ratings_count>
+        <text_reviews_count type="integer">25007</text_reviews_count>
+        <original_publication_year type="integer">1977</original_publication_year>
+        <original_publication_month type="integer">1</original_publication_month>
+        <original_publication_day type="integer">28</original_publication_day>
+        <average_rating>4.23</average_rating>
+        <best_book type="Book">
+            <id type="integer">11588</id>
+            <title>The Shining</title>
+            <author>
+                <id type="integer">3389</id>
+                <name>Stephen King</name>
+            </author>
+            <image_url>https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588._SX98_.jpg</image_url>
+            <small_image_url>https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588._SY75_.jpg</small_image_url>
+        </best_book>
+    </work>
+    <work>
+        <id type="integer">150259</id>
+        <books_count type="integer">131</books_count>
+        <ratings_count type="integer">804461</ratings_count>
+        <text_reviews_count type="integer">25632</text_reviews_count>
+        <original_publication_year type="integer">1986</original_publication_year>
+        <original_publication_month type="integer">9</original_publication_month>
+        <original_publication_day type="integer">15</original_publication_day>
+        <average_rating>4.24</average_rating>
+        <best_book type="Book">
+            <id type="integer">830502</id>
+            <title>It</title>
+            <author>
+                <id type="integer">3389</id>
+                <name>Stephen King</name>
+            </author>
+            <image_url>https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1334416842l/830502._SY160_.jpg</image_url>
+            <small_image_url>https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1334416842l/830502._SY75_.jpg</small_image_url>
+        </best_book>
+    </work>
+    <work>
+        <id type="integer">46575</id>
+        <books_count type="integer">291</books_count>
+        <ratings_count type="integer">515813</ratings_count>
+        <text_reviews_count type="integer">19064</text_reviews_count>
+        <original_publication_year type="integer">1982</original_publication_year>
+        <original_publication_month type="integer">6</original_publication_month>
+        <original_publication_day type="integer">1</original_publication_day>
+        <average_rating>3.95</average_rating>
+        <best_book type="Book">
+            <id type="integer">43615</id>
+            <title>The Gunslinger</title>
+            <author>
+                <id type="integer">3389</id>
+                <name>Stephen King</name>
+            </author>
+            <image_url>https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1554220416l/43615._SX98_.jpg</image_url>
+            <small_image_url>https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1554220416l/43615._SY75_.jpg</small_image_url>
+        </best_book>
+    </work>
+</results>

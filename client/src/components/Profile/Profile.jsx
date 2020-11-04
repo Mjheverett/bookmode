@@ -4,19 +4,19 @@ import LibraryCard from "./LibraryCard/LibraryCard";
 import GroupsCard from "./GroupsCard/GroupsCard";
 import NotificationsCard from "./NotificationsCard/NotificationsCard";
 import './Profile.css';
+import LogoutButton from '../Auth0/LogoutButton';
 
 const Profile = () => {
     return (
         <>
             <h1>Profile</h1>
-        <div className='contentCards'>
-            <LibraryCard />
-            <GroupsCard />
-            <SharingCard />
-            <NotificationsCard />
-        </div>
-           
-            
+            <LogoutButton />
+            <div className='contentCards'>
+                <LibraryCard />
+                <GroupsCard />
+                <SharingCard />
+                <NotificationsCard />
+            </div>
         </>
     )
 }
