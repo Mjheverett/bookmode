@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import styled from "styled-components";
+
 const FooterDiv = styled.div`
     margin-top: calc(5% + 60px);
     bottom: 0;
