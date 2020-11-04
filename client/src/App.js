@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import ProtectedRoute from './auth/ProtectedRoute';
 
 import MaterialNavbar from './components/Navbar/MaterialNavbar';
-import Home from './components/Home/Home';
 import AuthenticatedHome from './components/Auth0/AuthenticatedHome';
 import Profile from './components/Profile/Profile';
 import Library from './components/Library/Library';
@@ -26,26 +26,26 @@ const theme = createMuiTheme({
 function App() {
   return (
     <div className="App">
-    <ThemeProvider theme={theme}>  
-    <MaterialNavbar />
-      <div className="app-container">
-        <Switch>
-          <Route exact path="/">
-            <AuthenticatedHome />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/library">
-            <Library />
-          </Route>
-          <Route path="/groups">
-            <Groups />
-          </Route>
-          <Route path="/results" render={(props) => <Results {...props}/>}/>
-        </Switch>
-      </div>
-      <Footer />
+      <ThemeProvider theme={theme}>  
+        <MaterialNavbar />
+        <div className="app-container">
+          <Switch>
+            <Route exact path="/">
+              <AuthenticatedHome />
+            </Route>
+            <ProtectedRoute path="/profile">
+              <Profile />
+            </ProtectedRoute>
+            <ProtectedRoute path="/library">
+              <Library />
+            </ProtectedRoute>
+            <ProtectedRoute path="/groups">
+              <Groups />
+            </ProtectedRoute>
+            <Route path="/results" render={(props) => <Results {...props}/>}/>
+          </Switch>
+        </div>
+        <Footer />
       </ThemeProvider>
     </div>
   );

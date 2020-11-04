@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import styled from "styled-components";
 import { makeStyles } from '@material-ui/core/styles';
@@ -217,7 +218,12 @@ const Library = () => {
         }
     };
 
-    // Popover with information about each book.
+
+    useEffect(() => {
+        setLibrary(libraryBooks);
+    }, []);
+
+    // Modal with information about each book.
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
