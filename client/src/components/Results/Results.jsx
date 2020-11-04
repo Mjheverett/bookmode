@@ -5,6 +5,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import InfoIcon from '@material-ui/icons/Info';
 import StarIcon from '@material-ui/icons/Star';
 import axios from 'axios';
 
@@ -14,21 +15,28 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
+    },
+    div: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
     },
     gridList: {
-        padding: '16px',
         flexWrap: 'nowrap',
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
     },
-    title: {
-        color: theme.palette.primary.light,
-    },
     titleBar: {
-        background:
-        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+
+    background: 'rgba(0, 43, 54, .7)',
+    color: '#EBEBEB'
+    //     'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
+    icon: {
+        color: 'rgba(235, 235, 235, 0.54)',
+      },
 }));
 const Results = (props) => {
     const [clicked, setClicked] = useState(false);
@@ -47,11 +55,10 @@ const Results = (props) => {
                     parseString(data, function (err, result) {
                         const resultsData = result.GoodreadsResponse['search'][0]['results'][0]['work'];
                         console.log("ready to return", resultsData);
-                        
+                        setResults(resultsData);
                         })
                 })
             })();
-    setResults(resultsData);
     }, [setResults]);    
     const classes = useStyles();
     if (results === null) {
@@ -63,23 +70,23 @@ const Results = (props) => {
 
     return (
         <div className={classes.root}>
-            <GridList className={classes.gridList} cols={5} cellHeight={'auto'}>
+            <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
                 {results.map((result) => {
                     return (
                     <GridListTile key={result.id[0]._}>
-                        <img width={'auto'} src={result.best_book[0].image_url[0]} alt={result.best_book[0].title} />
-                        
+                        <div width={'auto'} className={classes.div}>
+                        <img maxWidth={'50%'} src={result.best_book[0].image_url[0]} alt={result.best_book[0].title} />
+                        </div>
                         <GridListTileBar
                         title={result.best_book[0].title}
+                        subtitle={<span>by: {result.best_book[0].author[0].name[0]}</span>}
                         classes={{
                             root: classes.titleBar,
-                            title: classes.title,
                         }}
                         actionIcon={
-                            <IconButton aria-label={`star ${result.best_book[0].title}`} onClick={_handleAddLibrary()}>
-                            {clicked ? <StarIcon /> : <StarBorderIcon className={classes.title} />}<StarBorderIcon className={classes.title} 
-                            onClick={_handleAddLibrary}/>
-                            </IconButton> }
+                            <IconButton aria-label={`info about ${result.best_book[0].title}`} className={classes.icon}>
+                              <InfoIcon />
+                            </IconButton>}
                     />
                     </GridListTile>
                     )})}

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import GroupDetail from './GroupDetail';
 
-const GroupsList = () => {
+const GroupsList = (props) => {
+    const { list } = props;
     const [groups, setGroups] = useState([]);
     
     const renderGroups = () => {
@@ -16,7 +17,7 @@ const GroupsList = () => {
 
     return (
         <>
-            <h2>Render List of Users Groups Here</h2>
+            <h2>Render List of {list} Groups Here</h2>
             {renderGroups()}
         </>
     )

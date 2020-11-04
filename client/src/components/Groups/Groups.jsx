@@ -5,7 +5,9 @@ const Groups = () => {
     return (
         <>
             <h1>Groups</h1>
-            <GroupsList />
+            <button>Create new group</button>
+            <GroupsList list={"User"} />
+            <GroupsList list={"All"} />
         </>
     )
 }
