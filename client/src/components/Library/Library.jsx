@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import styled from "styled-components";
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,6 +53,13 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         color: '#93A1A1',
         backgroundColor: '#EBEBEB',
+    },
+    button: {
+        backgroundColor: '#D33682',
+        '&:hover': {
+            backgroundColor: '#859900',
+        },
+        color: '#002B36',
     },
 }));
 
@@ -210,6 +218,7 @@ const Library = () => {
         }
     };
 
+
     useEffect(() => {
         setLibrary(libraryBooks);
     }, []);
@@ -248,13 +257,14 @@ const Library = () => {
                                     </div>
                                 <br />
                                 <div>
-                                    <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                     More Information
                                     </Button>
                                     <Popover
                                         id={id}
                                         open={open}
                                         anchorEl={anchorEl}
+                                        className={classes.root}
                                         onClose={handleClose}
                                         anchorOrigin={{
                                             vertical: 'bottom',
@@ -288,7 +298,7 @@ const Library = () => {
                                     </div>
                                 <br />
                                 <div>
-                                    <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                     More Information
                                     </Button>
                                     <Popover
@@ -328,7 +338,7 @@ const Library = () => {
                                     </div>
                                 <br />
                                 <div>
-                                    <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                     More Information
                                     </Button>
                                     <Popover
@@ -372,7 +382,7 @@ const Library = () => {
                                     </div>
                                 <br />
                                 <div>
-                                    <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                     More Information
                                     </Button>
                                     <Popover
@@ -412,7 +422,7 @@ const Library = () => {
                                     </div>
                                 <br />
                                 <div>
-                                    <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                     More Information
                                     </Button>
                                     <Popover
@@ -452,7 +462,7 @@ const Library = () => {
                                     </div>
                                 <br />
                                 <div>
-                                    <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                     More Information
                                     </Button>
                                     <Popover
