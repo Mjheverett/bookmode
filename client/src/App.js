@@ -44,7 +44,7 @@ function App() {
               <ProtectedRoute path="/groups">
                 <Groups />
               </ProtectedRoute>
-              <Route path="/results" render={(props) => <Results {...props}/>}/>
+                <Route path="/results" render={(props) => <Results {...props}/>}/>
             </Switch>
           </div>
         <Footer />
