@@ -1,4 +1,35 @@
 import React, { useState } from 'react';
+import Grid from '@material-ui/core/Grid';
+import styled from "styled-components";
+
+const LibraryDiv = styled.div`
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    background: #EBEBEB;
+    box-shadow: inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8;
+    text-align: center;
+    color: #93A1A1;
+    padding: 0.8rem 1.6rem;
+    margin-bottom: 2rem;
+`;
+
+// const LibraryDivDark = styled.div`
+//     position: relative;
+//     height: 100%;
+//     width: 100%;
+//     border-radius: 5px;
+//     background: #002B36;
+//     box-shadow: inset -12px -12px 30px #003746, inset 12px 12px 30px #001f26;
+//     text-align: center;
+//     color: #6A6B7A;
+//     padding: 0.8rem 1.6rem;
+//     font-weight: bold;
+//     font-size: 2.4rem;
+//     margin-bottom: 2rem;
+// `;
+
 
 const Library = () => {
     const [library, setLibrary] = useState({});
@@ -156,10 +187,32 @@ const Library = () => {
 
     return (
         <>
-            <h1>Library</h1>
-            <p>{libraryBooks.results.work[0].best_book.title}</p>
-            <p>{libraryBooks.results.work[1].best_book.title}</p>
-            <p>{libraryBooks.results.work[2].best_book.title}</p>
+            <Grid 
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="center">
+                <Grid item>
+                    <h1>Library</h1>
+                    <br />
+                    <LibraryDiv>
+                        <div>
+                            <h3>{libraryBooks.results.work[0].best_book.title}</h3>
+                            <p>{libraryBooks.results.work[0].best_book.author.name}</p>
+                            <p>Genre (update with API data)</p>
+                            <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
+                            <p>Reader (update with API data if available)</p>
+                        </div>
+                    </LibraryDiv>
+                    <LibraryDiv>
+                    <p>{libraryBooks.results.work[1].best_book.title}</p>
+                        <p>{libraryBooks.results.work[1].best_book.author.name}</p>
+                        <p>Genre (update with API data)</p>
+                        <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
+                        <p>Reader (update with API data if available)</p>
+                    </LibraryDiv>
+                </Grid>
+            </Grid>
         </>
     )
 }

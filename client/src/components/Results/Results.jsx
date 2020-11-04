@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     gridList: {
+        padding: '16px',
         flexWrap: 'nowrap',
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
@@ -46,10 +47,11 @@ const Results = (props) => {
                     parseString(data, function (err, result) {
                         const resultsData = result.GoodreadsResponse['search'][0]['results'][0]['work'];
                         console.log("ready to return", resultsData);
-                        setResults(resultsData);
+                        
                         })
                 })
             })();
+    setResults(resultsData);
     }, [setResults]);    
     const classes = useStyles();
     if (results === null) {
@@ -61,13 +63,12 @@ const Results = (props) => {
 
     return (
         <div className={classes.root}>
-            <GridList className={classes.gridList} cols={1.5} cellHeight={400}> 
+            <GridList className={classes.gridList} cols={5} cellHeight={'auto'}>
                 {results.map((result) => {
                     return (
                     <GridListTile key={result.id[0]._}>
-                        <p>{result.best_book[0].title}</p>
-                        <img height={400} width={auto} src={result.best_book[0].image_url[0]} alt={result.best_book[0].title} />
-                        {/* 
+                        <img width={'auto'} src={result.best_book[0].image_url[0]} alt={result.best_book[0].title} />
+                        
                         <GridListTileBar
                         title={result.best_book[0].title}
                         classes={{
@@ -79,7 +80,7 @@ const Results = (props) => {
                             {clicked ? <StarIcon /> : <StarBorderIcon className={classes.title} />}<StarBorderIcon className={classes.title} 
                             onClick={_handleAddLibrary}/>
                             </IconButton> }
-                        */}
+                    />
                     </GridListTile>
                     )})}
             </GridList> 

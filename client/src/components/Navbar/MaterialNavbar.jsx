@@ -191,14 +191,14 @@ export default function PrimarySearchAppBar() {
         <div className={classes.grow}>
             <AppBar position="static">
                 <Toolbar>
-                    <img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} />
+                    <a href="/"><img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} /></a>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
                         <form onSubmit={e => _handleSubmit(e)}>
                             <InputBase
-                                placeholder="Search…"
+                                placeholder="Search title, author, ISBN..."
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
@@ -219,7 +219,6 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <Link to="/" className="link">Home</Link>
                         <Link to="/profile" className="link">Profile</Link>
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
