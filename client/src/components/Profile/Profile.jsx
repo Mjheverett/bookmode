@@ -1,5 +1,5 @@
 import React from 'react';
-import SharingCard from "./ResultsCard/SharingCard";
+import SharingCard from "./SharingCard/SharingCard";
 import LibraryCard from "./LibraryCard/LibraryCard";
 import GroupsCard from "./GroupsCard/GroupsCard";
 import NotificationsCard from "./NotificationsCard/NotificationsCard";
