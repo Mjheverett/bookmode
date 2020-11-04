@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express'),
-    router = express.Router(),
+    router = express.Router();
 
 const groupsList = require('../models/groupsModel');
 

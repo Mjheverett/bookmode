@@ -4,9 +4,9 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import InfoIcon from '@material-ui/icons/Info';
-import StarIcon from '@material-ui/icons/Star';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
+        marginTop: '20%'
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -29,17 +30,21 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translateZ(0)',
     },
     titleBar: {
-
     background: 'rgba(0, 43, 54, .7)',
     color: '#EBEBEB'
     //     'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
+    titleBarTop: {
+        background: 'rgba(0, 43, 54, .001)',
+        color: '#EBEBEB'
+        //     'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+        },
     icon: {
         color: 'rgba(235, 235, 235, 0.54)',
       },
 }));
 const Results = (props) => {
-    const [clicked, setClicked] = useState(false);
+    const [clicks, setClicks] = useState([])
     const [results, setResults] = useState(null);
     const { data } = props.location.state;
     useEffect(() => {
@@ -64,8 +69,10 @@ const Results = (props) => {
     if (results === null) {
         return 'Loading...';
     }
-    const _handleAddLibrary = (stateItem) =>{
-        setClicked(true)
+    const _handleAddLibrary = (id) =>{
+        //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
+        let result =  clicks.includes(id) ? clicks.filter(click => click != id): [...clicks, id]
+        setClicks(result)
         }
 
     return (
@@ -75,7 +82,7 @@ const Results = (props) => {
                     return (
                     <GridListTile key={result.id[0]._}>
                         <div width={'auto'} className={classes.div}>
-                        <img maxWidth={'50%'} src={result.best_book[0].image_url[0]} alt={result.best_book[0].title} />
+                        <img src={result.best_book[0].image_url[0]} alt={result.best_book[0].title} />
                         </div>
                         <GridListTileBar
                         title={result.best_book[0].title}
@@ -85,8 +92,19 @@ const Results = (props) => {
                         }}
                         actionIcon={
                             <IconButton aria-label={`info about ${result.best_book[0].title}`} className={classes.icon}>
-                              <InfoIcon />
+                            <InfoIcon />
                             </IconButton>}
+                    />
+                    <GridListTileBar
+                        classes={{
+                            root: classes.titleBarTop,
+                        }}
+                        titlePosition ={'top'}
+                        actionIcon={
+                            <IconButton aria-label={`${result.id[0]._}`} onClick={() => _handleAddLibrary(result.id[0]._)}>
+                            {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
+                            {clicks.includes(result.id[0]._) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
+                            </IconButton> }
                     />
                     </GridListTile>
                     )})}
