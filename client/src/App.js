@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import ProtectedRoute from './auth/ProtectedRoute';
+
 import MaterialNavbar from './components/Navbar/MaterialNavbar';
 import Home from './components/Home/Home';
+import AuthenticatedHome from './components/Auth0/AuthenticatedHome';
 import Profile from './components/Profile/Profile';
 import Library from './components/Library/Library';
 import Groups from './components/Groups/Groups';
@@ -17,17 +18,17 @@ function App() {
       <div className="app-container">
         <Switch>
           <Route exact path="/">
-            <Home />
+            <AuthenticatedHome />
           </Route>
-          <ProtectedRoute path="/profile">
+          <Route path="/profile">
             <Profile />
-          </ProtectedRoute>
-          <ProtectedRoute path="/library">
+          </Route>
+          <Route path="/library">
             <Library />
-          </ProtectedRoute>
-          <ProtectedRoute path="/groups">
+          </Route>
+          <Route path="/groups">
             <Groups />
-          </ProtectedRoute>
+          </Route>
           <Route path="/results" render={(props) => <Results {...props}/>}/>
         </Switch>
       </div>
