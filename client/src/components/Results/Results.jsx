@@ -6,8 +6,6 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
-import { loadData } from '../../utils/loadData';
-import { parseData } from '../../utils/parseData';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,19 +32,27 @@ const useStyles = makeStyles((theme) => ({
 const Results = (props) => {
     const [clicked, setClicked] = useState(false);
     const [input, setInput] = useState([]);
-    const { data } = props.location.state
-    
-    console.log(props);
+    const [results, setResults] = useState([]);
+    const { data } = props.location.state;
     
     useEffect(() => {
         const key = process.env.REACT_APP_GOODREADS_KEY;
-        axios.get(`https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${key}&q=${input}&page=1&search=all`)
+        const parseString = require('xml2js').parseString;
+        console.log("props.data", data);
+        const url = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${key}&q=${data}&page=1&search=all`;
+        console.log(url);
+        axios.get(url)
             .then(res => {
                 const data = res.data;
-                console.log("data is:", data);
+                parseString(data, function (err, result) {
+                    
+                    console.log("result in parse", result.GoodreadsResponse['search'][0]['results'][0]['work']);
+                    const resultsData = result.GoodreadsResponse['search'][0]['results'][0]['work'];
+                    console.log("ready to return", resultsData);
+                    setResults({ results: resultsData });
+                })
             })
-        
-    }, [input]);
+    }, [setResults]);
     
     const classes = useStyles();
     
@@ -68,24 +74,26 @@ const Results = (props) => {
     return (
         <div className={classes.root}>
             <GridList className={classes.gridList} cols={2.5}>
-                {/* {data.map((result) => (
-                <GridListTile key={result.img}>
-                    <img src={result.img} alt={result.title} />
-                    <GridListTileBar
-                    title={result.title}
-                    classes={{
-                        root: classes.titleBar,
-                        title: classes.title,
-                    }}
-                    actionIcon={
-                        <IconButton aria-label={`star ${result.title}`} onClick={_handleAddLibrary()}>
-                        {clicked ? <StarIcon /> : <StarBorderIcon className={classes.title} />}<StarBorderIcon className={classes.title} 
-                        onClick={_handleAddLibrary}/>
-                        </IconButton>
-                    }
-                    />
-                </GridListTile>
-                ))} */}
+                {!!results ? (results.map((result) => (
+                    <GridListTile key={result.img}>
+                        <img src={result.img} alt={result.title} />
+                        <GridListTileBar
+                        title={result.title}
+                        classes={{
+                            root: classes.titleBar,
+                            title: classes.title,
+                        }}
+                        actionIcon={
+                            <IconButton aria-label={`star ${result.title}`} onClick={_handleAddLibrary()}>
+                            {clicked ? <StarIcon /> : <StarBorderIcon className={classes.title} />}<StarBorderIcon className={classes.title} 
+                            onClick={_handleAddLibrary}/>
+                            </IconButton>
+                        }
+                        />
+                    </GridListTile>
+                ))) : (
+                    <p>Fetching results</p>
+                )}
             </GridList>
         </div>
     );
