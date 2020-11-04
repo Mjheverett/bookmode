@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         },
     icon: {
         color: 'rgba(235, 235, 235, 0.54)',
-      },
+    },
 }));
 const Results = (props) => {
     const [clicks, setClicks] = useState([])
@@ -64,7 +64,7 @@ const Results = (props) => {
                         })
                 })
             })();
-    }, [setResults]);    
+    }, [data]);    
     const classes = useStyles();
     if (results === null) {
         return 'Loading...';
@@ -73,7 +73,7 @@ const Results = (props) => {
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
         let result =  clicks.includes(id) ? clicks.filter(click => click != id): [...clicks, id]
         setClicks(result)
-        }
+    }
 
     return (
         <div className={classes.root}>

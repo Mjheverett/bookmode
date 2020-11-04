@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from './auth/ProtectedRoute';
 
 import MaterialNavbar from './components/Navbar/MaterialNavbar';
-import Home from './components/Home/Home';
 import AuthenticatedHome from './components/Auth0/AuthenticatedHome';
 import Profile from './components/Profile/Profile';
 import Library from './components/Library/Library';

@@ -16,7 +16,7 @@ import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
 import bookmodeLogo from '../../images/bookmode.png';
 import { Link, Redirect } from 'react-router-dom';
-// import { loadData } from '../../utils/loadData';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -90,7 +90,6 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [input, setInput] = React.useState('');
     const [data, setData] = React.useState([]);
     const [fireRedirect, setRedirect] = React.useState(false);
 
@@ -114,6 +113,8 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const { logout } = useAuth0();
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -125,8 +126,9 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem><Link to="/profile">Profile</Link></MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={() => logout({ returnTo: window.location.origin })}>Logout</MenuItem>
         </Menu>
     );
 
@@ -222,7 +224,6 @@ export default function PrimarySearchAppBar() {
                         <Link to="/profile" className="link">Profile</Link>
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
-                        <Link to="/results" className="link">Results</Link>
                         <IconButton aria-label="show 4 new mails" color="inherit">
                             <Badge badgeContent={1} color="secondary">
                                 <MailIcon />
