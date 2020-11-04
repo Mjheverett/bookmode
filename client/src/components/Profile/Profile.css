@@ -1,0 +1,15 @@
+
+
+.contentCards {
+    margin-right: 0.30rem;
+    margin-left: 0.75rem;
+    display: flex;
+}
+
+@media screen and (max-width: 725px) { 
+    .contentCards {
+        display: inline-block;
+       
+    }
+
+}
