@@ -20,6 +20,7 @@ class GroupsList {
     }
     //get users groups
     static async getUserGroups(user_id) {
+        user_id = 2;
         try {
             const response = await db.any(`SELECT * FROM groups WHERE user_id = $1;`, [user_id]);
             return response;
