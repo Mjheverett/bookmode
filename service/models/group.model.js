@@ -9,6 +9,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(1234),
         },
         });
-  
+
     return Group;
-  };
+};
