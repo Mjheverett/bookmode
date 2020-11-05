@@ -1,7 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from "@material-ui/core";
 import './GroupsCard.css';
-import { Link } from 'react-router-dom';
 
 const GroupsCard = () => {
     return (

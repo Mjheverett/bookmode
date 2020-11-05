@@ -10,7 +10,7 @@ const FooterDiv = styled.div`
 const Footer = () => {
     return (
         <FooterDiv>
-            Made with <span className="fa fa-heart" /> by Team Lee
+            {/* Made with <span className="fa fa-heart" /> by Team Lee */}
         </FooterDiv>
     )
 };
