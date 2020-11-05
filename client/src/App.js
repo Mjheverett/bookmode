@@ -14,22 +14,10 @@ import Sharing from './components/Sharing/Sharing';
 import Notifications from './components/Notifications/Notifications';
 import './App.css'
 
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#002B36',
-      contrastText: '#93A1A1',
-    },
-  },
-  shadows: ["none"]
-});
 
 function App() {
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>  
         <MaterialNavbar />
         <div className="app-container">
           <Switch>
@@ -58,7 +46,6 @@ function App() {
           </Switch>
         </div>
         <Footer />
-      </ThemeProvider>
     </div>
   );
 }

@@ -17,8 +17,23 @@ import LightDarkToggle from '../LightDark/LightDarkToggle';
 import bookmodeLogo from '../../images/bookmode.png';
 import { Link, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+    typography: {
+        fontFamily: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+    },
     grow: {
         flexGrow: 1,
     },
@@ -226,6 +241,7 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
+                    <Typography>
                         <Link to="/dashboard" className="link">Dashboard</Link>
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
@@ -254,6 +270,7 @@ export default function PrimarySearchAppBar() {
                         >
                             <AccountCircle />
                         </IconButton>
+                    </Typography>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton

@@ -4,26 +4,23 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    button: {
-        backgroundColor: '#D33682',
-        '&:hover': {
-            backgroundColor: '#859900',
-        },
-        color: '#002B36',
-        margin: theme.spacing(0, 2),
+    margin: {
+        margin: theme.spacing(2),
     },
 }));
 
+
 const LoginButton = () => {
-    const { loginWithRedirect } = useAuth0();
     const classes = useStyles();
+    const { loginWithRedirect } = useAuth0();
 
     return (
         <Button 
             variant="contained" 
-            className={classes.button}  
+            color="secondary"
             onClick={() => loginWithRedirect()}
             size="large"
+            className={classes.margin}
         >
             Log In
         </Button>
