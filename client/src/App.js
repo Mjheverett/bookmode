@@ -9,6 +9,9 @@ import Library from './components/Library/Library';
 import Groups from './components/Groups/Groups';
 import Footer from './components/Footer/Footer';
 import Results from './components/Results/Results';
+import Profile from './components/Profile/Profile';
+import Sharing from './components/Sharing/Sharing';
+import Notifications from './components/Notifications/Notifications';
 import './App.css'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -41,6 +44,15 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute path="/groups">
               <Groups />
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile">
+              <Profile />
+            </ProtectedRoute>
+            <ProtectedRoute path="/sharing">
+              <Sharing />
+            </ProtectedRoute>
+            <ProtectedRoute path="/notifications">
+              <Notifications />
             </ProtectedRoute>
             <Route path="/results" render={(props) => <Results {...props}/>}/>
           </Switch>

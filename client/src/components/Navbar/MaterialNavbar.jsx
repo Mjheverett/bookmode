@@ -126,7 +126,7 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem><Link to="/profile">My account</Link></MenuItem>
+            <MenuItem><Link to="/profile" className="menu-link">My account</Link></MenuItem>
             <MenuItem onClick={() => logout({ returnTo: window.location.origin })}>Logout</MenuItem>
         </Menu>
     );
@@ -222,16 +222,21 @@ export default function PrimarySearchAppBar() {
                         <Link to="/dashboard" className="link">Dashboard</Link>
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={1} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={1} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <Link to="/sharing">
+                            <IconButton aria-label="show 4 new mails" color="inherit">
+                                <Badge badgeContent={1} color="secondary">
+                                    <MailIcon />
+                                </Badge>
+                            </IconButton>
+                        </Link>
+                        <Link to="/notifications">
+                            <IconButton aria-label="show 17 new notifications" color="inherit">
+                                
+                                <Badge badgeContent={1} color="secondary">
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                        </Link>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
