@@ -1,22 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from "@material-ui/core";
-import './NotificationsCard.css';
+import './LibraryCard.css';
 
-
-const NotificationsCard = () => {
+const LibraryCard = () => {
     return (
         <>
             
-            <Card className='notificationsCard' style={{backgroundColor: '#2AA198', color: '#93A1A1'}}>
-                
-            <h3>Your Notifications</h3>
-            <ul>
+            <Card className='libraryCard' style={{backgroundColor: '#2AA198', color: '#93A1A1'}}>
+                <Link to="/library">Your Library</Link>
+                <ul>
                     <li>Lorem ipsum dolor sit amet, consectetur</li>
                     <li>Lorem ipsum dolor sit amet, consectetur</li>
                     <li>Lorem ipsum dolor sit amet, consectetur</li>
                     <li>Lorem ipsum dolor sit amet, consectetur</li>
-            </ul>
-            
+                </ul>
             </Card>
             
             
@@ -24,4 +22,4 @@ const NotificationsCard = () => {
     )
 }
 
-export default NotificationsCard;
+export default LibraryCard;

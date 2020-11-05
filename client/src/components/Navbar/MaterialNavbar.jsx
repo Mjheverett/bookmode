@@ -16,7 +16,7 @@ import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
 import bookmodeLogo from '../../images/bookmode.png';
 import { Link, Redirect } from 'react-router-dom';
-// import { loadData } from '../../utils/loadData';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -90,7 +90,6 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [input, setInput] = React.useState('');
     const [data, setData] = React.useState([]);
     const [fireRedirect, setRedirect] = React.useState(false);
 
@@ -114,6 +113,8 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -125,8 +126,15 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            {isAuthenticated ? (
+                <>
+                    <MenuItem><Link to="/profile" className="menu-link">My account</Link></MenuItem>
+                    <MenuItem onClick={() => logout({ returnTo: window.location.origin })}>Logout</MenuItem>
+                </>
+            ) : (
+                <MenuItem onClick={() => loginWithRedirect({ returnTo: window.location.origin })}>Login</MenuItem>
+            )}
+            
         </Menu>
     );
 
@@ -142,10 +150,9 @@ export default function PrimarySearchAppBar() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <Link to="/" className="link">Home</Link>
+                <Link to="/dashboard" className="link">Dashboard</Link>
                 <Link to="/library" className="link">Library</Link>
                 <Link to="/groups" className="link">Groups</Link>
-                <Link to="/results" className="link">Results</Link>
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
@@ -191,14 +198,14 @@ export default function PrimarySearchAppBar() {
         <div className={classes.grow}>
             <AppBar position="static">
                 <Toolbar>
-                    <img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} />
+                    <a href="/"><img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} /></a>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
                         <form onSubmit={e => _handleSubmit(e)}>
                             <InputBase
-                                placeholder="Search…"
+                                placeholder="Search title, author, ISBN..."
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
@@ -219,21 +226,24 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <Link to="/" className="link">Home</Link>
-                        <Link to="/profile" className="link">Profile</Link>
+                        <Link to="/dashboard" className="link">Dashboard</Link>
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
-                        <Link to="/results" className="link">Results</Link>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <Link to="/sharing">
+                            <IconButton aria-label="show 4 new mails" color="inherit">
+                                <Badge badgeContent={1} color="secondary">
+                                    <MailIcon />
+                                </Badge>
+                            </IconButton>
+                        </Link>
+                        <Link to="/notifications">
+                            <IconButton aria-label="show 17 new notifications" color="inherit">
+                                
+                                <Badge badgeContent={1} color="secondary">
+                                    <NotificationsIcon />
+                                </Badge>
+                            </IconButton>
+                        </Link>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"

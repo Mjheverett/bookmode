@@ -8,7 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const AuthenticatedHome = () => {
     const { isAuthenticated } = useAuth0();
 
-    return isAuthenticated ? <Redirect to="/profile" /> : <Home />;
+    return isAuthenticated ? <Redirect to="/dashboard" /> : <Home />;
 };
 
 export default AuthenticatedHome;
