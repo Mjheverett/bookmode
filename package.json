@@ -7,7 +7,8 @@
     "docker:build": "docker-compose -p book-club-app build",
     "docker:down": "docker-compose -p book-club-app down",
     "docker:up": "docker-compose -p book-club-app up",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/Mjheverett/book-club-app/issues"
   },
-  "homepage": "https://github.com/Mjheverett/book-club-app#readme"
+  "homepage": "https://github.com/Mjheverett/book-club-app#readme",
+  "dependencies": {
+    "nodemon": "^2.0.6",
+    "pg": "^8.4.2",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5"
+  }
 }
