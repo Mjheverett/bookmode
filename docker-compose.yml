@@ -3,6 +3,7 @@ version: '3.7'
 services:
     postgres:
         image: postgres:12.1
+        container_name: "postgres"
         ports:
             - "5432:5432"
         environment:
@@ -10,22 +11,22 @@ services:
         volumes:
             - ./postgresql/data:/var/lib/postgresql/data
     service:
+        container_name: "bookmode_backend"
         build:
             context: ./service
             dockerfile: Dockerfile.dev
         volumes:
-            - /app/node_modules
-            - ./service/config:/app/config
-            - ./service/src:/app/src
-            - ./service/test:/app/test
+            - "/app/node_modules"
+            - "./:/app"
         ports:
             - "3000:3000"
     client:
+        container_name: "bookmode_client"
         build:
             context: ./client
             dockerfile: Dockerfile.dev
         volumes:
-            - /app/node_modules
-            - ./client:/app
+            - "/app/node_modules"
+            - "./:/app"
         ports:
             - "8080:8080"
