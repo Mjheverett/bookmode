@@ -214,8 +214,9 @@ const Library = () => {
                 <Typography variant="h2">Library</Typography>
                 <br />
                 <Typography variant="h6">Shelf</Typography>
+                <br />
                 <div className={classes.libraryDiv}>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'} cellWidth={'auto'}>
+                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile cellHeight={'auto'}>
                             <br />
                                 <div width={'auto'} className={classes.div}>
@@ -342,6 +343,7 @@ const Library = () => {
                 
                 <br />
                 <Typography variant="h6">Shelf</Typography>
+                <br />
                 <div className={classes.libraryDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile cellHeight={'auto'}>
