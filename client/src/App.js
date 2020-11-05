@@ -4,7 +4,7 @@ import ProtectedRoute from './auth/ProtectedRoute';
 
 import MaterialNavbar from './components/Navbar/MaterialNavbar';
 import AuthenticatedHome from './components/Auth0/AuthenticatedHome';
-import Profile from './components/Profile/Profile';
+import Dashboard from './components/Dashboard/Dashboard';
 import Library from './components/Library/Library';
 import Groups from './components/Groups/Groups';
 import Footer from './components/Footer/Footer';
@@ -33,8 +33,8 @@ function App() {
             <Route exact path="/">
               <AuthenticatedHome />
             </Route>
-            <ProtectedRoute path="/profile">
-              <Profile />
+            <ProtectedRoute path="/dashboard">
+              <Dashboard />
             </ProtectedRoute>
             <ProtectedRoute path="/library">
               <Library />

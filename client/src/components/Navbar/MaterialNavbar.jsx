@@ -126,8 +126,7 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem><Link to="/profile">Profile</Link></MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem><Link to="/profile">My account</Link></MenuItem>
             <MenuItem onClick={() => logout({ returnTo: window.location.origin })}>Logout</MenuItem>
         </Menu>
     );
@@ -144,10 +143,9 @@ export default function PrimarySearchAppBar() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <Link to="/" className="link">Home</Link>
+                <Link to="/dashboard" className="link">Dashboard</Link>
                 <Link to="/library" className="link">Library</Link>
                 <Link to="/groups" className="link">Groups</Link>
-                <Link to="/results" className="link">Results</Link>
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 4 new mails" color="inherit">
@@ -221,7 +219,7 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <Link to="/profile" className="link">Profile</Link>
+                        <Link to="/dashboard" className="link">Dashboard</Link>
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
                         <IconButton aria-label="show 4 new mails" color="inherit">
