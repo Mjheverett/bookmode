@@ -113,7 +113,7 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
-    const { logout } = useAuth0();
+    const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -126,8 +126,15 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem><Link to="/profile" className="menu-link">My account</Link></MenuItem>
-            <MenuItem onClick={() => logout({ returnTo: window.location.origin })}>Logout</MenuItem>
+            {isAuthenticated ? (
+                <>
+                    <MenuItem><Link to="/profile" className="menu-link">My account</Link></MenuItem>
+                    <MenuItem onClick={() => logout({ returnTo: window.location.origin })}>Logout</MenuItem>
+                </>
+            ) : (
+                <MenuItem onClick={() => loginWithRedirect({ returnTo: window.location.origin })}>Login</MenuItem>
+            )}
+            
         </Menu>
     );
 
