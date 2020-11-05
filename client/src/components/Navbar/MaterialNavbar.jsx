@@ -1,12 +1,9 @@
 import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { AppBar, Toolbar, IconButton, InputBase, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
+
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -15,9 +12,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
 import bookmodeLogo from '../../images/bookmode.png';
-import { Link, Redirect } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-import { Typography } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
     typography: {
