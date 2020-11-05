@@ -3,12 +3,18 @@
 .contentCards {
     margin-right: 0.30rem;
     margin-left: 0.75rem;
-    display: flex;
+    font-size: 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
 }
 
-@media screen and (max-width: 725px) { 
+@media screen and (max-width: 650px) { 
     .contentCards {
         display: inline-block;
+        justify-content: center;
+        width: 110%
+        
        
     }
 

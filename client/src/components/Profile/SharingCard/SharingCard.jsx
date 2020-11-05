@@ -7,7 +7,7 @@ const SharingCard = () => {
     return (
         <>
             
-            <Card className='sharingCard' style={{backgroundColor: '#2AA198', color: '#93A1A1'}}>
+            <Card className='sharingCard' style={{backgroundColor: '#EBEBEB', color: '#93A1A1', boxShadow: '-12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8'}}>
                 
             <h3>Sharing</h3>
             <ul>

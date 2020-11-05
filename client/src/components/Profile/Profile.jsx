@@ -5,10 +5,12 @@ import GroupsCard from "./GroupsCard/GroupsCard";
 import NotificationsCard from "./NotificationsCard/NotificationsCard";
 import './Profile.css';
 
+
 const Profile = () => {
     return (
         <>
             <h1>Profile</h1>
+            <br></br><br></br>
         <div className='contentCards'>
             <LibraryCard />
             <GroupsCard />

@@ -1,13 +1,14 @@
 import React from 'react';
 import { Card } from "@material-ui/core";
 import './GroupsCard.css';
+import { Link } from 'react-router-dom';
 
 const GroupsCard = () => {
     return (
         <>
             
-            <Card className='groupsCard' style={{backgroundColor: '#2AA198', color: '#93A1A1'}}>
-                <h3>Your Groups</h3>
+            <Card className='groupsCard' style={{backgroundColor: '#EBEBEB', color: '#93A1A1', boxShadow: '-12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8'}}>
+                <h3><Link to='/groups' className='yourGroups'>Your Groups</Link></h3>
                 <ul>
                     <li>Lorem ipsum dolor sit amet, consectetur</li>
                     <li>Lorem ipsum dolor sit amet, consectetur</li>
