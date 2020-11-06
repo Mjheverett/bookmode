@@ -42,12 +42,12 @@ const GroupsList = (props) => {
         (async function (){
             let url = ``;
             if (list === 'All') {
-                url = `http://localhost:3000/groups/all`
+                url = `http://localhost:3000/groups/`
             } else {
                 url = `http://localhost:3000/groups/${user.sub}`
             }
             console.log(url);
-            await axios.get(url)
+            axios.get('http://localhost:3000/groups/')
                 .then(res => {
                     const groups = res.data;
                     setGroups(groups)
