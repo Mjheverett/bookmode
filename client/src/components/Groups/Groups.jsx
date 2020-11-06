@@ -54,7 +54,7 @@ const Groups = () => {
             groupName: name,
             groupDescription: description
         };
-        axios.post('http://localhost:3000/library/add', data)
+        axios.post('http://localhost:3000/groups/add', data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
