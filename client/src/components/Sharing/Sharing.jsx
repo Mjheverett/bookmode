@@ -31,7 +31,7 @@ const Sharing = () => {
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Sharing</Typography>
                 <br />
                 <Typography variant="h6">View Reccomendations</Typography>

@@ -64,7 +64,7 @@ const Groups = () => {
 
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Groups</Typography>
                 <br />
                 <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Add Group</Button>
