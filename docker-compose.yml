@@ -16,8 +16,6 @@ services:
         volumes:
             - /app/node_modules
             - ./service/config:/app/config
-            - ./service/src:/app/src
-            - ./service/test:/app/test
         ports:
             - "3000:3000"
     client:

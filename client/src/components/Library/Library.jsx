@@ -340,7 +340,7 @@ const Library = () => {
                         </GridListTile>
                     </GridList> 
                 </div>
-                
+
                 <br />
                 <Typography variant="h6">Shelf</Typography>
                 <br />
@@ -431,7 +431,7 @@ const Library = () => {
                                 <div width={'auto'} className={classes.div}>
                                     <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
                                 </div>
-                            <br />
+                                <br />
                             <div>
                                 <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                 More Information
@@ -472,7 +472,23 @@ const Library = () => {
                
               
             </Container>
+<<<<<<< HEAD
         
+=======
+
+            <div>
+                <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
+                <form action={`http://localhost:3000/library/add`} method='POST'>
+                    <label>post title
+                        <input name='shelfName' />
+                    </label>
+                    <label>shelf description
+                        <textarea name='shelfDescription' />
+                    </label>
+                    <button type='submit'>comment</button>
+                </form>
+            </div>
+>>>>>>> 36b75790d53ccdfe020b04405b0410906020a94f
         </>
     )
 }
