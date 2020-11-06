@@ -191,11 +191,11 @@ const Library = () => {
     };
 
     useEffect(() => {
-        setLibrary(libraryBooks);
         axios.get('http://localhost:3000/library')
             .then(res => {
-                    const data = res.data;
-            console.log('data:', data)
+                const data = res.data;
+                console.log('res.data:', data)
+                setLibrary(data)
             });
     }, []);
 
