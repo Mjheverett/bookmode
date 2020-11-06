@@ -22,11 +22,11 @@ const theme = createMuiTheme({
             dark: '#b9b9b9',
             contrastText: '#444444',
         },
-        // This is the accent pink color
+        // This is the accent green color
         secondary: {
-            light: '#ff6cb1',
-            main: '#d33582',
-            dark: '#9d0056',
+            light: '#80A64B',
+            main: '#52781e',
+            dark: '#244B00',
             color: '#fffff',
         },
     },
