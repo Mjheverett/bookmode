@@ -210,7 +210,7 @@ const Library = () => {
     return (
         <>
         
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">Library</Typography>
                 <br />
                 <Typography variant="h6">Shelf</Typography>

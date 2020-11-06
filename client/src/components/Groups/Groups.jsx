@@ -7,7 +7,7 @@ import { Container, Typography, Button }  from '@material-ui/core';
 const Groups = () => {
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Groups</Typography>
                 <br />
                 <Button color="secondary" variant="contained" size="large">Create new group</Button>

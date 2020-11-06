@@ -14,7 +14,7 @@ const Dashboard = () => {
     
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Dashboard</Typography>
                 <br />
                 <br />
