@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         isbn: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
         length: {
             type: DataTypes.STRING(1234),
