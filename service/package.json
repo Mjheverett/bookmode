@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "PORT=3000 nodemon ./bin/www",
-    "run dev": "nodemon app.js",
-    "seed": "node index.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node ./config/media-seed.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -22,6 +21,7 @@
     "pg": "^8.4.2",
     "pg-hstore": "^2.3.3",
     "pg-promise": "^10.7.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0"
   }
 }

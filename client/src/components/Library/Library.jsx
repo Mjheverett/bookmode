@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, Popover, Typography, Button }  from '@material-ui/core';
 
@@ -8,9 +7,9 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #a5c3cb, inset 12px 12px 30px #475357',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
-        color: '#93A1A1',
+        color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
     },
@@ -210,8 +209,9 @@ const Library = () => {
 
     return (
         <>
+        
             <Container maxWidth="lg">
-                <Typography variant="h2">Library</Typography>
+            <Typography variant="h2">Library</Typography>
                 <br />
                 <Typography variant="h6">Shelf</Typography>
                 <br />
@@ -340,7 +340,7 @@ const Library = () => {
                         </GridListTile>
                     </GridList> 
                 </div>
-                
+
                 <br />
                 <Typography variant="h6">Shelf</Typography>
                 <br />
@@ -431,7 +431,7 @@ const Library = () => {
                                 <div width={'auto'} className={classes.div}>
                                     <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
                                 </div>
-                            <br />
+                                <br />
                             <div>
                                 <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
                                 More Information
@@ -467,8 +467,24 @@ const Library = () => {
                             <br />
                         </GridListTile>
                     </GridList> 
+                    
                 </div>
+               
+              
             </Container>
+
+            <div>
+                <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
+                <form action={`http://localhost:3000/library/add`} method='POST'>
+                    <label>post title
+                        <input name='shelfName' />
+                    </label>
+                    <label>shelf description
+                        <textarea name='shelfDescription' />
+                    </label>
+                    <button type='submit'>comment</button>
+                </form>
+            </div>
         </>
     )
 }

@@ -7,10 +7,10 @@ const useStyles = makeStyles((theme) => ({
     notificationDiv:{
         position: 'relative',
         borderRadius: '5px',
-        background: '#EBEBEB',
-        boxShadow: 'inset -12px -12px 30px #a5c3cb, inset 12px 12px 30px #475357',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
-        color: '#93A1A1',
+        color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
     },

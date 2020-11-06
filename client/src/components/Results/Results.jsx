@@ -11,10 +11,10 @@ const useStyles = makeStyles((theme) => ({
     resultsDiv:{
         position: 'relative',
         borderRadius: '5px',
-        background: '#EBEBEB',
-        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
-        color: '#93A1A1',
+        color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
     },
@@ -70,14 +70,20 @@ const Results = (props) => {
     if (results === null) {
         return 'Loading...';
     }
-    
-    const _handleAddLibrary = (id) =>{
+
+    const _handleAddLibrary = (id, title, author) =>{
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
         let result =  clicks.includes(id) ? clicks.filter(click => click != id): [...clicks, id]
         setClicks(result)
-    }
+        axios.post('http://localhost:3000/library/add', {title, author})
+            .then(res => {
+                    const data = res.data;
+            console.log('data:', data)
+            });
+        }
 
     return (
+
         <>
             <Container maxWidth="lg">
             <Typography variant="h2">Books</Typography>
