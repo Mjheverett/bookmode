@@ -340,7 +340,7 @@ const Library = () => {
                         </GridListTile>
                     </GridList> 
                 </div>
-                
+
                 <br />
                 <Typography variant="h6">Shelf</Typography>
                 <br />
@@ -432,22 +432,56 @@ const Library = () => {
                                     <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
                                 </div>
                                 <br />
-                            </GridListTile>
-                        </GridList> 
-                    </LibraryDiv>
-                </Grid>
-            </Grid>
-            <div><p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
-        <form action={`http://localhost:3000/library/add`} method='POST'>
-            <label>post title
-                <input name='shelfName' />
-            </label>
-            <label>shelf description
-                <textarea name='shelfDescription' />
-            </label>
-            <button type='submit'>comment</button>
-        </form>
-        </div>
+                            <div>
+                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
+                                More Information
+                                </Button>
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {libraryBooks.results.work[2].best_book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {libraryBooks.results.work[2].best_book.author.name}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: (update with API data)
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: (update with API data)
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>
+                    </GridList> 
+                </div>
+            </Container>
+
+            <div>
+                <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
+                <form action={`http://localhost:3000/library/add`} method='POST'>
+                    <label>post title
+                        <input name='shelfName' />
+                    </label>
+                    <label>shelf description
+                        <textarea name='shelfDescription' />
+                    </label>
+                    <button type='submit'>comment</button>
+                </form>
+            </div>
         </>
     )
 }

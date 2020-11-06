@@ -19,40 +19,28 @@ db.recommendations = require('./recommendation.model')(sequelize, Sequelize);
 db.shelves = require('./shelf.model')(sequelize, Sequelize);
 db.users = require('./user.model')(sequelize, Sequelize);
 
-
-db.authors.hasMany(db.books, { as: "authors-books" });
-db.books.hasMany(db.authors, {
-    foreignKey: "authorId",
-    as: "author",
-});
-db.media.hasMany(db.books, { as: "media-books" });
+db.authors.belongsToMany(db.books, { through: 'authors_books' });
+db.books.belongsToMany(db.authors, { through: 'authors_books' });
+db.readers.belongsToMany(db.books, { through: 'readers_books' });
+db.books.belongsToMany(db.readers, { through: 'readers_books' });
+db.media.hasMany(db.books);
 db.books.belongsTo(db.media, {
     foreignKey: "mediaId",
     as: "mediaType",
-});
-db.readers.hasMany(db.books, { as: "reader-books" });
-db.books.belongsTo(db.readers, {
-    foreignKey: "readerId",
-    as: "reader",
-});
-db.genres.hasMany(db.books, { as: "genre-books" });
+    });
+db.genres.hasMany(db.books);
 db.books.belongsTo(db.genres, {
     foreignKey: "genreId",
-    as: "genre",
+    as: "genres",
 });
-db.users.hasMany(db.recommendations, {as: "user-recommendations"});
+db.users.hasMany(db.recommendations);
 db.recommendations.belongsTo(db.users, {
-    foreignKey: "sendingUserId",
-    as: "sendingUser"
+    as: "sender"
 })
-db.recommendations.belongsTo(db.users, {
-    foreignKey: "receivingUserId",
-    as: "receivingUser"
+db.recommendations.belongsTo(db.users, {as: "receiver"
 })
-db.books.hasMany(db.recommendations, {as: "book-recommendations"});
-db.recommendations.belongsTo(db.books, {
-    foreignKey: "bookId",
-})
+db.books.hasMany(db.recommendations);
+db.recommendations.belongsTo(db.books)
 db.books.hasMany(db.shelves, {as: "shelves"});
 db.shelves.belongsToMany(db.books, {
     foreignKey: "bookId",
