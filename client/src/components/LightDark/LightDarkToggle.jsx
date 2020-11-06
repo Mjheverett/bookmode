@@ -27,13 +27,14 @@ const LightDarkToggle = () => {
         
         <FormGroup >
         <FormControlLabel
-        control={<Switch style={{color: '#D33682'}} size="Normal" onChange={(e) =>
+        control={<Switch style={{color: '#52781e'}} size="Normal" onChange={(e) =>
         setTheme(
           theme.mode === "dark" ? { mode: "light" } : { mode: "dark" }
         )} />}
-        label={theme.mode === 'light' ? <NightsStayIcon fontSize='small'/> : <Brightness5OutlinedIcon fontSize='small'/>} /> 
+        label={theme.mode === 'light' ? <NightsStayIcon style={{color: '#93A1A1'}} fontSize='small'/> : <Brightness5OutlinedIcon style={{color: '#93A1A1'}} fontSize='small'/>} /> 
 
         </FormGroup>
+        
       </ThemeProvider>
     </div>
   );

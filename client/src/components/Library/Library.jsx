@@ -7,10 +7,10 @@ const useStyles = makeStyles((theme) => ({
     libraryDiv:{
         position: 'relative',
         borderRadius: '5px',
-        background: '#EBEBEB',
-        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
-        color: '#93A1A1',
+        color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
     },
@@ -237,8 +237,9 @@ const Library = () => {
 
     return (
         <>
+        
             <Container maxWidth="lg">
-                <Typography variant="h2">Library</Typography>
+            <Typography variant="h2">Library</Typography>
                 <br />
                 <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Add Shelf</Button>
                 <div>
@@ -518,8 +519,6 @@ const Library = () => {
                     </GridList> 
                 </div>
             </Container>
-
-            
         </>
     )
 }

@@ -3,7 +3,7 @@ a {
 }
 
 a:hover {
-    color: rgb(211, 54, 130);
+    color: #52781e;
 }
 
 a:link {
@@ -21,9 +21,9 @@ a:link {
 }
 
 .link:hover {
-    color: rgb(211, 54, 130);
+    color:  #52781e;
 }
 
 .menu-link {
-    color: rgb(33, 33, 33);
+    color:  rgb(147, 161, 161);
 }

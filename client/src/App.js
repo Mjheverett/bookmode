@@ -12,7 +12,7 @@ import Results from './components/Results/Results';
 import Profile from './components/Profile/Profile';
 import Sharing from './components/Sharing/Sharing';
 import Notifications from './components/Notifications/Notifications';
-import './App.css'
+import './App.css';
 
 
 function App() {
