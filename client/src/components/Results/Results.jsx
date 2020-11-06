@@ -71,11 +71,12 @@ const Results = (props) => {
         return 'Loading...';
     }
 
-    const _handleAddLibrary = (id, title, author) =>{
+    const _handleAddLibrary = (id, title, author, imageURL, date) =>{
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
         let result =  clicks.includes(id) ? clicks.filter(click => click != id): [...clicks, id]
         setClicks(result)
-        axios.post('http://localhost:3000/library/add', {title, author})
+        console.log(title, author, imageURL, date)
+        axios.post('http://localhost:3000/results/add', {title, author, imageURL})
             .then(res => {
                     const data = res.data;
             console.log('data:', data)
@@ -115,7 +116,7 @@ const Results = (props) => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <IconButton aria-label={`${result.id[0]._}`} onClick={() => _handleAddLibrary(result.id[0]._)}>
+                                    <IconButton aria-label={`${result.id[0]._}`} onClick={() => _handleAddLibrary(result.id[0]._, result.best_book[0].title[0], result.best_book[0].author[0].name[0], result.best_book[0].image_url[0])}>
                                     {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
                                     {clicks.includes(result.id[0]._) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
                                     </IconButton> }

@@ -197,7 +197,7 @@ export default function PrimarySearchAppBar() {
     const _handleChange = (data) => {
         console.log(data)
         setData(data);
-    }
+    };
 
     const _handleSubmit = (e) => {
         e.preventDefault();

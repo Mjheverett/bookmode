@@ -1,10 +1,12 @@
 const db = require("../models");
 const Shelf = db.shelves;
-const Books = db.books;
+const Book = db.books;
+const Author = db.authors;
+const Authors_Books = db.authors_books
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    const shelfName = req.body.shelfName;
+    const {title, author, imageURL } = req.body;
     var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
     Shelf.findAll({ where: condition})
         .then(data => {
@@ -20,25 +22,48 @@ exports.findAll = (req, res) => {
 exports.create = (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
-    if (!req.body.shelfName) {
+    if (!req.body.title) {
         res.status(400).send({
-            message: "Name can not be empty!"
+            message: "Title cannot be empty!"
         });
         return;
     }
-    //create a new shelf
-    const shelf = {
-        shelfName: req.body.shelfName,
-        shelfDescription: req.body.shelfDescription};
-    //save shelf in DB
-    Shelf.create(shelf)
+    //create a new author if not already there
+    const author = {
+        authorName: req.body.author
+    }
+    Author.findOrCreate({
+        where: { author }});
+    //create a new book
+    const book = {
+        title: req.body.title,
+        coverURL: req.body.imageURL};
+    //save book in DB
+    Book.create(book)
         .then (data=> {
             res.send(data).status(200);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the shelf."
+                    err.message || "Some error occurred while creating the book."
+            });
+        });
+    //save book and author association in authors_books
+    const authorInstance = await Author.findOne({ where: { author } });
+    const bookInstance = await Book.findOne({ where: { book } });
+    const duo = {
+        AuthorId: authorInstance.id,
+        BookId: bookInstance.id
+    }
+    Authors_Books.create(duo)
+        .then (data=> {
+            res.send(data).status(200);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the association of book and author."
             });
         });
     };

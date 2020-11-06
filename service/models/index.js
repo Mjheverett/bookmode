@@ -24,15 +24,9 @@ db.books.belongsToMany(db.authors, { through: 'authors_books' });
 db.readers.belongsToMany(db.books, { through: 'readers_books' });
 db.books.belongsToMany(db.readers, { through: 'readers_books' });
 db.media.hasMany(db.books);
-db.books.belongsTo(db.media, {
-    foreignKey: "mediaId",
-    as: "mediaType",
-    });
+db.books.belongsTo(db.media);
 db.genres.hasMany(db.books);
-db.books.belongsTo(db.genres, {
-    foreignKey: "genreId",
-    as: "genres",
-});
+db.books.belongsTo(db.genres);
 db.users.hasMany(db.recommendations);
 db.recommendations.belongsTo(db.users, {as: "sender"})
 db.recommendations.belongsTo(db.users, {as: "receiver"})
