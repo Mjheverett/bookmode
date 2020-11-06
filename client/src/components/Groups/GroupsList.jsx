@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const GroupsList = (props) => {
     const classes = useStyles();
     const { list } = props;
-    const [groups, setGroups] = useState([]);
+    const [groups, setGroups] = useState(null);
     
     const { user } = useAuth0();
 
@@ -47,10 +47,11 @@ const GroupsList = (props) => {
                 url = `http://localhost:3000/groups/${user.sub}`
             }
             console.log(url);
-            axios.get('http://localhost:3000/groups/')
+            axios.get(url)
                 .then(res => {
-                    const groups = res.data;
-                    setGroups(groups)
+                    const data = res.data;
+                    console.log('res.data:', data)
+                    setGroups(data)
                 })
             })();
     }, []);  
@@ -65,13 +66,21 @@ const GroupsList = (props) => {
         }
     }
 
+    if (groups === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
             <div className={classes.groupsDiv}>
                 <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                     <GridListTile cellHeight={'auto'}>
                     <Typography variant="h6" >Render List of {list} Groups Here</Typography>
-                    {renderGroups()}
+                    {(groups.length !== 0) ? (groups.map((group) => (
+                        <GroupDetail group={group} />
+                    ))) : (
+                        <Typography varient="p">You're not part of any groups!</Typography>
+                    )};
                     </GridListTile>
                 </GridList> 
             </div>

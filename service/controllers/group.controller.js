@@ -32,7 +32,7 @@ exports.findAllUser = (req, res) => {
 exports.create = (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
-    if (!req.body.name) {
+    if (!req.body.groupName) {
         res.status(400).send({
             message: "Name cannot be empty!"
         });
@@ -41,8 +41,8 @@ exports.create = (req, res) => {
     
     //create a new book
     const group = {
-        groupName: req.body.name,
-        groupDescription: req.body.description};
+        groupName: req.body.groupName,
+        groupDescription: req.body.groupDescription};
     //save book in DB
     Group.create(group)
         .then (data=> {
