@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Library = () => {
-    const [library, setLibrary] = useState({});
+    const [library, setLibrary] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
     const classes = useStyles();
@@ -235,6 +235,10 @@ const Library = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    if (library === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
         
@@ -263,6 +267,11 @@ const Library = () => {
                 </div>
                 
                 <br />
+                {(library.length !== 0) ? (library.map((shelf) => (
+                    <p>{shelf.shelfName}</p>
+                ))) : (
+                    <p>No Shelves</p>
+                )}
                 <Typography variant="h6">Shelf</Typography>
                 <br />
                 <div className={classes.libraryDiv}>

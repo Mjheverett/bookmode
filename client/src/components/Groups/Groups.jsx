@@ -15,19 +15,6 @@ const Groups = () => {
     const [description, setGroupDescription] = useState('');
     const classes = useStyles();
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/groups/all')
-            .then(res => {
-                const allData = res.data;
-                setAllGroups({allGroups: allData});
-            });
-        axios.get('http://localhost:3000/groups/user')
-            .then(res => {
-                const userData = res.data;
-                setUserGroups({userGroups: userData});
-            });
-    }, []);
-
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -89,7 +76,7 @@ const Groups = () => {
                 </div>
                 <br />
                 <br />
-                <GroupsList list={"User"} />
+                {/* <GroupsList list={"User"} /> */}
                 <GroupsList list={"All"} />
             </Container>
         </>
