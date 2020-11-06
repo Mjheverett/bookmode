@@ -263,9 +263,9 @@ const Library = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    // if (library === null) {
-    //     return 'Loading...';
-    // }
+    if (library === null) {
+        return 'Loading...';
+    }
 
     return (
         <>
@@ -314,11 +314,11 @@ const Library = () => {
                 </Typography>
                 
                 <br />
-                {/* {(library.length !== 0) ? (library.map((shelf) => (
+                {(library.length !== 0) ? (library.map((shelf) => (
                     <p>{shelf.shelfName}</p>
                 ))) : (
                     <p>No Shelves</p>
-                )} */}
+                )}
                 <Typography variant="h6">Shelf</Typography>
                 <br />
                 <div className={classes.libraryDiv}>
