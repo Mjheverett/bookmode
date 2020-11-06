@@ -1,42 +1,19 @@
 import React, { useEffect, useState } from 'react';
-
-import Grid from '@material-ui/core/Grid';
-import styled from "styled-components";
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-
-const LibraryDiv = styled.div`
-    position: relative;
-    height: 100%;
-    width: 100%;
-    max-width: 1000px;
-    border-radius: 5px;
-    background: #EBEBEB;
-    box-shadow: inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8;
-    text-align: center;
-    color: #93A1A1;
-    padding: 0.8rem 1.6rem;
-    margin-bottom: 2rem;
-`;
-
-// const LibraryDivDark = styled.div`
-//     position: relative;
-//     height: 100%;
-//     width: 100%;
-//     border-radius: 5px;
-//     background: #002B36;
-//     box-shadow: inset -12px -12px 30px #003746, inset 12px 12px 30px #001f26;
-//     text-align: center;
-//     color: #6A6B7A;
-//     padding: 0.8rem 1.6rem;
-//     margin-bottom: 2rem;
-// `;
+import { Container, GridList, GridListTile, Popover, Typography, Button }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+    libraryDiv:{
+        position: 'relative',
+        borderRadius: '5px',
+        background: '#EBEBEB',
+        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        textAlign: 'center',
+        color: '#93A1A1',
+        padding: '0.8rem 1.6rem',
+        marginBottom: '2rem',
+    },
     div: {
         display: 'flex-inline',
         flexWrap: 'wrap',
@@ -54,17 +31,12 @@ const useStyles = makeStyles((theme) => ({
         color: '#93A1A1',
         backgroundColor: '#EBEBEB',
     },
-    button: {
-        backgroundColor: '#D33682',
-        '&:hover': {
-            backgroundColor: '#859900',
-        },
-        color: '#002B36',
-    },
 }));
 
 const Library = () => {
     const [library, setLibrary] = useState({});
+    const [name, setShelfName] = useState('');
+    const [description, setShelfDescription] = useState('');
     const classes = useStyles();
     
     const libraryBooks = {
@@ -218,9 +190,13 @@ const Library = () => {
         }
     };
 
-
     useEffect(() => {
         setLibrary(libraryBooks);
+        axios.get('http://localhost:3000/library')
+            .then(res => {
+                    const data = res.data;
+            console.log('data:', data)
+            });
     }, []);
 
     // Modal with information about each book.
@@ -235,270 +211,315 @@ const Library = () => {
         setAnchorEl(null);
     };
 
+    const _handleNameChange = (data) => {
+        console.log(data)
+        setShelfName(data);
+    };
+
+    const _handleDescChange = (data) => {
+        console.log(data)
+        setShelfDescription(data);
+    };
+
+    const _handleCreateShelf = (e) => {
+        e.preventDefault();
+        const data = {
+            shelfName: name,
+            shelfDescription: description
+        };
+        axios.post('http://localhost:3000/library/add', data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
     return (
         <>
-            <Grid 
-            container
-            direction="row"
-            justify="space-evenly"
-            alignItems="center">
-                <Grid item>
-                    <h1>Library</h1>
-                    <br />
-                    <LibraryDiv>
-                        <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                            <GridListTile cellHeight={'auto'}>
-                                <br />
-                                    <div width={'auto'} className={classes.div}>
-                                        <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
-                                    </div>
-                                <br />
-                                <div>
-                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                    More Information
-                                    </Button>
-                                    <Popover
-                                        id={id}
-                                        open={open}
-                                        anchorEl={anchorEl}
-                                        className={classes.root}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                    >
-                                        <Typography className={classes.typography}>
-                                            Title: {libraryBooks.results.work[0].best_book.title}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Author: {libraryBooks.results.work[0].best_book.author.name}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Genre: (update with API data)
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Reader: (update with API data)
-                                        </Typography>
-                                    </Popover>
+            <Container maxWidth="lg">
+                <Typography variant="h2">Library</Typography>
+                <br />
+                <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Add Shelf</Button>
+                <div>
+                    <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
+                    <form onSubmit={_handleCreateShelf}>
+                        <label>Shelf Name:
+                            <input 
+                                name='shelfName' 
+                                onChange={(event) => _handleNameChange(event.target.value)} 
+                            />
+                        </label>
+                        <label>Shelf Description
+                            <textarea 
+                                name='shelfDescription'
+                                onChange={(event) => _handleDescChange(event.target.value)} 
+                            />
+                        </label>
+                        <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Create New Shelf</Button>
+                        <Button type="button" color="default" aria-describedby={id} variant="outlined" size="medium" onClick={handleClick}>Cancel</Button>
+                    </form>
+                </div>
+                
+                <br />
+                <Typography variant="h6">Shelf</Typography>
+                <br />
+                <div className={classes.libraryDiv}>
+                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                        <GridListTile cellHeight={'auto'}>
+                            <br />
+                                <div width={'auto'} className={classes.div}>
+                                    <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
+                                </div>
+                            <br />
+                            <div>
+                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
+                                More Information
+                                </Button>
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    className={classes.root}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {libraryBooks.results.work[0].best_book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {libraryBooks.results.work[0].best_book.author.name}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: (update with API data)
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: (update with API data)
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>
+                        <GridListTile cellHeight={'auto'}>
+                            <br />
+                                <div width={'auto'} className={classes.div}>
+                                    <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
+                                </div>
+                            <br />
+                            <div>
+                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
+                                More Information
+                                </Button>
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {libraryBooks.results.work[1].best_book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {libraryBooks.results.work[1].best_book.author.name}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: (update with API data)
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: (update with API data)
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>
+                        <GridListTile cellHeight={'auto'}>
+                            <br />
+                                <div width={'auto'} className={classes.div}>
+                                    <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
+                                </div>
+                            <br />
+                            <div>
+                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
+                                More Information
+                                </Button>
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {libraryBooks.results.work[2].best_book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {libraryBooks.results.work[2].best_book.author.name}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: (update with API data)
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: (update with API data)
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>
+                    </GridList> 
+                </div>
+
+                <br />
+                <Typography variant="h6">Shelf</Typography>
+                <br />
+                <div className={classes.libraryDiv}>
+                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                        <GridListTile cellHeight={'auto'}>
+                            <br />
+                                <div width={'auto'} className={classes.div}>
+                                    <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
+                                </div>
+                            <br />
+                            <div>
+                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
+                                More Information
+                                </Button>
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {libraryBooks.results.work[0].best_book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {libraryBooks.results.work[0].best_book.author.name}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: (update with API data)
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: (update with API data)
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>
+                        <GridListTile cellHeight={'auto'}>
+                            <br />
+                                <div width={'auto'} className={classes.div}>
+                                    <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
+                                </div>
+                            <br />
+                            <div>
+                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
+                                More Information
+                                </Button>
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {libraryBooks.results.work[1].best_book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {libraryBooks.results.work[1].best_book.author.name}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: (update with API data)
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: (update with API data)
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>
+                        <GridListTile cellHeight={'auto'}>
+                            <br />
+                                <div width={'auto'} className={classes.div}>
+                                    <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
                                 </div>
                                 <br />
-                            </GridListTile>
-                            <GridListTile cellHeight={'auto'}>
-                                <br />
-                                    <div width={'auto'} className={classes.div}>
-                                        <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
-                                    </div>
-                                <br />
-                                <div>
-                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                    More Information
-                                    </Button>
-                                    <Popover
-                                        id={id}
-                                        open={open}
-                                        anchorEl={anchorEl}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                    >
-                                        <Typography className={classes.typography}>
-                                            Title: {libraryBooks.results.work[1].best_book.title}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Author: {libraryBooks.results.work[1].best_book.author.name}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Genre: (update with API data)
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Reader: (update with API data)
-                                        </Typography>
-                                    </Popover>
-                                </div>
-                                <br />
-                            </GridListTile>
-                            <GridListTile cellHeight={'auto'}>
-                                <br />
-                                    <div width={'auto'} className={classes.div}>
-                                        <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
-                                    </div>
-                                <br />
-                                <div>
-                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                    More Information
-                                    </Button>
-                                    <Popover
-                                        id={id}
-                                        open={open}
-                                        anchorEl={anchorEl}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                    >
-                                        <Typography className={classes.typography}>
-                                            Title: {libraryBooks.results.work[2].best_book.title}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Author: {libraryBooks.results.work[2].best_book.author.name}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Genre: (update with API data)
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Reader: (update with API data)
-                                        </Typography>
-                                    </Popover>
-                                </div>
-                                <br />
-                            </GridListTile>
-                        </GridList> 
-                    </LibraryDiv>
-                    <LibraryDiv>
-                        <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                            <GridListTile cellHeight={'auto'}>
-                                <br />
-                                    <div width={'auto'} className={classes.div}>
-                                        <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
-                                    </div>
-                                <br />
-                                <div>
-                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                    More Information
-                                    </Button>
-                                    <Popover
-                                        id={id}
-                                        open={open}
-                                        anchorEl={anchorEl}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                    >
-                                        <Typography className={classes.typography}>
-                                            Title: {libraryBooks.results.work[0].best_book.title}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Author: {libraryBooks.results.work[0].best_book.author.name}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Genre: (update with API data)
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Reader: (update with API data)
-                                        </Typography>
-                                    </Popover>
-                                </div>
-                                <br />
-                            </GridListTile>
-                            <GridListTile cellHeight={'auto'}>
-                                <br />
-                                    <div width={'auto'} className={classes.div}>
-                                        <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
-                                    </div>
-                                <br />
-                                <div>
-                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                    More Information
-                                    </Button>
-                                    <Popover
-                                        id={id}
-                                        open={open}
-                                        anchorEl={anchorEl}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                    >
-                                        <Typography className={classes.typography}>
-                                            Title: {libraryBooks.results.work[1].best_book.title}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Author: {libraryBooks.results.work[1].best_book.author.name}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Genre: (update with API data)
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Reader: (update with API data)
-                                        </Typography>
-                                    </Popover>
-                                </div>
-                                <br />
-                            </GridListTile>
-                            <GridListTile cellHeight={'auto'}>
-                                <br />
-                                    <div width={'auto'} className={classes.div}>
-                                        <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
-                                    </div>
-                                <br />
-                                <div>
-                                    <Button className={classes.button} aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                    More Information
-                                    </Button>
-                                    <Popover
-                                        id={id}
-                                        open={open}
-                                        anchorEl={anchorEl}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                    >
-                                        <Typography className={classes.typography}>
-                                            Title: {libraryBooks.results.work[2].best_book.title}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Author: {libraryBooks.results.work[2].best_book.author.name}
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Genre: (update with API data)
-                                        </Typography>
-                                        <Typography className={classes.typography}>
-                                            Reader: (update with API data)
-                                        </Typography>
-                                    </Popover>
-                                </div>
-                                <br />
-                            </GridListTile>
-                        </GridList> 
-                    </LibraryDiv>
-                </Grid>
-            </Grid>
+                            <div>
+                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
+                                More Information
+                                </Button>
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {libraryBooks.results.work[2].best_book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {libraryBooks.results.work[2].best_book.author.name}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: (update with API data)
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: (update with API data)
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>
+                    </GridList> 
+                </div>
+            </Container>
+
+            
         </>
     )
 }

@@ -1,17 +1,26 @@
 import React from 'react';
-import styled from "styled-components";
+import { Container, Typography }  from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const FooterDiv = styled.div`
-    margin-top: calc(5% + 60px);
-    bottom: 0;
-    position: absolute;
-`;
+const useStyles = makeStyles((theme) => ({
+    div: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        margin: '30px',
+    },
+}));
 
 const Footer = () => {
+    const classes = useStyles();
     return (
-        <FooterDiv>
-            {/* Made with <span className="fa fa-heart" /> by Team Lee */}
-        </FooterDiv>
+        <>
+            <Container maxWidth="lg">
+                <div className={classes.div}>
+                <Typography variant="h6"><span className="fa fa-heart" /></Typography>
+                </div>
+            </Container>
+        </>
     )
 };
 

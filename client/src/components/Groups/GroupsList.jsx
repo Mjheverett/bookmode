@@ -3,7 +3,36 @@ import GroupDetail from './GroupDetail';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 
+import { makeStyles } from '@material-ui/core/styles';
+import { GridList, GridListTile, Typography, Button }  from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+    groupsDiv:{
+        position: 'relative',
+        borderRadius: '5px',
+        background: '#EBEBEB',
+        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        textAlign: 'center',
+        color: '#93A1A1',
+        padding: '0.8rem 1.6rem',
+        marginBottom: '2rem',
+    },
+    div: {
+        display: 'flex-inline',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        overflow: 'hidden',
+    },
+    gridList: {
+        flexWrap: 'nowrap',
+        transform: 'translateZ(0)',
+    },
+}));
+
 const GroupsList = (props) => {
+    const classes = useStyles();
     const { list } = props;
     const [groups, setGroups] = useState([]);
     
@@ -32,14 +61,20 @@ const GroupsList = (props) => {
                 <GroupDetail group={group} />
             }))
         } else {
-            return <p>You're not part of any groups!</p>
+            return <Typography varient="p">You're not part of any groups!</Typography>
         }
     }
 
     return (
         <>
-            <h2>Render List of {list} Groups Here</h2>
-            {renderGroups()}
+            <div className={classes.groupsDiv}>
+                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                    <GridListTile cellHeight={'auto'}>
+                    <Typography variant="h6" >Render List of {list} Groups Here</Typography>
+                    {renderGroups()}
+                    </GridListTile>
+                </GridList> 
+            </div>
         </>
     )
 }
