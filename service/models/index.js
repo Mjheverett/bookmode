@@ -1,5 +1,4 @@
-const { Sequelize } = require('sequelize');
-const { DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require('sequelize');
 
 
 const sequelize = new Sequelize('postgres://jkveaiom:hwIiKYqHiUAR3_917dvIZRGvfsliF4YR@lallah.db.elephantsql.com:5432/jkveaiom')
@@ -247,6 +246,3 @@ const seed = async () => {
     }
   seed() //initialize the sync!
 
-
-
-module.exports = sequelize
