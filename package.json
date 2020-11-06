@@ -9,7 +9,8 @@
     "docker:up": "docker-compose -p book-club-app up",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "dev": "npm run --prefix client start && npm run --prefix service dev"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,8 @@
     "nodemon": "^2.0.6",
     "pg": "^8.4.2",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.3.5"},
+    "sequelize": "^6.3.5"
+  },
   "devDependencies": {
     "cypress": "^5.5.0"
   }

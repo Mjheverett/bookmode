@@ -1,34 +1,36 @@
-// import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme }  from '@material-ui/core/styles';
 
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: {
-//       light: '#EBEBEB',
-//       dark: '#002B36',
-//     },
-//     secondary: {
-//       light: '#EBEBEB',
-//       dark: '#002B36',
-//     },
-//   },
-// });
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+    },
+    palette: {
+        primary: {
+            light: '#fffff',
+            main: '#ebebeb',
+            dark: '#b9b9b9',
+            contrastText: '#444444',
+        },
+        // This is the accent pink color
+        secondary: {
+            light: '#ff6cb1',
+            main: '#d33582',
+            dark: '#9d0056',
+            color: '#fffff',
+        },
+    },
+    shadows: ["none"]
+});
 
-// import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-
-// const useStyles = makeStyles({
-//   root: {
-//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-//     border: 0,
-//     borderRadius: 3,
-//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-//     color: 'white',
-//     height: 48,
-//     padding: '0 30px',
-//   },
-// });
-
-// export default function Hook() {
-//   const classes = useStyles();
-
-// }
+export default theme;
