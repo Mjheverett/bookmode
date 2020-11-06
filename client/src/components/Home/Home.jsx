@@ -3,7 +3,8 @@ import AuthenticationButton from '../Auth0/AuthenticationButton';
 import SignupButton from '../Auth0/SignUpButton';
 
 import { Container, Grid, Typography } from '@material-ui/core';
-import './Graphic.css'
+import './Graphic.css';
+// import './GraphicDark.css';
 
 
 const Home = () => {

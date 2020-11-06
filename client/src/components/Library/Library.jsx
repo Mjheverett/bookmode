@@ -191,11 +191,11 @@ const Library = () => {
     };
 
     useEffect(() => {
-        setLibrary(libraryBooks);
         axios.get('http://localhost:3000/library')
             .then(res => {
-                    const data = res.data;
-            console.log('data:', data)
+                const data = res.data;
+                console.log('res.data:', data)
+                setLibrary(data)
             });
     }, []);
 
@@ -238,7 +238,7 @@ const Library = () => {
     return (
         <>
         
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">Library</Typography>
                 <br />
                 <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Add Shelf</Button>
