@@ -21,7 +21,7 @@ db.users = require('./user.model')(sequelize, Sequelize);
 
 
 db.authors.hasMany(db.books, { as: "authors-books" });
-db.books.belongsTo(db.authors, {
+db.books.hasMany(db.authors, {
     foreignKey: "authorId",
     as: "author",
 });
@@ -52,12 +52,11 @@ db.recommendations.belongsTo(db.users, {
 db.books.hasMany(db.recommendations, {as: "book-recommendations"});
 db.recommendations.belongsTo(db.books, {
     foreignKey: "bookId",
-    as: "book-recommendations"
 })
 db.books.hasMany(db.shelves, {as: "shelves"});
-db.shelves.belongsTo(db.books, {
+db.shelves.belongsToMany(db.books, {
     foreignKey: "bookId",
-    as: "book-shelves"
+    as: 'books'
 })
 db.users.belongsToMany(db.groups, {
     through: "user_group",
@@ -72,7 +71,7 @@ db.groups.belongsToMany(db.users, {
 db.users.belongsToMany(db.shelves, {
     through: "user_shelves",
     as: "userForShelf",
-    foreignKey: ".shelf_id",
+    foreignKey: "shelf_id",
 });
 db.shelves.belongsToMany(db.users, {
     through: "user_shelves",

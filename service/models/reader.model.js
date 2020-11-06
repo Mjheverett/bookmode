@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(1234),
             allowNull: false
         },
-        });
-  
-    return Reader;
-  };
+            });
+    
+        return Reader;
+    };
+    

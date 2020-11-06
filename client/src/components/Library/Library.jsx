@@ -499,7 +499,7 @@ const Library = () => {
                     </LibraryDiv>
                 </Grid>
             </Grid>
-            <div><p>Are you a fan of creating shelves? Well, have ?I got a form for you!!</p> 
+            <div><p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
         <form action={`http://localhost:3000/library/add`} method='POST'>
             <label>post title
                 <input name='shelfName' />

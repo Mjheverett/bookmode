@@ -1,10 +1,8 @@
 module.exports = app => {
     const shelves = require("../controllers/shelf.controller.js");
-    
         var router = require("express").Router();
-    
     // Create a new Shelf
-    router.post("/", shelves.create);
+    router.post("/add", shelves.create);
     // Retrieve all shelves
     router.get("/", shelves.findAll);
     // Retrieve a single Shelf with id

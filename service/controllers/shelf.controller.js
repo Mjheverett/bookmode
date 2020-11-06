@@ -18,6 +18,7 @@ exports.findAll = (req, res) => {
     };
 exports.create = (req, res) => {
     //Validate request
+    console.log('this is what is getting sent in as the req.body: ', req.body)
     if (!req.body.shelfName) {
         res.status(400).send({
             message: "Name can not be empty!"
