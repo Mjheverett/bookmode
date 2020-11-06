@@ -31,7 +31,7 @@ const Profile = () => {
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Profile Page</Typography>
                 <br />
                 <Button color="secondary" variant="contained" size="large">Update Profile</Button>
