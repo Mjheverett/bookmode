@@ -205,6 +205,10 @@ const Library = () => {
         setAnchorEl(null);
     };
 
+    const _handleCreateShelf = () => {
+        
+    }
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 

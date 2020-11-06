@@ -34,36 +34,22 @@ db.books.belongsTo(db.genres, {
     as: "genres",
 });
 db.users.hasMany(db.recommendations);
-db.recommendations.belongsTo(db.users, {
-    as: "sender"
-})
-db.recommendations.belongsTo(db.users, {as: "receiver"
-})
+db.recommendations.belongsTo(db.users, {as: "sender"})
+db.recommendations.belongsTo(db.users, {as: "receiver"})
 db.books.hasMany(db.recommendations);
 db.recommendations.belongsTo(db.books)
-db.books.hasMany(db.shelves, {as: "shelves"});
-db.shelves.belongsToMany(db.books, {
-    foreignKey: "bookId",
-    as: 'books'
-})
+db.shelves.belongsToMany(db.books, { through: 'shelves_books' });
+db.books.belongsToMany(db.shelves, { through: 'shelves_books' });
 db.users.belongsToMany(db.groups, {
     through: "user_group",
-    as: "userInGroup",
-    foreignKey: "group_id",
 });
 db.groups.belongsToMany(db.users, {
     through: "user_group",
-    as: "group",
-    foreignKey: "user_id",
 });
 db.users.belongsToMany(db.shelves, {
     through: "user_shelves",
-    as: "userForShelf",
-    foreignKey: "shelf_id",
 });
 db.shelves.belongsToMany(db.users, {
     through: "user_shelves",
-    as: "shelvesForUsers",
-    foreignKey: "user_id",
 });
 module.exports = db;

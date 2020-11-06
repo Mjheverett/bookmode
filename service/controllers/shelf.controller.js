@@ -32,7 +32,7 @@ exports.create = (req, res) => {
     //save shelf in DB
     Shelf.create(shelf)
         .then (data=> {
-            res.send(data);
+            res.status(200);
         })
         .catch(err => {
             res.status(500).send({
