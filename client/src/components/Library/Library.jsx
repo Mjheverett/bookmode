@@ -7,8 +7,8 @@ const useStyles = makeStyles((theme) => ({
     libraryDiv:{
         position: 'relative',
         borderRadius: '5px',
-        background: '#EBEBEB',
-        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #a5c3cb, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#93A1A1',
         padding: '0.8rem 1.6rem',
