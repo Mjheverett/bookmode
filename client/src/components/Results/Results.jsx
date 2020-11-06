@@ -30,15 +30,12 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translateZ(0)',
     },
     titleBar: {
-        background: '#D33682',
+        background: '#52781e',
         color: '#fffff'
     },
     titleBarTop: {
         background: 'rgba(0, 43, 54, .001)',
-        color: '#EBEBEB'
-    },
-    icon: {
-        color: 'rgba(235, 235, 235, 0.54)',
+        color: '#52781e',
     },
 }));
 
@@ -71,20 +68,21 @@ const Results = (props) => {
         return 'Loading...';
     }
 
-    const _handleAddLibrary = (id, title, author, imageURL, date) =>{
+    const _handleAddLibrary = (id, title, author, imageURL) =>{
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
-        let result =  clicks.includes(id) ? clicks.filter(click => click != id): [...clicks, id]
+        let result =  clicks.includes(id) ? clicks.filter(click => click !== id): [...clicks, id]
         setClicks(result)
-        console.log(title, author, imageURL, date)
-        axios.post('http://localhost:3000/results/add', {title, author, imageURL})
-            .then(res => {
-                    const data = res.data;
-            console.log('data:', data)
-            });
-        }
-
+        console.log(title, imageURL, author)
+        const data = {
+            title: title,
+            coverURL: imageURL,
+            authorName: author
+        };
+        axios.post('http://localhost:3000/results/add', data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
     return (
-
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">Books</Typography>
@@ -92,6 +90,7 @@ const Results = (props) => {
             <Typography variant="h6">Add books to your library from here</Typography>
             <br />
                 <div className={classes.resultsDiv}>
+                <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
                         {results.map((result) => {
                             return (

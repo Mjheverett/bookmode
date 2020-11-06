@@ -10,7 +10,6 @@ import { Container, GridList, GridListTile, Typography }  from '@material-ui/cor
 
 const Dashboard = () => {
     const { user } = useAuth0();
-    console.log(user);
     
     return (
         <>
