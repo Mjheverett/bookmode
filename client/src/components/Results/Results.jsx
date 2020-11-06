@@ -71,20 +71,21 @@ const Results = (props) => {
         return 'Loading...';
     }
 
-    const _handleAddLibrary = (id, title, author, imageURL, date) =>{
+    const _handleAddLibrary = (id, title, author, imageURL) =>{
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
-        let result =  clicks.includes(id) ? clicks.filter(click => click != id): [...clicks, id]
+        let result =  clicks.includes(id) ? clicks.filter(click => click !== id): [...clicks, id]
         setClicks(result)
-        console.log(title, author, imageURL, date)
-        axios.post('http://localhost:3000/results/add', {title, author, imageURL})
-            .then(res => {
-                    const data = res.data;
-            console.log('data:', data)
-            });
-        }
-
+        console.log(title, imageURL, author)
+        const data = {
+            title: title,
+            coverURL: imageURL,
+            authorName: author
+        };
+        axios.post('http://localhost:3000/results/add', data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
     return (
-
         <>
             <Container maxWidth="lg">
             <Typography variant="h2">Books</Typography>
