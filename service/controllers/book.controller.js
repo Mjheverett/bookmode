@@ -50,8 +50,8 @@ exports.create = (req, res) => {
             });
         });
     //save book and author association in authors_books
-    const authorInstance = await Author.findOne({ where: { author } });
-    const bookInstance = await Book.findOne({ where: { book } });
+    const authorInstance = Author.findOne({ where: { author } });
+    const bookInstance = Book.findOne({ where: { book } });
     const duo = {
         AuthorId: authorInstance.id,
         BookId: bookInstance.id

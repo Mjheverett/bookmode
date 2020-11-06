@@ -1,9 +1,12 @@
 import React from 'react'
 
 const GroupDetail = (props) => {
+    const { group } = props;
+    console.log("props", props)
+
     return (
         <>
-            <h4>Group Name</h4>
+            <h4>{group.groupName}</h4>
         </>
     )
 }

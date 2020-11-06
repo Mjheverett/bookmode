@@ -3,7 +3,20 @@ const Group = db.groups;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    const {title, author, imageURL } = req.body;
+    
+    Group.findAll()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving groups."
+            });
+        });
+    };
+exports.findAllUser = (req, res) => {
+    const { userId } = req.params.userId;
     var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
     Group.findAll({ where: condition})
         .then(data => {
@@ -12,31 +25,26 @@ exports.findAll = (req, res) => {
         .catch(err => {
             res.status(500).send({
             message:
-                err.message || "Some error occurred while retrieving shelves."
+                err.message || "Some error occurred while retrieving users groups."
             });
         });
     };
 exports.create = (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
-    if (!req.body.title) {
+    if (!req.body.groupName) {
         res.status(400).send({
-            message: "Title cannot be empty!"
+            message: "Name cannot be empty!"
         });
         return;
     }
-    //create a new author if not already there
-    const author = {
-        authorName: req.body.author
-    }
-    Author.findOrCreate({
-        where: { author }});
+    
     //create a new book
-    const book = {
-        title: req.body.title,
-        coverURL: req.body.imageURL};
+    const group = {
+        groupName: req.body.groupName,
+        groupDescription: req.body.groupDescription};
     //save book in DB
-    Group.create(book)
+    Group.create(group)
         .then (data=> {
             res.send(data).status(200);
         })
@@ -46,23 +54,7 @@ exports.create = (req, res) => {
                     err.message || "Some error occurred while creating the book."
             });
         });
-    //save book and author association in authors_books
-    const authorInstance = await Author.findOne({ where: { author } });
-    const bookInstance = await Book.findOne({ where: { book } });
-    const duo = {
-        AuthorId: authorInstance.id,
-        BookId: bookInstance.id
-    }
-    Authors_Books.create(duo)
-        .then (data=> {
-            res.send(data).status(200);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the association of book and author."
-            });
-        });
+    
     };
 exports.findOne = (req, res) => {
     const id = req.params.id;

@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Library = () => {
-    const [library, setLibrary] = useState({});
+    const [library, setLibrary] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
     const classes = useStyles();
@@ -220,11 +220,11 @@ const Library = () => {
     };
 
     useEffect(() => {
-        setLibrary(libraryBooks);
         axios.get('http://localhost:3000/library')
             .then(res => {
-                    const data = res.data;
-            console.log('data:', data)
+                const data = res.data;
+                console.log('res.data:', data)
+                setLibrary(data)
             });
     }, []);
 
@@ -262,6 +262,10 @@ const Library = () => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+
+    if (library === null) {
+        return 'Loading...';
+    }
 
     return (
         <>
@@ -310,6 +314,11 @@ const Library = () => {
                 </Typography>
                 
                 <br />
+                {(library.length !== 0) ? (library.map((shelf) => (
+                    <p>{shelf.shelfName}</p>
+                ))) : (
+                    <p>No Shelves</p>
+                )}
                 <Typography variant="h6">Shelf</Typography>
                 <br />
                 <div className={classes.libraryDiv}>
