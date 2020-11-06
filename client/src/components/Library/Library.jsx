@@ -472,9 +472,6 @@ const Library = () => {
                
               
             </Container>
-<<<<<<< HEAD
-        
-=======
 
             <div>
                 <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
@@ -488,7 +485,6 @@ const Library = () => {
                     <button type='submit'>comment</button>
                 </form>
             </div>
->>>>>>> 36b75790d53ccdfe020b04405b0410906020a94f
         </>
     )
 }
