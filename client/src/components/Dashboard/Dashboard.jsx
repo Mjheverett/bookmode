@@ -10,11 +10,10 @@ import { Container, GridList, GridListTile, Typography }  from '@material-ui/cor
 
 const Dashboard = () => {
     const { user } = useAuth0();
-    console.log(user);
     
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Dashboard</Typography>
                 <br />
                 <br />

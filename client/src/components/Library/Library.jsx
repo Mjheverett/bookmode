@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Popover, Typography, Button }  from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import { Container, GridList, GridListTile, Popover, Typography, Button, InputBase }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     libraryDiv:{
         position: 'relative',
         borderRadius: '5px',
-        background: '#EBEBEB',
-        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
-        color: '#93A1A1',
+        color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
     },
@@ -28,13 +28,42 @@ const useStyles = makeStyles((theme) => ({
     typography: {
         padding: theme.spacing(2),
         alignItems: 'center',
-        color: '#93A1A1',
-        backgroundColor: '#EBEBEB',
+        color: '#002B36',
+        backgroundColor: '#768B91',
+    },
+    inputRoot: {
+        color: 'primary',
+    },
+    inputInput: {
+        padding: theme.spacing(1),
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        marginLeft: 0,
+        [theme.breakpoints.up('md')]: {
+            width: '100ch',
+        },
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(3),
+            width: 'auto',
+            marginLeft: 0,
+        },
+    },
+    margin: {
+        margin: theme.spacing(2),
     },
 }));
 
 const Library = () => {
-    const [library, setLibrary] = useState({});
+    const [library, setLibrary] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
     const classes = useStyles();
@@ -191,16 +220,15 @@ const Library = () => {
     };
 
     useEffect(() => {
-        setLibrary(libraryBooks);
         axios.get('http://localhost:3000/library')
             .then(res => {
-                    const data = res.data;
-            console.log('data:', data)
+                const data = res.data;
+                console.log('res.data:', data)
+                setLibrary(data)
             });
     }, []);
 
     // Modal with information about each book.
-
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -235,33 +263,62 @@ const Library = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    if (library === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
-            <Container maxWidth="lg">
+        
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Library</Typography>
+                <Typography variant="h6">Are you a fan of creating shelves? Well, have we got a form for you!!</Typography>
                 <br />
-                <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Add Shelf</Button>
-                <div>
-                    <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
+                <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="large">Add Shelf</Button>
+                <br />
+                <br />
+                <Typography>
                     <form onSubmit={_handleCreateShelf}>
-                        <label>Shelf Name:
-                            <input 
-                                name='shelfName' 
-                                onChange={(event) => _handleNameChange(event.target.value)} 
-                            />
+                        <label>Shelf Name
+                            <div className={classes.search}>
+                                <InputBase style={{color: '#93A1A1'}}
+                                    placeholder="Type here..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='shelfName' 
+                                    onChange={(event) => _handleNameChange(event.target.value)} 
+                                />
+                            </div>
                         </label>
+                        <br />
                         <label>Shelf Description
-                            <textarea 
-                                name='shelfDescription'
-                                onChange={(event) => _handleDescChange(event.target.value)} 
-                            />
+                        <div className={classes.search}>
+                                <InputBase
+                                    style={{color: '#93A1A1'}}
+                                    placeholder="Type here..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='shelfDescription'
+                                    onChange={(event) => _handleDescChange(event.target.value)} 
+                                />
+                        </div>
                         </label>
-                        <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Create New Shelf</Button>
-                        <Button type="button" color="default" aria-describedby={id} variant="outlined" size="medium" onClick={handleClick}>Cancel</Button>
+                        <br/>
+                        <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="large">Create New Shelf</Button>
+                        <Button type="button" className={classes.margin} color="secondary" aria-describedby={id} variant="outlined" size="large">Cancel</Button>
                     </form>
-                </div>
+                </Typography>
                 
                 <br />
+                {(library.length !== 0) ? (library.map((shelf) => (
+                    <p>{shelf.shelfName}</p>
+                ))) : (
+                    <p>No Shelves</p>
+                )}
                 <Typography variant="h6">Shelf</Typography>
                 <br />
                 <div className={classes.libraryDiv}>
@@ -518,8 +575,6 @@ const Library = () => {
                     </GridList> 
                 </div>
             </Container>
-
-            
         </>
     )
 }

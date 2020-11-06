@@ -1,0 +1,20 @@
+@keyframes play48 {
+    0% {
+      background-position: 0px 0px;
+    }
+    100% {
+      background-position: -28800px 0px;
+    }
+}
+.shapeshifter {
+    animation-duration: 800ms;
+    animation-timing-function: steps(48);
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-image: url(./GraphicDark.svg);
+}
+.shapeshifter.play {
+    animation-name: play48;
+}
+  

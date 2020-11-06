@@ -1,16 +1,16 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Popover, Typography, Button }  from '@material-ui/core';
+import { Container, GridList, GridListTile, Typography, Button }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     profileDiv:{
         position: 'relative',
         borderRadius: '5px',
-        background: '#EBEBEB',
-        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
-        color: '#93A1A1',
+        color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
     },
@@ -31,7 +31,7 @@ const Profile = () => {
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Profile Page</Typography>
                 <br />
                 <Button color="secondary" variant="contained" size="large">Update Profile</Button>

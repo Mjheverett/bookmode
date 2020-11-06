@@ -1,27 +1,50 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { makeStyles } from '@material-ui/core/styles';
-// import { Container, GridList, GridListTile, Popover, Typography, Button }  from '@material-ui/core';
-// import GroupsList from './GroupsList';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import { Container, Typography, Button, InputBase }  from '@material-ui/core';
+import GroupsList from './GroupsList';
 
-// const useStyles = makeStyles((theme) => ({
-    
-// }));
+const useStyles = makeStyles((theme) => ({
+    inputRoot: {
+        color: 'primary',
+    },
+    inputInput: {
+        padding: theme.spacing(1),
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        marginLeft: 0,
+        [theme.breakpoints.up('md')]: {
+            width: '100ch',
+        },
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(3),
+            width: 'auto',
+            marginLeft: 0,
+        },
+    },
+    margin: {
+        margin: theme.spacing(2),
+    },
+}));
 
-// const Groups = () => {
-//     const [groups, setGroups] = useState({});
-//     const classes = useStyles();
+const Groups = () => {
+    const [userGroups, setUserGroups] = useState({});
+    const [allGroups, setAllGroups] = useState({});
+    const [name, setGroupName] = useState('');
+    const [description, setGroupDescription] = useState('');
+    const classes = useStyles();
 
-//     useEffect(() => {
-//         setLibrary(libraryBooks);
-//         axios.get('http://localhost:3000/library')
-//             .then(res => {
-//                     const data = res.data;
-//             console.log('data:', data)
-//             });
-//     }, []);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-//     const [anchorEl, setAnchorEl] = React.useState(null);
 
 //     const handleClick = (event) => {
 //             setAnchorEl(event.currentTarget);
@@ -31,59 +54,79 @@
 //         setAnchorEl(null);
 //     };
 
-//     const _handleNameChange = (data) => {
-//         console.log(data)
-//         setShelfName(data);
-//     };
 
-//     const _handleDescChange = (data) => {
-//         console.log(data)
-//         setShelfDescription(data);
-//     };
+    const _handleNameChange = (data) => {
+        console.log(data)
+        setGroupName(data);
+    };
 
-//     const _handleCreateShelf = (e) => {
-//         e.preventDefault();
-//         const data = {
-//             shelfName: name,
-//             shelfDescription: description
-//         };
-//         axios.post('http://localhost:3000/library/add', data)
-//             .then(res => console.log(res))
-//             .catch(err => console.log(err));
-//     };
-    
-//     return (
-//         <>
-//             <Container maxWidth="lg">
-//                 <Typography variant="h2">Groups</Typography>
-//                 <br />
-//                 <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Create new group</Button>
-//                 <div>
-//                     <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
-//                     <form onSubmit={_handleCreateShelf}>
-//                         <label>Shelf Name:
-//                             <input 
-//                                 name='shelfName' 
-//                                 onChange={(event) => _handleNameChange(event.target.value)} 
-//                             />
-//                         </label>
-//                         <label>Shelf Description
-//                             <textarea 
-//                                 name='shelfDescription'
-//                                 onChange={(event) => _handleDescChange(event.target.value)} 
-//                             />
-//                         </label>
-//                         <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Create New Shelf</Button>
-//                         <Button type="button" color="default" aria-describedby={id} variant="outlined" size="medium" onClick={handleClick}>Cancel</Button>
-//                     </form>
-//                 </div>
-//                 <br />
-//                 <br />
-//                 <GroupsList list={"User"} />
-//                 <GroupsList list={"All"} />
-//             </Container>
-//         </>
-//     )
-// }
+    const _handleDescChange = (data) => {
+        console.log(data)
+        setGroupDescription(data);
+    };
+
+    const _handleCreateGroup = (e) => {
+        e.preventDefault();
+        const data = {
+            groupName: name,
+            groupDescription: description
+        };
+        axios.post('http://localhost:3000/groups/add', data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
+
+    return (
+        <>
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
+                <Typography variant="h2">Groups</Typography>
+                <Typography variant="h6">Get connected, create new groups here!</Typography>
+                <br />
+                <Button type="button" color="secondary" variant="contained" size="large">Add Group</Button>
+                <br />
+                <br />
+                <Typography>
+                    <form onSubmit={_handleCreateGroup}>
+                        <label>Group Name
+                            <div className={classes.search}>
+                                <InputBase style={{color: '#93A1A1'}}
+                                    placeholder="Type here..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='groupName' 
+                                    onChange={(event) => _handleNameChange(event.target.value)} 
+                                />
+                            </div>
+                        </label>
+                        <br />
+                        <label>Group Description
+                        <div className={classes.search}>
+                                <InputBase
+                                    style={{color: '#93A1A1'}}
+                                    placeholder="Type here..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='groupDescription'
+                                    onChange={(event) => _handleDescChange(event.target.value)} 
+                                />
+                        </div>
+                        </label>
+                        <br/>
+                        <Button type="submit" color="secondary" variant="contained" size="large">Create New Group</Button>
+                        <Button type="button" className={classes.margin} color="secondary" variant="outlined" size="large">Cancel</Button>
+                    </form>
+                </Typography>
+                <br />
+                <br />
+                {/* <GroupsList list={"User"} /> */}
+                <GroupsList list={"All"} />
+            </Container>
+        </>
+    )
+}
 
 // export default Groups;

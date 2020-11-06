@@ -11,10 +11,10 @@ const useStyles = makeStyles((theme) => ({
     resultsDiv:{
         position: 'relative',
         borderRadius: '5px',
-        background: '#EBEBEB',
-        boxShadow: 'inset -12px -12px 30px #ffffff, inset 12px 12px 30px #c8c8c8',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
-        color: '#93A1A1',
+        color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
     },
@@ -30,15 +30,12 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translateZ(0)',
     },
     titleBar: {
-        background: '#D33682',
+        background: '#52781e',
         color: '#fffff'
     },
     titleBarTop: {
         background: 'rgba(0, 43, 54, .001)',
-        color: '#EBEBEB'
-    },
-    icon: {
-        color: 'rgba(235, 235, 235, 0.54)',
+        color: '#52781e',
     },
 }));
 
@@ -87,12 +84,13 @@ const Results = (props) => {
     };
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">Books</Typography>
             <br />
             <Typography variant="h6">Add books to your library from here</Typography>
             <br />
                 <div className={classes.resultsDiv}>
+                <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
                         {results.map((result) => {
                             return (

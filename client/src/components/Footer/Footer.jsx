@@ -15,7 +15,7 @@ const Footer = () => {
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <div className={classes.div}>
                 <Typography variant="h6"><span className="fa fa-heart" /></Typography>
                 </div>
