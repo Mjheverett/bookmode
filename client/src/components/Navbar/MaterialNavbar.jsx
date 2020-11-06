@@ -1,12 +1,9 @@
 import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { AppBar, Toolbar, IconButton, InputBase, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
+
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
@@ -15,10 +12,23 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
 import bookmodeLogo from '../../images/bookmode.png';
-import { Link, Redirect } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
+
 
 const useStyles = makeStyles((theme) => ({
+    typography: {
+        fontFamily: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+    },
     grow: {
         flexGrow: 1,
     },
@@ -226,6 +236,7 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
+                    <Typography>
                         <Link to="/dashboard" className="link">Dashboard</Link>
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
@@ -254,6 +265,7 @@ export default function PrimarySearchAppBar() {
                         >
                             <AccountCircle />
                         </IconButton>
+                    </Typography>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton
