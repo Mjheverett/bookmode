@@ -16,6 +16,6 @@ const Shelf = sequelize.define('Shelf', {
         }, {
             tableName: 'Shelves'
         });
-  
+        
     return Shelf;
-  };
+};

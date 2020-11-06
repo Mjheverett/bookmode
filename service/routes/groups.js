@@ -1,7 +1,7 @@
 module.exports = (app, db) => {
 
     // GET all groups
-    app.get('/all', async (req, res) => {
+    app.get('/groups/all', async (req, res) => {
         const groupData = await groupsList.getAllGroups();
 
         res.json(groupData).status(200);
