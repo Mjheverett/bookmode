@@ -70,14 +70,20 @@ const Results = (props) => {
     if (results === null) {
         return 'Loading...';
     }
-    
+
     const _handleAddLibrary = (id) =>{
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
         let result =  clicks.includes(id) ? clicks.filter(click => click != id): [...clicks, id]
         setClicks(result)
-    }
+        await axios.post('http://localhost:3000/library/add', {title, author})
+            .then(res => {
+                    const data = res.data;
+            console.log('data:', data)
+            });
+        }
 
     return (
+
         <>
             <Container maxWidth="lg">
             <Typography variant="h2">Books</Typography>
