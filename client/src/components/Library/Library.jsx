@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, Popover, Typography, Button }  from '@material-ui/core';
 
@@ -34,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Library = () => {
     const [library, setLibrary] = useState({});
+    const [name, setShelfName] = useState('');
+    const [description, setShelfDescription] = useState('');
     const classes = useStyles();
     
     const libraryBooks = {
@@ -187,9 +190,13 @@ const Library = () => {
         }
     };
 
-
     useEffect(() => {
         setLibrary(libraryBooks);
+        axios.get('http://localhost:3000/library')
+            .then(res => {
+                    const data = res.data;
+            console.log('data:', data)
+            });
     }, []);
 
     // Modal with information about each book.
@@ -204,6 +211,27 @@ const Library = () => {
         setAnchorEl(null);
     };
 
+    const _handleNameChange = (data) => {
+        console.log(data)
+        setShelfName(data);
+    };
+
+    const _handleDescChange = (data) => {
+        console.log(data)
+        setShelfDescription(data);
+    };
+
+    const _handleCreateShelf = (e) => {
+        e.preventDefault();
+        const data = {
+            shelfName: name,
+            shelfDescription: description
+        };
+        axios.post('http://localhost:3000/library/add', data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -212,6 +240,28 @@ const Library = () => {
         
             <Container maxWidth="lg">
             <Typography variant="h2">Library</Typography>
+                <br />
+                <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Add Shelf</Button>
+                <div>
+                    <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
+                    <form onSubmit={_handleCreateShelf}>
+                        <label>Shelf Name:
+                            <input 
+                                name='shelfName' 
+                                onChange={(event) => _handleNameChange(event.target.value)} 
+                            />
+                        </label>
+                        <label>Shelf Description
+                            <textarea 
+                                name='shelfDescription'
+                                onChange={(event) => _handleDescChange(event.target.value)} 
+                            />
+                        </label>
+                        <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="medium" onClick={handleClick}>Create New Shelf</Button>
+                        <Button type="button" color="default" aria-describedby={id} variant="outlined" size="medium" onClick={handleClick}>Cancel</Button>
+                    </form>
+                </div>
+                
                 <br />
                 <Typography variant="h6">Shelf</Typography>
                 <br />
@@ -467,24 +517,10 @@ const Library = () => {
                             <br />
                         </GridListTile>
                     </GridList> 
-                    
                 </div>
-               
-              
             </Container>
 
-            <div>
-                <p>Are you a fan of creating shelves? Well, have I got a form for you!!</p> 
-                <form action={`http://localhost:3000/library/add`} method='POST'>
-                    <label>post title
-                        <input name='shelfName' />
-                    </label>
-                    <label>shelf description
-                        <textarea name='shelfDescription' />
-                    </label>
-                    <button type='submit'>comment</button>
-                </form>
-            </div>
+           
         </>
     )
 }
