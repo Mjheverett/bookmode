@@ -10,3 +10,4 @@ const Genre = sequelize.define('Genre', {
     
         return Genre;
     };
+    

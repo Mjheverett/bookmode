@@ -11,6 +11,7 @@ db.sequelize.sync();
 // });
 
 app.use(cors());
+app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(express.static("./public"));
