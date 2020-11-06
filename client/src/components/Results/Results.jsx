@@ -30,15 +30,12 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translateZ(0)',
     },
     titleBar: {
-        background: '#D33682',
+        background: '#52781e',
         color: '#fffff'
     },
     titleBarTop: {
         background: 'rgba(0, 43, 54, .001)',
-        color: '#EBEBEB'
-    },
-    icon: {
-        color: 'rgba(235, 235, 235, 0.54)',
+        color: '#52781e',
     },
 }));
 
@@ -92,6 +89,7 @@ const Results = (props) => {
             <Typography variant="h6">Add books to your library from here</Typography>
             <br />
                 <div className={classes.resultsDiv}>
+                <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
                         {results.map((result) => {
                             return (
