@@ -11,11 +11,7 @@ var groupsRouter = require('./routes/groups');
 
 var app = express();
 
-<<<<<<< HEAD
-
-=======
 app.use(cors());
->>>>>>> 3d8585348bc522b48dd2855ccd7eb1b804541f1e
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
