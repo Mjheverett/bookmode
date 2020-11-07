@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
     
-    Group.findAll()
+    User.findAll()
         .then(data => {
             res.send(data);
         })
@@ -18,7 +18,7 @@ exports.findAll = (req, res) => {
 exports.findAllUser = (req, res) => {
     const { userId } = req.params.userId;
     var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
-    Group.findAll({ where: condition})
+    User.findAll({ where: condition})
         .then(data => {
             res.send(data);
         })
@@ -45,7 +45,7 @@ exports.create = (req, res) => {
         name: req.body.name,
         email: req.body.email};
     //save book in DB
-    Group.create(user)
+    User.create(user)
         .then (data=> {
             res.send(data).status(200);
         })
@@ -59,7 +59,7 @@ exports.create = (req, res) => {
     };
 exports.findOne = (req, res) => {
     const id = req.params.id;
-    Group.findByPk(id)
+    User.findByPk(id)
         .then(data => {
         res.send(data);
         })
@@ -71,7 +71,7 @@ exports.findOne = (req, res) => {
     };
 exports.update = (req, res) => {
     const id = req.params.id;
-    Group.update(req.body, {
+    User.update(req.body, {
         where: { id: id }
     })
         .then(num => {
@@ -94,7 +94,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
     
-    Group.destroy({
+    User.destroy({
         where: { id: id }
     })
         .then(num => {

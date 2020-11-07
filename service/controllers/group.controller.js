@@ -16,32 +16,23 @@ exports.findAll = (req, res) => {
             });
         });
     };
-exports.findAllUser = (req, res) => {
+exports.findAllUser = async (req, res) => {
     const { userId } = req.params.userId;
-    User.findByPk(userId)
+    const userInstance = await User.findOne({where: userId})
+    console.log('user instance is the following data: ', userInstance)
+    // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
+    Group.findAll({ include: [{model: User, where: userInstance}]})
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || "Some error occured while retrieving user."
+            message:
+                err.message || "Some error occurred while retrieving users groups."
             });
         });
-    
-    // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
-    // Group.findAll({ where: condition})
-    //     .then(data => {
-    //         res.send(data);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //         message:
-    //             err.message || "Some error occurred while retrieving users groups."
-    //         });
-    //     });
     };
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
     if (!req.body.groupName) {
@@ -56,7 +47,12 @@ exports.create = (req, res) => {
         groupName: req.body.groupName,
         groupDescription: req.body.groupDescription};
     //save book in DB
-    Group.create(group)
+    const groupAdded = await Group.create(group)
+    console.log("group info is: ", groupAdded)
+    const { userId } = req.params.userId;
+    const user = await User.findOne({where: userId})
+    console.log("user info is: ", user)
+    await user.addGroup(groupAdded, { through: {isAdmin: true} })
         .then (data=> {
             res.send(data).status(200);
         })
@@ -67,6 +63,23 @@ exports.create = (req, res) => {
             });
         });
     
+    };
+exports.joinOne = async (req, res) => {
+    const { userId } = req.params;
+    const { groupId } = req.body;
+    const groupJoined = await Group.findByPk(groupId)
+    const user = await User.findOne({where: userId})
+    console.log("user info is: ", user)
+    await user.addGroup(groupJoined, { through: {isAdmin: false} })
+        .then (data=> {
+            res.send(data).status(200);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the book."
+            });
+        });
     };
 exports.findOne = (req, res) => {
     const id = req.params.id;
