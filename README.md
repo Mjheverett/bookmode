@@ -1,12 +1,18 @@
 ### Dev Environment
 
 Commands needed to run Bookmode in dev environment:
-* npm
+* Express Backend
+```sh
+cd service
+```
 ```sh
 npm run dev
 ```
 
-* npm
+* React Client
+```sh
+cd client
+```
 ```sh
 npm start
 ```
