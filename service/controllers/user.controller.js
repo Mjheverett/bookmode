@@ -1,5 +1,4 @@
 const db = require("../models");
-const Group = db.groups;
 const User = db.users;
 const Op = db.Sequelize.Op;
 
@@ -18,33 +17,22 @@ exports.findAll = (req, res) => {
     };
 exports.findAllUser = (req, res) => {
     const { userId } = req.params.userId;
-    User.findByPk(userId)
+    var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
+    Group.findAll({ where: condition})
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || "Some error occured while retrieving user."
+            message:
+                err.message || "Some error occurred while retrieving users groups."
             });
         });
-    
-    // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
-    // Group.findAll({ where: condition})
-    //     .then(data => {
-    //         res.send(data);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //         message:
-    //             err.message || "Some error occurred while retrieving users groups."
-    //         });
-    //     });
     };
 exports.create = (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
-    if (!req.body.groupName) {
+    if (!req.body.name) {
         res.status(400).send({
             message: "Name cannot be empty!"
         });
@@ -52,11 +40,12 @@ exports.create = (req, res) => {
     }
     
     //create a new book
-    const group = {
-        groupName: req.body.groupName,
-        groupDescription: req.body.groupDescription};
+    const user = {
+        id: req.body.id,
+        name: req.body.name,
+        email: req.body.email};
     //save book in DB
-    Group.create(group)
+    Group.create(user)
         .then (data=> {
             res.send(data).status(200);
         })

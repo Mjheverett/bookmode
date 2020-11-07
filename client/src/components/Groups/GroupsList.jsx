@@ -56,16 +56,7 @@ const GroupsList = (props) => {
             })();
     }, []);  
 
-    const renderGroups = () => {
-        if (groups.length !== 0) {
-            return (groups.map((group) => {
-                <GroupDetail group={group} />
-            }))
-        } else {
-            return <Typography varient="p">You're not part of any groups!</Typography>
-        }
-    }
-
+    // return while waiting on axios, then render updated page
     if (groups === null) {
         return 'Loading...';
     }
