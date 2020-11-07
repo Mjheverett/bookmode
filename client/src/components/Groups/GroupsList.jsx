@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { GridList, GridListTile, Typography, Button }  from '@material-ui/core';
+import { GridList, Typography, Button }  from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,16 +63,15 @@ const GroupsList = (props) => {
 
     return (
         <>
+            <Typography variant="h6" >List of {list} Groups</Typography>
+            <br />
             <div className={classes.groupsDiv}>
                 <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                    <GridListTile cellHeight={'auto'}>
-                    <Typography variant="h6" >Render List of {list} Groups Here</Typography>
                     {(groups.length !== 0) ? (groups.map((group) => (
                         <GroupDetail group={group} />
                     ))) : (
-                        <Typography varient="p">You're not part of any groups!</Typography>
+                        <Typography>You're not part of any groups!</Typography>
                     )};
-                    </GridListTile>
                 </GridList> 
             </div>
         </>
