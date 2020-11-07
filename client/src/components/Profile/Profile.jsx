@@ -1,7 +1,9 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Typography, Button }  from '@material-ui/core';
+import { Container, GridList, GridListTile, Typography, Button, CardMedia }  from '@material-ui/core';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
     profileDiv:{
@@ -28,11 +30,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
+    // const { user } = useAuth0();
     const classes = useStyles();
+    const { user, setUser } = useState();
+
+    useEffect(() => {
+        (async function (){
+            let url = `http://localhost:3000/user/`;
+            console.log(url);
+            axios.get(url)
+                .then(res => {
+                    const data = res.data;
+                    console.log('res.data:', data)
+                    setUser(data)
+                })
+            })();
+    }, []); 
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Profile Page</Typography>
+                
                 <br />
                 <Button color="secondary" variant="contained" size="large">Update Profile</Button>
                 <br />
@@ -40,7 +59,9 @@ const Profile = () => {
                 <div className={classes.profileDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile cellHeight={'auto'}>
-                            <Typography variant="h6" >Image will go here</Typography>
+                            {/* <Typography variant="h4">{setUser.name} </Typography>
+                            <Typography variant="h5">{setUser.email}</Typography>
+                            <CardMedia><img className="" src={user.picture} alt="Profile"/></CardMedia> */}
                         </GridListTile>
                         <GridListTile cellHeight={'auto'}>
                             <Typography variant="h6" >Info will go here</Typography>
