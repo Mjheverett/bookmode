@@ -36,7 +36,7 @@ const Profile = () => {
 
     useEffect(() => {
         (async function (){
-            let url = `http://localhost:3000/user/`;
+            let url = `http://localhost:3000/users/`;
             console.log(url);
             axios.get(url)
                 .then(res => {
