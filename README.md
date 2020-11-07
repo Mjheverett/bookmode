@@ -1,3 +1,16 @@
+### Dev Environment
+
+Commands needed to run Bookmode in dev environment:
+* npm
+```sh
+npm run dev
+```
+
+* npm
+```sh
+npm start
+```
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
