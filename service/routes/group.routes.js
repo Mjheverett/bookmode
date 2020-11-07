@@ -2,7 +2,9 @@ module.exports = app => {
     const groups = require("../controllers/group.controller.js");
         var router = require("express").Router();
     // Create a new group
-    router.post("/add", groups.create);
+    router.post("/add/:userId", groups.create);
+    // Join a group
+    router.post("/join", groups.joinOne);
     // Retrieve all groups
     router.get("/", groups.findAll);
     // Retrieve all groups with user id
