@@ -120,7 +120,7 @@ const Groups = () => {
                 </Typography>
                 <br />
                 <br />
-                {/* <GroupsList list={"User"} /> */}
+                <GroupsList list={"User"} />
                 <GroupsList list={"All"} />
             </Container>
         </>

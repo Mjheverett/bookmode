@@ -1,30 +1,23 @@
 {
-  "local": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  },
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
+    "username": "jkveaiom",
+    "password": "hwIiKYqHiUAR3_917dvIZRGvfsliF4YR",
+    "database": "jkveaiom",
+    "host": "lallah.db.elephantsql.com",
     "dialect": "postgres"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "kjoxpigv",
+    "password": "PPePqyIB6HhXnXGIOawegIb75ZcqBlLG",
+    "database": "kjoxpigv",
+    "host": "lallah.db.elephantsql.com",
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "username": "fooafgfk",
+    "password": "bT1Nb8W_5uZVHwIoUS9mZnCHUztuwHxh",
+    "database": "fooafgfk",
+    "host": "lallah.db.elephantsql.com",
     "dialect": "postgres"
   }
 }
