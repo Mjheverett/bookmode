@@ -1,7 +1,8 @@
 const db = require("../models");
 const Book = db.books;
 const Author = db.authors;
-const Authors_Books = db.authors_books;
+const Shelf = db.shelves;
+
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
@@ -18,21 +19,20 @@ exports.findAll = (req, res) => {
             });
         });
     };
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
-    //create a new book if not already there
-    const {title, coverURL, authorName } = req.body;
     //save book in DB
-    Book.create({
+    const {title, coverURL, authorName } = req.body;
+    const book = await Book.create({
         title: title,
-        coverURL: coverURL,
-        authors: [
-            { authorName: authorName},
-        ]
-        }, {
-        include: [ Author ]
+        coverURL: coverURL,})
+    const author = await Author.create({
+            authorName: authorName
         })
+    await author.addBook(book)
+    const shelf= await Shelf.findByPk(1)
+    await shelf.addBook(book)
     .then(data => {
         res.send(data);
     })
@@ -42,24 +42,7 @@ exports.create = (req, res) => {
                     err.message || "Some error occurred while creating the book."
             });
         })
-    // //save book and author association in authors_books
-    // const authorInstance = Author.findOne({ where: { author } });
-    // const bookInstance = Book.findOne({ where: { book } });
-    // const duo = {
-    //     AuthorId: authorInstance.id,
-    //     BookId: bookInstance.id
-    // }
-    // Authors_Books.create(duo)
-    //     .then (data=> {
-    //         res.send(data).status(200);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message:
-    //                 err.message || "Some error occurred while creating the association of book and author."
-    //         });
-    //     });
-    };
+    }
 exports.findOne = (req, res) => {
     const id = req.params.id;
     Book.findByPk(id)

@@ -64,160 +64,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Library = () => {
     const [library, setLibrary] = useState(null);
+    const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
     const classes = useStyles();
-    
-    const libraryBooks = {
-        "results": {
-            "work": [
-                {
-                    "id": {
-                        "_type": "integer",
-                        "__text": "849585"
-                    },
-                    "books_count": {
-                        "_type": "integer",
-                        "__text": "403"
-                    },
-                    "ratings_count": {
-                        "_type": "integer",
-                        "__text": "1129530"
-                    },
-                    "text_reviews_count": {
-                        "_type": "integer",
-                        "__text": "25007"
-                    },
-                    "original_publication_year": {
-                        "_type": "integer",
-                        "__text": "1977"
-                    },
-                    "original_publication_month": {
-                        "_type": "integer",
-                        "__text": "1"
-                    },
-                    "original_publication_day": {
-                        "_type": "integer",
-                        "__text": "28"
-                    },
-                    "average_rating": "4.23",
-                    "best_book": {
-                        "id": {
-                            "_type": "integer",
-                            "__text": "11588"
-                        },
-                        "title": "The Shining",
-                        "author": {
-                            "id": {
-                                "_type": "integer",
-                                "__text": "3389"
-                            },
-                            "name": "Stephen King"
-                        },
-                        "image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588._SX98_.jpg",
-                        "small_image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1353277730l/11588._SY75_.jpg",
-                        "_type": "Book"
-                    }
-                },
-                {
-                    "id": {
-                        "_type": "integer",
-                        "__text": "150259"
-                    },
-                    "books_count": {
-                        "_type": "integer",
-                        "__text": "131"
-                    },
-                    "ratings_count": {
-                        "_type": "integer",
-                        "__text": "804461"
-                    },
-                    "text_reviews_count": {
-                        "_type": "integer",
-                        "__text": "25632"
-                    },
-                    "original_publication_year": {
-                        "_type": "integer",
-                        "__text": "1986"
-                    },
-                    "original_publication_month": {
-                        "_type": "integer",
-                        "__text": "9"
-                    },
-                    "original_publication_day": {
-                        "_type": "integer",
-                        "__text": "15"
-                    },
-                    "average_rating": "4.24",
-                    "best_book": {
-                        "id": {
-                            "_type": "integer",
-                            "__text": "830502"
-                        },
-                        "title": "It",
-                        "author": {
-                            "id": {
-                                "_type": "integer",
-                                "__text": "3389"
-                            },
-                            "name": "Stephen King"
-                        },
-                        "image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1334416842l/830502._SY160_.jpg",
-                        "small_image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1334416842l/830502._SY75_.jpg",
-                        "_type": "Book"
-                    }
-                },
-                {
-                    "id": {
-                        "_type": "integer",
-                        "__text": "46575"
-                    },
-                    "books_count": {
-                        "_type": "integer",
-                        "__text": "291"
-                    },
-                    "ratings_count": {
-                        "_type": "integer",
-                        "__text": "515813"
-                    },
-                    "text_reviews_count": {
-                        "_type": "integer",
-                        "__text": "19064"
-                    },
-                    "original_publication_year": {
-                        "_type": "integer",
-                        "__text": "1982"
-                    },
-                    "original_publication_month": {
-                        "_type": "integer",
-                        "__text": "6"
-                    },
-                    "original_publication_day": {
-                        "_type": "integer",
-                        "__text": "1"
-                    },
-                    "average_rating": "3.95",
-                    "best_book": {
-                        "id": {
-                            "_type": "integer",
-                            "__text": "43615"
-                        },
-                        "title": "The Gunslinger",
-                        "author": {
-                            "id": {
-                                "_type": "integer",
-                                "__text": "3389"
-                            },
-                            "name": "Stephen King"
-                        },
-                        "image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1554220416l/43615._SX98_.jpg",
-                        "small_image_url": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1554220416l/43615._SY75_.jpg",
-                        "_type": "Book"
-                    }
-                }
-            ]
-        }
-    };
 
     useEffect(() => {
         axios.get('http://localhost:3000/library')
@@ -231,11 +81,13 @@ const Library = () => {
     // Modal with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = (event) => {
+    const handleClick = (event, popoverId) => {
+        setPopoverId(popoverId);
         setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
+        setPopoverId(null);
         setAnchorEl(null);
     };
 
@@ -266,317 +118,113 @@ const Library = () => {
     if (library === null) {
         return 'Loading...';
     }
-
-    return (
-        <>
-        
-            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
-                <Typography variant="h2">Library</Typography>
-                <Typography variant="h6">Are you a fan of creating shelves? Well, have we got a form for you!!</Typography>
+return (
+<>
+    <Container maxWidth="lg" style={{marginTop: '2rem'}}>
+        <Typography variant="h2">Library</Typography>
+        <Typography variant="h6">
+            Are you a fan of creating shelves? Well, have we got a form for you!!
+        </Typography>
+        <br />
+        <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="large">
+            Add Shelf
+        </Button>
+        <br />
+        <br />
+        <Typography>
+            <form onSubmit={_handleCreateShelf}>
+                <label>Shelf Name
+                    <div className={classes.search}>
+                        <InputBase style={{color: '#93A1A1'}}
+                            placeholder="Type here..."
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            name='shelfName' 
+                            onChange={(event) => _handleNameChange(event.target.value)} 
+                        />
+                    </div>
+                </label>
                 <br />
-                <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="large">Add Shelf</Button>
-                <br />
-                <br />
-                <Typography>
-                    <form onSubmit={_handleCreateShelf}>
-                        <label>Shelf Name
-                            <div className={classes.search}>
-                                <InputBase style={{color: '#93A1A1'}}
-                                    placeholder="Type here..."
-                                    classes={{
-                                        root: classes.inputRoot,
-                                        input: classes.inputInput,
-                                    }}
-                                    name='shelfName' 
-                                    onChange={(event) => _handleNameChange(event.target.value)} 
-                                />
-                            </div>
-                        </label>
-                        <br />
-                        <label>Shelf Description
-                        <div className={classes.search}>
-                                <InputBase
-                                    style={{color: '#93A1A1'}}
-                                    placeholder="Type here..."
-                                    classes={{
-                                        root: classes.inputRoot,
-                                        input: classes.inputInput,
-                                    }}
-                                    name='shelfDescription'
-                                    onChange={(event) => _handleDescChange(event.target.value)} 
-                                />
-                        </div>
-                        </label>
-                        <br/>
-                        <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="large">Create New Shelf</Button>
-                        <Button type="button" className={classes.margin} color="secondary" aria-describedby={id} variant="outlined" size="large">Cancel</Button>
-                    </form>
-                </Typography>
-                
-                <br />
-                {(library.length !== 0) ? (library.map((shelf) => (
-                    <p>{shelf.shelfName}</p>
-                ))) : (
-                    <p>No Shelves</p>
+                <label>Shelf Description
+                <div className={classes.search}>
+                        <InputBase
+                            style={{color: '#93A1A1'}}
+                            placeholder="Type here..."
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            name='shelfDescription'
+                            onChange={(event) => _handleDescChange(event.target.value)} 
+                        />
+                </div>
+                </label>
+                <br/>
+                <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="large">Create New Shelf</Button>
+                <Button type="button" className={classes.margin} color="secondary" aria-describedby={id} variant="outlined" size="large">Cancel</Button>
+            </form>
+        </Typography>
+        <br />
+        {(library.length !== 0) ? (library.map(shelf => (
+            <div>
+            <Typography variant="h6">{shelf.shelfName}</Typography>
+            <br />
+            <div className={classes.libraryDiv}>
+            <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
+                    return (
+                    <GridListTile cellHeight={'auto'} key={book.id}>
+                    <br />
+                    <div width={'auto'} className={classes.div}>
+                        <img src={book.coverURL} alt={book.title}/>
+                    </div>
+                    <br />
+                    <p>{book.title}</p>
+                    <div>
+                        <Button color="secondary" aria-describedby={book.id} variant="contained" size="large" onClick={(e) => handleClick(e, book.id)}>
+                            More Information
+                        </Button>
+                        <Popover
+                            id={book.id}
+                            open={popoverId === book.id}
+                            anchorEl={anchorEl}
+                            className={classes.root}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <Typography className={classes.typography}>
+                                Title: {book.title}
+                            </Typography>
+                            <Typography className={classes.typography}>
+                                Author: {book.Authors[0].authorName}
+                            </Typography>
+                            <Typography className={classes.typography}>
+                                Genre: (update with API data)
+                            </Typography>
+                            <Typography className={classes.typography}>
+                                Reader: (update with API data)
+                            </Typography>
+                        </Popover>
+                    </div>
+                    <br />
+                    </GridListTile>)})) : (
+                    <p>No books!!</p>
+                            )}
+                    </GridList> 
+                    </div>
+                    </div>))) : (
+                    <p>No Shelves!</p>
                 )}
-                <Typography variant="h6">Shelf</Typography>
-                <br />
-                <div className={classes.libraryDiv}>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                        <GridListTile cellHeight={'auto'}>
-                            <br />
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
-                                </div>
-                            <br />
-                            <div>
-                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                More Information
-                                </Button>
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    className={classes.root}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                >
-                                    <Typography className={classes.typography}>
-                                        Title: {libraryBooks.results.work[0].best_book.title}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Author: {libraryBooks.results.work[0].best_book.author.name}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: (update with API data)
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: (update with API data)
-                                    </Typography>
-                                </Popover>
-                            </div>
-                            <br />
-                        </GridListTile>
-                        <GridListTile cellHeight={'auto'}>
-                            <br />
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
-                                </div>
-                            <br />
-                            <div>
-                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                More Information
-                                </Button>
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                >
-                                    <Typography className={classes.typography}>
-                                        Title: {libraryBooks.results.work[1].best_book.title}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Author: {libraryBooks.results.work[1].best_book.author.name}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: (update with API data)
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: (update with API data)
-                                    </Typography>
-                                </Popover>
-                            </div>
-                            <br />
-                        </GridListTile>
-                        <GridListTile cellHeight={'auto'}>
-                            <br />
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
-                                </div>
-                            <br />
-                            <div>
-                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                More Information
-                                </Button>
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                >
-                                    <Typography className={classes.typography}>
-                                        Title: {libraryBooks.results.work[2].best_book.title}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Author: {libraryBooks.results.work[2].best_book.author.name}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: (update with API data)
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: (update with API data)
-                                    </Typography>
-                                </Popover>
-                            </div>
-                            <br />
-                        </GridListTile>
-                    </GridList> 
-                </div>
-
-                <br />
-                <Typography variant="h6">Shelf</Typography>
-                <br />
-                <div className={classes.libraryDiv}>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                        <GridListTile cellHeight={'auto'}>
-                            <br />
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[0].best_book.image_url} alt={libraryBooks.results.work[0].best_book.title}/>
-                                </div>
-                            <br />
-                            <div>
-                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                More Information
-                                </Button>
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                >
-                                    <Typography className={classes.typography}>
-                                        Title: {libraryBooks.results.work[0].best_book.title}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Author: {libraryBooks.results.work[0].best_book.author.name}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: (update with API data)
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: (update with API data)
-                                    </Typography>
-                                </Popover>
-                            </div>
-                            <br />
-                        </GridListTile>
-                        <GridListTile cellHeight={'auto'}>
-                            <br />
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[1].best_book.image_url} alt={libraryBooks.results.work[1].best_book.title}/>
-                                </div>
-                            <br />
-                            <div>
-                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                More Information
-                                </Button>
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                >
-                                    <Typography className={classes.typography}>
-                                        Title: {libraryBooks.results.work[1].best_book.title}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Author: {libraryBooks.results.work[1].best_book.author.name}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: (update with API data)
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: (update with API data)
-                                    </Typography>
-                                </Popover>
-                            </div>
-                            <br />
-                        </GridListTile>
-                        <GridListTile cellHeight={'auto'}>
-                            <br />
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={libraryBooks.results.work[2].best_book.image_url} alt={libraryBooks.results.work[2].best_book.title}/>
-                                </div>
-                                <br />
-                            <div>
-                                <Button color="secondary" aria-describedby={id} variant="contained" size="large" onClick={handleClick}>
-                                More Information
-                                </Button>
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                >
-                                    <Typography className={classes.typography}>
-                                        Title: {libraryBooks.results.work[2].best_book.title}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Author: {libraryBooks.results.work[2].best_book.author.name}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: (update with API data)
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: (update with API data)
-                                    </Typography>
-                                </Popover>
-                            </div>
-                            <br />
-                        </GridListTile>
-                    </GridList> 
-                </div>
-            </Container>
-
-           
+    </Container> 
         </>
     )
 }
