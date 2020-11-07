@@ -19,10 +19,12 @@ app.use(express.static("./public"));
 require("./routes/shelf.routes")(app);
 require("./routes/book.routes")(app);
 require("./routes/group.routes")(app);
+require("./routes/user.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
 module.exports = app;
