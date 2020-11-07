@@ -17,6 +17,24 @@ cd client
 npm start
 ```
 
+### Database Environment
+
+Connect to development, testing, production databases:
+* Development
+```sh
+export NODE_ENV=development
+```
+
+* Testing
+```sh
+export NODE_ENV=test
+```
+
+* Production
+```sh
+export NODE_ENV=production
+```
+
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
