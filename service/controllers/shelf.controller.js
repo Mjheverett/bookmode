@@ -1,12 +1,14 @@
 const db = require("../models");
 const Shelf = db.shelves;
-const Books = db.books;
+const Book = db.books;
+const Author = db.authors;
 const Op = db.Sequelize.Op;
 
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
     const shelfName = req.body.shelfName;
     var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
-    Shelf.findAll({ where: condition})
+    await Shelf.findAll({ where: condition,
+        include: [{model: Book, include: [{model: Author}]}]})
         .then(data => {
             res.send(data);
         })
