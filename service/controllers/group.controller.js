@@ -1,5 +1,6 @@
 const db = require("../models");
 const Group = db.groups;
+const User = db.users;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
@@ -17,17 +18,28 @@ exports.findAll = (req, res) => {
     };
 exports.findAllUser = (req, res) => {
     const { userId } = req.params.userId;
-    var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
-    Group.findAll({ where: condition})
+    User.findByPk(userId)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-            message:
-                err.message || "Some error occurred while retrieving users groups."
+                message:
+                    err.message || "Some error occured while retrieving user."
             });
         });
+    
+    // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
+    // Group.findAll({ where: condition})
+    //     .then(data => {
+    //         res.send(data);
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send({
+    //         message:
+    //             err.message || "Some error occurred while retrieving users groups."
+    //         });
+    //     });
     };
 exports.create = (req, res) => {
     //Validate request
