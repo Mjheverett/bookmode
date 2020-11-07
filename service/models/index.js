@@ -34,15 +34,15 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.authors = require('./author.model')(sequelize, Sequelize);
-db.books = require('./book.model')(sequelize, Sequelize);
-db.genres = require('./genre.model')(sequelize, Sequelize);
-db.groups = require('./group.model')(sequelize, Sequelize);
+db.authors = require('./authors.model')(sequelize, Sequelize);
+db.books = require('./books.model')(sequelize, Sequelize);
+db.genres = require('./genres.model')(sequelize, Sequelize);
+db.groups = require('./groups.model')(sequelize, Sequelize);
 db.media = require('./media.model')(sequelize, Sequelize);
-db.readers = require('./reader.model')(sequelize, Sequelize);
-db.recommendations = require('./recommendation.model')(sequelize, Sequelize);
-db.shelves = require('./shelf.model')(sequelize, Sequelize);
-db.users = require('./user.model')(sequelize, Sequelize);
+db.readers = require('./readers.model')(sequelize, Sequelize);
+db.recommendations = require('./recommendations.model')(sequelize, Sequelize);
+db.shelves = require('./shelves.model')(sequelize, Sequelize);
+db.users = require('./users.model')(sequelize, Sequelize);
 
 db.authors.belongsToMany(db.books, { through: 'authors_books' });
 db.books.belongsToMany(db.authors, { through: 'authors_books' });
