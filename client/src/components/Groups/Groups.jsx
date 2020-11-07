@@ -37,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Groups = () => {
-    const [userGroups, setUserGroups] = useState({});
-    const [allGroups, setAllGroups] = useState({});
     const [name, setGroupName] = useState('');
     const [description, setGroupDescription] = useState('');
     const classes = useStyles();
