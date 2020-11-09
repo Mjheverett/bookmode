@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
@@ -32,6 +34,18 @@ const useStyles = makeStyles((theme) => ({
 
 const GroupsCard = () => {
     const classes = useStyles();
+    const [groups, setGroups] = useState(null);
+    const { user } = useAuth0();
+
+    useEffect(() => {
+        axios.post(`http://localhost:3000/groups/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                setGroups(data);
+            })
+            .catch(err => console.log(err));
+    }, []);
+
     return (
         <>
             <div className={classes.dashboardDiv}>

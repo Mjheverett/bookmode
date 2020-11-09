@@ -37,13 +37,13 @@ const LibraryCard = () => {
     const { user } = useAuth0();
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/library/${user.sub}`)
+        axios.post(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 console.log('res.data:', data)
-                setLibrary(data)
-                console.log(data)
-            });
+                setLibrary(data);
+            })
+            .catch(err => console.log(err));
     }, []);
 
     return (
