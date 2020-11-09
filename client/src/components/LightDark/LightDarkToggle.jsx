@@ -21,7 +21,11 @@ const LightDarkToggle = () => {
     },
     [theme]
   );
+
+
+
   // Toggle component to switch from light to dark mode 
+
   return (
     <div className="lightDarkToggle">
       <ThemeProvider theme={theme}>
