@@ -81,17 +81,17 @@ exports.joinOne = async (req, res) => {
             });
         });
     };
-exports.findOne = async (req, res) => {
-    const { id } = req.params;
+exports.findOne = (req, res) => {
+    const { groupId } = req.params;
     console.log("req params of findOne", req.params)
-    console.log("group id is:", id);
-    await Group.findOne({ where: { id: id }})
+    console.log("group id is:", groupId);
+    Group.findOne({ where: { id: groupId }})
         .then(data => {
             res.send(data);
             })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Shelf with id=" + id
+                message: "Error retrieving Shelf with id=" + groupId
             });
         });
     };

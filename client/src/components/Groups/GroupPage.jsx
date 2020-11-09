@@ -44,7 +44,7 @@ const GroupPage = () => {
     useEffect(() => {
         axios.get(`http://localhost:3000/groups/${id}`)
             .then(res => {
-                console.log("individual group", res.data);
+                console.log("individual group", res);
                 const data = res.data;
                 setGroup(data);
             })

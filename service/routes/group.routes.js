@@ -10,7 +10,7 @@ module.exports = app => {
     // Retrieve all groups
     router.get("/", groups.findAll);
     // Retrieve a single group with id
-    router.get("/:id", groups.findOne);
+    router.get("/:groupId", groups.findOne);
     // Update a group with id
     router.put("/:id", groups.update);
     // Delete a group with id
