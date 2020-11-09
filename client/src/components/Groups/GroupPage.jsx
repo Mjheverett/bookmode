@@ -2,11 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, Button, InputBase }  from '@material-ui/core';
-
+import { Container, Typography, GridList, GridListTile, Button}  from '@material-ui/core';
+import { useAuth0 } from '@auth0/auth0-react';
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
         color: 'primary',
+    },
+    groupBar: {
+        background: '#52781e',
+        margin: theme.spacing(2),
+        padding: theme.spacing(2),
+    },
+    groupsDiv:{
+        position: 'relative',
+        borderRadius: '5px',
+        background: '#768B91',
+        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
+        textAlign: 'center',
+        color: '#002B36',
+        padding: '0.8rem 1.6rem',
+        marginBottom: '2rem',
     },
     inputInput: {
         padding: theme.spacing(1),
@@ -31,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: 0,
         },
     },
+    gridList: {
+        flexWrap: 'nowrap',
+        transform: 'translateZ(0)',
+    },
     margin: {
         margin: theme.spacing(2),
     },
@@ -39,10 +58,11 @@ const useStyles = makeStyles((theme) => ({
 const GroupPage = () => {
     const classes = useStyles();
     const [group, setGroup] = useState(null);
-    const { id } = useParams();
-
+    const groupId = useParams();
+    const { user } = useAuth0();
     useEffect(() => {
-        axios.get(`http://localhost:3000/groups/${id}`)
+        console.log(groupId.id)
+        axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
             .then(res => {
                 console.log("individual group", res);
                 const data = res.data;
@@ -51,6 +71,16 @@ const GroupPage = () => {
             .catch(err => console.log(err));
     }, []);
 
+    const _handleJoinGroup = (e) => {
+        e.preventDefault();
+        const data = {
+            groupId: group.id
+        };
+        axios.post(`http://localhost:3000/groups/join/${user.sub}`, data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
+
     // return while waiting on axios, then render updated page
     if (group === null) {
         return 'Loading...';
@@ -58,8 +88,27 @@ const GroupPage = () => {
 
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
-            <Typography variant="h2">{group.name}</Typography>
-            <Typography variant="h6">This should show info for the selected group but it doesn't!</Typography>
+            <Typography variant="h2">{group.groupName}</Typography>
+            <Typography variant="h6">{group.groupDescription}</Typography>
+            <form onSubmit={_handleJoinGroup}>
+                <input value={group.id} name="groupId" hidden></input>
+                <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
+            </form>
+            <Typography variant="h6">Members:</Typography>
+            <div className={classes.groupsDiv}>
+                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                    {(group.Users.length !== 0) ? (group.Users.map(user => (
+                        <GridListTile className={classes.groupBar} cellHeight={'auto'} key={user.id}>
+                        <Typography variant="h6" style={{color: '#fff'}}>{user.name}</Typography>
+                        {!!user.user_group.isAdmin ?
+                        <Typography style={{color: '#fff'}}>(admin)</Typography>
+                        : <Typography style={{color: '#fff'}}>(member)</Typography> }
+                    </GridListTile>
+                    ))) : (
+                        <Typography>You're not part of any groups!</Typography>
+                    )};
+                </GridList> 
+            </div>
         </Container>
     )
 }

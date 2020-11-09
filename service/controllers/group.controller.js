@@ -68,7 +68,7 @@ exports.joinOne = async (req, res) => {
     const { userId } = req.params;
     const { groupId } = req.body;
     const groupJoined = await Group.findByPk(groupId)
-    const user = await User.findOne({where: userId})
+    const user = await User.findOne({where: {id: userId}})
     console.log("user info is: ", user)
     await user.addGroup(groupJoined, { through: {isAdmin: false} })
         .then (data=> {
@@ -85,7 +85,7 @@ exports.findOne = (req, res) => {
     const { groupId } = req.params;
     console.log("req params of findOne", req.params)
     console.log("group id is:", groupId);
-    Group.findOne({ where: { id: groupId }})
+    Group.findOne({ where: { id: groupId }, include: [{model: User}]})
         .then(data => {
             res.send(data);
             })
