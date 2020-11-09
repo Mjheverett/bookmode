@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, Popover, Typography, Button, InputBase }  from '@material-ui/core';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
     libraryDiv:{
@@ -68,9 +69,10 @@ const Library = () => {
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
     const classes = useStyles();
+    const { user } = useAuth0();
 
     useEffect(() => {
-        axios.get('http://localhost:3000/library')
+        axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 console.log('res.data:', data)
@@ -107,10 +109,10 @@ const Library = () => {
             shelfName: name,
             shelfDescription: description
         };
-        axios.post('http://localhost:3000/library/add', data)
+        axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
-    };
+    }
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
