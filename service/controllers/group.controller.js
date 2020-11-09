@@ -21,7 +21,7 @@ exports.findAllUser = async (req, res) => {
     const userInstance = await User.findOne({where: { id: userId}})
     // console.log('user instance is the following data: ', userInstance)
     // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
-    Group.findAll({ include: [{model: User, where: userInstance}]})
+    Group.findAll({ include: [{model: User, where: { id: userId}}]})
         .then(data => {
             res.send(data);
         })
