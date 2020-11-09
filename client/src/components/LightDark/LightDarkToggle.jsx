@@ -21,6 +21,7 @@ const LightDarkToggle = () => {
     },
     [theme]
   );
+
   return (
     <div className="lightDarkToggle">
       <ThemeProvider theme={theme}>

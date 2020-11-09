@@ -6,6 +6,7 @@
     background-position: -28800px 0px;
   }
 }
+
 .shapeshifter {
   animation-duration: 3500ms;
   animation-timing-function: steps(48);
@@ -15,6 +16,7 @@
   background-repeat: no-repeat;
   background-image: url(./Graphic.svg);
 }
+
 .shapeshifter.play {
   animation-name: play48;
 }

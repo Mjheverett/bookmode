@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-
-
 import { makeStyles } from '@material-ui/core/styles';
 import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
 
@@ -31,14 +30,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 const LibraryCard = () => {
     const classes = useStyles();
-    // const [theme, setTheme] = useState({ mode: "light" });
+    // const [library, setLibrary] = useState(null);
+    // useEffect(() => {
+    //     axios.get('http://localhost:3000/library')
+    //         .then(res => {
+    //             const data = res.data;
+    //             console.log('res.data:', data)
+    //             setLibrary(data)
+    //             console.log(data)
+    //         });
+    // }, []);
+
     return (
         <>
             <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to='/library'>Your Libray</Link></Typography>
+                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to='/library'>Your Library</Link></Typography>
                 <GridListTile cellHeight={'auto'}>
                     <Typography>
                         <List>
