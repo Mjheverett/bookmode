@@ -144,7 +144,7 @@ const Library = () => {
                 <div className={classes.search}>
                     <form onSubmit={e => _handleSubmit(e)}>
                         <InputBase style={{color: '#fff', paddingLeft: '6px'}}
-                            placeholder="Search title, author, ISBN..."
+                            placeholder="Search your library..."
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
@@ -161,8 +161,8 @@ const Library = () => {
                     {fireRedirect && search && (
                         <Redirect 
                             to={{
-                                pathname: '/results',
-                                state: {data: search}
+                                pathname: `/library/results/${search}`,
+                                state: {search: search}
                             }}
                         />
                     )}
