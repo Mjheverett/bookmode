@@ -1,7 +1,9 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Typography, Button }  from '@material-ui/core';
+import { Container, GridList, GridListTile, Typography, Button, CardMedia }  from '@material-ui/core';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
     profileDiv:{
@@ -27,12 +29,37 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 const Profile = () => {
+    // const { userAuth0 } = useAuth0();
     const classes = useStyles();
+    const [ user, setUser ] = useState(null);
+
+    useEffect(() => {
+        (async function (){
+            const url = await (`http://localhost:3000/users`);
+            console.log(url);
+            const res = axios.get(url)
+                .then(res => {
+                    const data = res.data[3];
+                    console.log('data is:', data)
+                    setUser(data);
+                })
+                
+            })();
+            
+    },[]);  
+
+    if (user === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Profile Page</Typography>
+                
                 <br />
                 <Button color="secondary" variant="contained" size="large">Update Profile</Button>
                 <br />
@@ -40,7 +67,9 @@ const Profile = () => {
                 <div className={classes.profileDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile cellHeight={'auto'}>
-                            <Typography variant="h6" >Image will go here</Typography>
+                            <Typography variant="h6">{user.name} </Typography>
+                            <Typography variant="h6">{user.email}</Typography>
+                            {/* <CardMedia><img className="" src={userAuth0.picture} alt="Profile"/></CardMedia> */}
                         </GridListTile>
                         <GridListTile cellHeight={'auto'}>
                             <Typography variant="h6" >Info will go here</Typography>

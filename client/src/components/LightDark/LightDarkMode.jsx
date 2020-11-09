@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
+//global styles for light dark mode
 const LightDarkMode = createGlobalStyle`
 body {
   background-color: ${(props) =>
