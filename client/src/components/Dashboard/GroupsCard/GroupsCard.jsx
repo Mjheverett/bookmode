@@ -38,7 +38,7 @@ const GroupsCard = () => {
     const { user } = useAuth0();
 
     useEffect(() => {
-        axios.post(`http://localhost:3000/groups/${user.sub}`)
+        axios.get(`http://localhost:3000/groups/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 setGroups(data);

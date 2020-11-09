@@ -19,7 +19,7 @@ exports.findAll = (req, res) => {
 exports.findAllUser = async (req, res) => {
     const { userId } = req.params;
     const userInstance = await User.findOne({where: { id: userId}})
-    console.log('user instance is the following data: ', userInstance)
+    // console.log('user instance is the following data: ', userInstance)
     // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
     Group.findAll({ include: [{model: User, where: userInstance}]})
         .then(data => {
@@ -42,7 +42,7 @@ exports.create = async (req, res) => {
         return;
     }
     
-    //create a new book
+    //create a new group
     const group = {
         groupName: req.body.groupName,
         groupDescription: req.body.groupDescription};
@@ -81,16 +81,18 @@ exports.joinOne = async (req, res) => {
             });
         });
     };
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-    Group.findByPk(id)
+exports.findOne = async (req, res) => {
+    const { id } = req.params;
+    console.log("req params of findOne", req.params)
+    console.log("group id is:", id);
+    await Group.findOne({ where: { id: id }})
         .then(data => {
-        res.send(data);
-        })
+            res.send(data);
+            })
         .catch(err => {
-        res.status(500).send({
-            message: "Error retrieving Shelf with id=" + id
-        });
+            res.status(500).send({
+                message: "Error retrieving Shelf with id=" + id
+            });
         });
     };
 exports.update = (req, res) => {
