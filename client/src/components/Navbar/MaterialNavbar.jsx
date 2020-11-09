@@ -2,8 +2,9 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, IconButton, InputBase, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
-
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { AppBar, Toolbar, IconButton, InputBase, Select, MenuItem, Menu, Typography } from '@material-ui/core';
+import NativeSelect from '@material-ui/core/NativeSelect';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -67,15 +68,22 @@ const useStyles = makeStyles((theme) => ({
         color: 'primary',
     },
     inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
+        padding: theme.spacing(1, 1, 1, 1),
         // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        // paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
             width: '20ch',
         },
     },
+    select: {
+        margin: theme.spacing(0),
+        minWidth: 40,
+        background: 'secondary',
+        color: '#93A1A1',
+
+      },
     sectionDesktop: {
         display: 'none',
         [theme.breakpoints.up('md')]: {
@@ -95,11 +103,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
 
-    const classes = useStyles();
+    const classes = useStyles(); 
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [data, setData] = React.useState([]);
     const [fireRedirect, setRedirect] = React.useState(false);
+    const [query, setQuery] = React.useState('all');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -120,7 +130,9 @@ export default function PrimarySearchAppBar() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
-
+    const handleSelect = (event) => {
+        setQuery(event.target.value);
+        };
     const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     const menuId = 'primary-search-account-menu';
@@ -195,33 +207,47 @@ export default function PrimarySearchAppBar() {
         e.preventDefault();
         setRedirect(true)
     };
-
     return (
         <div className={classes.grow}>
             <AppBar position="static" style={{backgroundColor: '#002B36'}}>
                 <Toolbar>
                     <a href="/"><img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} /></a>
                     <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon style={{color: '#93A1A1'}}/>
-                        </div>
+                        <Select
+                            labelId="demo-simple-select-autowidth-label"
+                            id="demo-simple-select-autowidth"
+                            value={query}
+                            onChange={handleSelect}
+                            className={classes.select}
+                            autoWidth
+                            >
+                            <MenuItem value="all">All</MenuItem>
+                            <MenuItem value="title">Title</MenuItem>
+                            <MenuItem value="author">Author</MenuItem>
+                            <MenuItem value="subject">Subject</MenuItem>
+                            <MenuItem value="ISBN">ISBN</MenuItem>
+                        </Select>
                         <form onSubmit={e => _handleSubmit(e)}>
-                            <InputBase style={{color: '#fff'}}
+                            <InputBase style={{color: '#fff', paddingLeft: '6px'}}
                                 placeholder="Search title, author, ISBN..."
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
-                                inputProps={{ 'aria-label': 'search' }}
+                                endAdornment={<InputAdornment position="end">
+                                <SearchIcon style={{color: '#93A1A1'}}/>
+                            </InputAdornment>}
+                                inputProps={{ 'aria-label': 'search'}}
                                 onChange={(event) => _handleChange(event.target.value)}
                                 
                             />
+                            
                         </form>
                         {fireRedirect && data && (
                             <Redirect 
                                 to={{
                                     pathname: '/results',
-                                    state: {data: data}
+                                    state: {data: data, query: query}
                                 }}
                             />
                         )}

@@ -19,9 +19,9 @@ exports.findAll = (req, res) => {
 exports.findAllUser = async (req, res) => {
     const { userId } = req.params;
     const userInstance = await User.findOne({where: { id: userId}})
-    console.log('user instance is the following data: ', userInstance)
+    // console.log('user instance is the following data: ', userInstance)
     // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
-    Group.findAll({ include: [{model: User, where: userInstance}]})
+    Group.findAll({ include: [{model: User, where: { id: userId}}]})
         .then(data => {
             res.send(data);
         })
@@ -42,7 +42,7 @@ exports.create = async (req, res) => {
         return;
     }
     
-    //create a new book
+    //create a new group
     const group = {
         groupName: req.body.groupName,
         groupDescription: req.body.groupDescription};
@@ -68,7 +68,7 @@ exports.joinOne = async (req, res) => {
     const { userId } = req.params;
     const { groupId } = req.body;
     const groupJoined = await Group.findByPk(groupId)
-    const user = await User.findOne({where: userId})
+    const user = await User.findOne({where: {id: userId}})
     console.log("user info is: ", user)
     await user.addGroup(groupJoined, { through: {isAdmin: false} })
         .then (data=> {
@@ -82,15 +82,17 @@ exports.joinOne = async (req, res) => {
         });
     };
 exports.findOne = (req, res) => {
-    const id = req.params.id;
-    Group.findByPk(id)
+    const { groupId } = req.params;
+    console.log("req params of findOne", req.params)
+    console.log("group id is:", groupId);
+    Group.findOne({ where: { id: groupId }, include: [{model: User}]})
         .then(data => {
-        res.send(data);
-        })
+            res.send(data);
+            })
         .catch(err => {
-        res.status(500).send({
-            message: "Error retrieving Shelf with id=" + id
-        });
+            res.status(500).send({
+                message: "Error retrieving Shelf with id=" + groupId
+            });
         });
     };
 exports.update = (req, res) => {

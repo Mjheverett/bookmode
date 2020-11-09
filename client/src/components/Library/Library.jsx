@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
     search: {
         position: 'relative',
+        maxWidth: "600px",
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
@@ -64,11 +65,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Library = () => {
+    const classes = useStyles();
     const [library, setLibrary] = useState(null);
     const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
-    const classes = useStyles();
     const { user } = useAuth0();
 
     useEffect(() => {
@@ -120,114 +121,111 @@ const Library = () => {
     if (library === null) {
         return 'Loading...';
     }
-return (
-<>
-    <Container maxWidth="lg" style={{marginTop: '2rem'}}>
-        <Typography variant="h2">Library</Typography>
-        <Typography variant="h6">
-            Are you a fan of creating shelves? Well, have we got a form for you!!
-        </Typography>
-        <br />
-        <Button type="button" color="secondary" aria-describedby={id} variant="contained" size="large">
-            Add Shelf
-        </Button>
-        <br />
-        <br />
-        <Typography>
-            <form onSubmit={_handleCreateShelf}>
-                <label>Shelf Name
-                    <div className={classes.search}>
-                        <InputBase style={{color: '#93A1A1'}}
-                            placeholder="Type here..."
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            name='shelfName' 
-                            onChange={(event) => _handleNameChange(event.target.value)} 
-                        />
-                    </div>
-                </label>
+
+    return (
+        <>
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
+                <Typography variant="h2">Library</Typography>
+                <Typography variant="h6">
+                    Are you a fan of creating shelves? Well, have we got a form for you!!
+                </Typography>
                 <br />
-                <label>Shelf Description
-                <div className={classes.search}>
-                        <InputBase
-                            style={{color: '#93A1A1'}}
-                            placeholder="Type here..."
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            name='shelfDescription'
-                            onChange={(event) => _handleDescChange(event.target.value)} 
-                        />
-                </div>
-                </label>
-                <br/>
-                <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="large">Create New Shelf</Button>
-                <Button type="button" className={classes.margin} color="secondary" aria-describedby={id} variant="outlined" size="large">Cancel</Button>
-            </form>
-        </Typography>
-        <br />
-        {(library.length !== 0) ? (library.map(shelf => (
-            <div>
-            <Typography variant="h6">{shelf.shelfName}</Typography>
-            <br />
-            <div className={classes.libraryDiv}>
-            <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
-                    return (
-                    <GridListTile cellHeight={'auto'} key={book.id}>
-                    <br />
-                    <div width={'auto'} className={classes.div}>
-                        <img src={book.coverURL} alt={book.title}/>
-                    </div>
-                    <br />
-                    <p>{book.title}</p>
+                <Typography>
+                    <form onSubmit={_handleCreateShelf}>
+                        <label>Shelf Name
+                            <div className={classes.search}>
+                                <InputBase style={{color: '#93A1A1'}}
+                                    placeholder="Awesome Shelf Name..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='shelfName' 
+                                    onChange={(event) => _handleNameChange(event.target.value)} 
+                                />
+                            </div>
+                        </label>
+                        <br />
+                        <label>Shelf Description
+                        <div className={classes.search}>
+                                <InputBase
+                                    style={{color: '#93A1A1'}}
+                                    placeholder="Shelf Description..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='shelfDescription'
+                                    onChange={(event) => _handleDescChange(event.target.value)} 
+                                />
+                        </div>
+                        </label>
+                        <br/>
+                        <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="large">Create New Shelf</Button>
+                        <Button type="button" color="secondary" aria-describedby={id} variant="outlined" size="large" className={classes.margin}>Cancel</Button>
+                    </form>
+                </Typography>
+                <br />
+                {(library.length !== 0) ? (library.map(shelf => (
                     <div>
-                        <Button color="secondary" aria-describedby={book.id} variant="contained" size="large" onClick={(e) => handleClick(e, book.id)}>
-                            More Information
-                        </Button>
-                        <Popover
-                            id={book.id}
-                            open={popoverId === book.id}
-                            anchorEl={anchorEl}
-                            className={classes.root}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                        >
-                            <Typography className={classes.typography}>
-                                Title: {book.title}
-                            </Typography>
-                            <Typography className={classes.typography}>
-                                Author: {book.Authors[0].authorName}
-                            </Typography>
-                            <Typography className={classes.typography}>
-                                Genre: (update with API data)
-                            </Typography>
-                            <Typography className={classes.typography}>
-                                Reader: (update with API data)
-                            </Typography>
-                        </Popover>
-                    </div>
+                    <Typography variant="h6">{shelf.shelfName}</Typography>
                     <br />
-                    </GridListTile>)})) : (
-                    <p>No books!!</p>
-                            )}
+                    <div className={classes.libraryDiv}>
+                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                        {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
+                            return (
+                            <GridListTile cellHeight={'auto'} key={book.id}>
+                            <br />
+                            <div width={'auto'} className={classes.div}>
+                                <img src={book.coverURL} alt={book.title}/>
+                            </div>
+                            <br />
+                            <Typography>{book.title}</Typography>
+                            <div>
+                            <br />
+                                <Button color="secondary" aria-describedby={book.id} variant="contained" size="large" onClick={(e) => handleClick(e, book.id)}>
+                                    More Information
+                                </Button>
+                                <Popover
+                                    id={book.id}
+                                    open={popoverId === book.id}
+                                    anchorEl={anchorEl}
+                                    className={classes.root}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'right',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+                                >
+                                    <Typography className={classes.typography}>
+                                        Title: {book.title}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Author: {book.Authors[0].authorName}
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Genre: Self Improvement
+                                    </Typography>
+                                    <Typography className={classes.typography}>
+                                        Reader: None
+                                    </Typography>
+                                </Popover>
+                            </div>
+                            <br />
+                        </GridListTile>)})) : (
+                        <Typography>No books!!</Typography>
+                        )}
                     </GridList> 
                     </div>
                     </div>))) : (
-                    <p>No Shelves!</p>
+                    <Typography>No Shelves!</Typography>
                 )}
-        </Container> 
-    </>
+            </Container> 
+        </>
     )
 }
 
