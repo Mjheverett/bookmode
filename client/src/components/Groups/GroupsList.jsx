@@ -50,7 +50,7 @@ const GroupsList = (props) => {
             axios.get(url)
                 .then(res => {
                     const data = res.data;
-                    console.log('res.data:', data)
+                    // console.log('res.data:', data)
                     setGroups(data)
                 })
             })();
