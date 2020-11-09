@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
@@ -32,16 +33,18 @@ const useStyles = makeStyles((theme) => ({
 
 const LibraryCard = () => {
     const classes = useStyles();
-    // const [library, setLibrary] = useState(null);
-    // useEffect(() => {
-    //     axios.get('http://localhost:3000/library')
-    //         .then(res => {
-    //             const data = res.data;
-    //             console.log('res.data:', data)
-    //             setLibrary(data)
-    //             console.log(data)
-    //         });
-    // }, []);
+    const [library, setLibrary] = useState(null);
+    const { user } = useAuth0();
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/library/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                console.log('res.data:', data)
+                setLibrary(data)
+                console.log(data)
+            });
+    }, []);
 
     return (
         <>
