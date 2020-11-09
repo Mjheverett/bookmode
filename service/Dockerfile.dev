@@ -15,5 +15,8 @@ RUN npm install
 # add app
 COPY . ./
 
+# open port
+EXPOSE 3000
+
 # start app
 CMD ["npm", "run", "dev"]
