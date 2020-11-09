@@ -1,4 +1,5 @@
 const db = require("../models");
+const Shelf = db.shelves;
 const User = db.users;
 const Op = db.Sequelize.Op;
 
@@ -7,31 +8,23 @@ exports.create = async (req, res) => {
     console.log('this is what is getting sent in as the req.body: ', req.body)
     
     //create a new book
-    const user = {
+    const userInput = {
         id: req.body.id,
         name: req.body.name,
         email: req.body.email};
     //save book in DB
-    await User.findOrCreate({
-        where: { id: user.id },
+    const [user, created] = await User.findOrCreate({
+        where: { id: userInput.id },
         defaults: {
-            name: user.name,
-            email: user.email
+            name: userInput.name,
+            email: userInput.email
         }
     })
-        .spread((user, created) => {
-            console.log(user.get({
-                plain: true
-            }))
-            console.log(created)
-        })
-        
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the user."
-            });
-        });
+    if (created) {
+        console.log("user created with id", user.id);
+    }
+    res.send(user);
+    console.log("user data", user);
     
     };
 exports.findAll = (req, res) => {
