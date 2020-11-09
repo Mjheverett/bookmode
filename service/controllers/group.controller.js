@@ -17,8 +17,8 @@ exports.findAll = (req, res) => {
         });
     };
 exports.findAllUser = async (req, res) => {
-    const { userId } = req.params.userId;
-    const userInstance = await User.findOne({where: userId})
+    const { userId } = req.params;
+    const userInstance = await User.findOne({where: { id: userId}})
     console.log('user instance is the following data: ', userInstance)
     // var condition = userId ? { id: { [Op.eq]: `${userId}` } } : null;
     Group.findAll({ include: [{model: User, where: userInstance}]})
@@ -49,8 +49,8 @@ exports.create = async (req, res) => {
     //save book in DB
     const groupAdded = await Group.create(group)
     console.log("group info is: ", groupAdded)
-    const { userId } = req.params.userId;
-    const user = await User.findOne({where: userId})
+    const { userId } = req.params;
+    const user = await User.findOne({where: { id: userId}})
     console.log("user info is: ", user)
     await user.addGroup(groupAdded, { through: {isAdmin: true} })
         .then (data=> {
