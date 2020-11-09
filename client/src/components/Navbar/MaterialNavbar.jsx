@@ -110,7 +110,7 @@ export default function PrimarySearchAppBar() {
     const [data, setData] = React.useState([]);
     const [fireRedirect, setRedirect] = React.useState(false);
     const [query, setQuery] = React.useState('all');
-   
+
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -223,6 +223,7 @@ export default function PrimarySearchAppBar() {
                             >
                             <MenuItem value="all">All</MenuItem>
                             <MenuItem value="title">Title</MenuItem>
+                            <MenuItem value="author">Author</MenuItem>
                             <MenuItem value="subject">Subject</MenuItem>
                             <MenuItem value="ISBN">ISBN</MenuItem>
                         </Select>
@@ -246,7 +247,7 @@ export default function PrimarySearchAppBar() {
                             <Redirect 
                                 to={{
                                     pathname: '/results',
-                                    state: {data: data}
+                                    state: {data: data, query: query}
                                 }}
                             />
                         )}

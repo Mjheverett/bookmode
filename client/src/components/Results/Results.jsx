@@ -51,24 +51,34 @@ const Results = (props) => {
     const [clicks, setClicks] = useState([])
     const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
-    const { data } = props.location.state;
+    const { data, query } = props.location.state;
     const { user } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
     useEffect(() => {
         (async function (){
-            const key = process.env.REACT_APP_GOODREADS_KEY;
-            const parseString = require('xml2js').parseString;
-            console.log("props.data", data);
-            const url = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?key=${key}&q=${data}&page=1&search=all`;
-            console.log(url);
+            let url;
+            if (query === 'all') {
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}`;
+            }
+            if (query === 'title') {
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}`;
+            }
+            if (query === 'author') {
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}`;
+            }
+            if (query === 'subject') {
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}`;
+            }
+            if (query === 'ISBN') {
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}`;
+            }
+            
             await axios.get(url)
                 .then(res => {
-                    const data = res.data;
-                    parseString(data, function (err, result) {
-                        const resultsData = result.GoodreadsResponse['search'][0]['results'][0]['work'];
-                        console.log("ready to return", resultsData);
-                        setResults(resultsData);
-                        })
+                    console.log("response", res);
+                    const data = res.data.docs;
+                    console.log("get isbn", data[0].isbn[0]);
+                    setResults(data);
                 })
             })();
     }, [data]);    
@@ -112,26 +122,26 @@ const Results = (props) => {
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
                         {results.map((result) => {
                             return (
-                            <GridListTile key={result.id[0]._}>
+                            <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
-                                <img src={result.best_book[0].image_url[0]} alt={result.best_book[0].title} />
+                                    <img src={`http://covers.openlibrary.org/b/isbn/${result.isbn}-M.jpg`} alt={result.cover_i} />
                                 </div>
                                 <GridListTileBar
-                                title={result.best_book[0].title}
-                                subtitle={<span>by: {result.best_book[0].author[0].name[0]}</span>}
+                                title={result.title}
+                                subtitle={<span>by: {result.author_name}</span>}
                                 classes={{
                                     root: classes.titleBar,
                                 }}
                                 actionIcon={
-                                    <IconButton aria-label={`info about ${result.best_book[0].title}`} onClick={(e) => handleClick(e, result.id[0]._)} className={classes.icon}>
+                                    <IconButton aria-label={`info about ${result.title}`} onClick={(e) => handleClick(e, result.key)} className={classes.icon}>
                                     
                                     <InfoIcon />
                                     </IconButton>}
                                     
                             />
                             <Popover
-                            id={result.id[0]._}
-                            open={popoverId === result.id[0]._}
+                            id={result.key}
+                            open={popoverId === result.key}
                             anchorEl={anchorEl}
                             className={classes.root}
                             onClose={handleClose}
@@ -145,10 +155,10 @@ const Results = (props) => {
                             }}
                         >
                             <Typography className={classes.typography}>
-                                Title: {result.best_book[0].title}
+                                Title: {result.title}
                             </Typography>
                             <Typography className={classes.typography}>
-                                Author: {result.best_book[0].author[0].name[0]}
+                                Author: {result.author_name}
                             </Typography>
                             <Typography className={classes.typography}>
                                 Genre: (update with API data)
@@ -163,9 +173,9 @@ const Results = (props) => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <IconButton aria-label={`${result.id[0]._}`} onClick={() => _handleAddLibrary(result.id[0]._, result.best_book[0].title[0], result.best_book[0].author[0].name[0], result.best_book[0].image_url[0])}>
+                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, result.cover_i)}>
                                     {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
-                                    {clicks.includes(result.id[0]._) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
+                                    {clicks.includes(result.key) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
                                     </IconButton> }
                             />
                             </GridListTile>
