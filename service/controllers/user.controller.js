@@ -2,42 +2,9 @@ const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
 
-exports.findAll = (req, res) => {
-    
-    User.findAll()
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-            message:
-                err.message || "Some error occurred while retrieving groups."
-            });
-        });
-    };
-exports.findAllUser = (req, res) => {
-    const { userId } = req.params.userId;
-    var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
-    User.findAll({ where: condition})
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-            message:
-                err.message || "Some error occurred while retrieving users groups."
-            });
-        });
-    };
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
-    if (!req.body.name) {
-        res.status(400).send({
-            message: "Name cannot be empty!"
-        });
-        return;
-    }
     
     //create a new book
     const user = {
@@ -45,72 +12,95 @@ exports.create = (req, res) => {
         name: req.body.name,
         email: req.body.email};
     //save book in DB
-    User.create(user)
-        .then (data=> {
-            res.send(data).status(200);
+    await User.findOrCreate({
+        where: { id: user.id },
+        defaults: {
+            name: user.name,
+            email: user.email
+        }
+    })
+        .spread((user, created) => {
+            console.log(user.get({
+                plain: true
+            }))
+            console.log(created)
+        })
+        
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the user."
+            });
+        });
+    
+    };
+exports.findAll = (req, res) => {
+    User.findAll()
+        .then(data => {
+            res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the book."
+                    err.message || "Some error occurred while retrieving all users."
             });
         });
-    
     };
 exports.findOne = (req, res) => {
-    const id = req.params.id;
-    User.findByPk(id)
+    const { userId } = req.params;
+    User.findByPk(userId)
         .then(data => {
-        res.send(data);
+            res.send(data);
         })
         .catch(err => {
-        res.status(500).send({
-            message: "Error retrieving Shelf with id=" + id
-        });
+            res.status(500).send({
+                message: 
+                    err.message || "Error retrieving user with id=" + userId
+            });
         });
     };
 exports.update = (req, res) => {
-    const id = req.params.id;
+    const { userId } = req.params;
     User.update(req.body, {
-        where: { id: id }
+        where: { id: userId }
     })
         .then(num => {
         if (num == 1) {
             res.send({
-            message: "Shelf was updated successfully."
+                message: "User was updated successfully."
             });
         } else {
             res.send({
-            message: `Cannot update Shelf with id=${id}. Maybe the Shelf was not found or req.body is empty!`
+                message: `Cannot update User with id=${userId}. Maybe the User was not found or req.body is empty!`
             });
         }
         })
         .catch(err => {
-        res.status(500).send({
-            message: "Error updating Shelf with id=" + id
-        });
+            res.status(500).send({
+                message: "Error updating User with id=" + userId
+            });
         });
     };
 exports.delete = (req, res) => {
-    const id = req.params.id;
+    const { userId } = req.params;
     
     User.destroy({
-        where: { id: id }
+        where: { id: userId }
     })
         .then(num => {
         if (num == 1) {
             res.send({
-            message: "Shelf was deleted successfully!"
+                message: "User was deleted successfully!"
             });
         } else {
             res.send({
-            message: `Cannot delete Shelf with id=${id}. Maybe Shelf was not found!`
+                message: `Cannot delete User with id=${userId}. Maybe User was not found!`
             });
         }
         })
         .catch(err => {
-        res.status(500).send({
-            message: "Could not delete Shelf with id=" + id
-        });
+            res.status(500).send({
+                message: "Could not delete User with id=" + userId
+            });
         });
     };
