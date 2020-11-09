@@ -1,35 +1,55 @@
-// const db = require("../models");
-// const Book = db.books;
-// const Author = db.authors;
-// const Shelf = db.shelves;
-// const User = db.users;
-// const Recommendation = db.recommendations
+const db = require("../models");
+const Book = db.books;
+const Author = db.authors;
+const Shelf = db.shelves;
+const User = db.users;
+const Recommendation = db.recommendations
 
-
-// exports.create = async (req, res) => {
-//     const { id }= req.params
-//     const book = await Book.findByPk(id)
-//     const { userId } = req.params;
-//     const sender = await User.findOne({where: { id: userId}})
-//     console.log('this is what is getting sent in as the req.body: ', req.body)
-//     const { comment, receiverId } = req.body;
-//     const receiver = const user = await User.findOne({where: { name: receiverId}})
-//         const book = await Book.create({
-//             title: title,
-//             coverURL: coverURL,})
-//     await author.addBook(book)
-//     const shelf= await Shelf.findByPk(1)
-//         await shelf.addBook(book)
-//         .then(data => {
-//             res.send(data);
-//         })
-//             .catch(err => {
-//                 res.status(500).send({
-//                     message:
-//                         err.message || "Some error occurred while creating the book."
-//                 });
-//             })
-//         }
-//     await user.addRecommendation(book)
-
-// }
+exports.create = async (req, res) => {
+    const { id }= req.params
+    const { userId } = req.params;
+    console.log('this is what is getting sent in as the req.body: ', req.body)
+    const { comment, receiverName } = req.body;
+    const receiver = await User.findOne({where: { name: receiverName}})
+    await Recommendation.create({
+        comment: comment,
+        senderId: userId,
+        receiverId: receiver.id,
+        BookId: id,
+    })
+        .then(data => {
+            res.send(data);
+        })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while creating the recommendation."
+                });
+            })
+        }
+exports.findAllSent = async (req, res) => {
+    const { userId } = req.params;
+    await Recommendation.findAll({ where: { senderId: userId}, include: [{model: User}, {model: Book, include: [{model: Author}]}]})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving recommendations"
+            });
+        });
+    };
+exports.findAllReceived = async (req, res) => {
+    const { userId } = req.params;
+    await Recommendation.findAll({ where: { receiverId: userId}, include: [{model: User}, {model: Book, include: [{model: Author}]}]})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving recommendations"
+            });
+        });
+    };

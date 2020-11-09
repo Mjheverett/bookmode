@@ -25,14 +25,16 @@ exports.create = async (req, res) => {
     console.log('this is what is getting sent in as the req.body: ', req.body)
     //save book in DB
     const {title, coverURL, authorName } = req.body;
-    const book = await Book.create({
+    const book = await Book.findOrCreate({
         title: title,
         coverURL: coverURL,})
     const author = await Author.create({
             authorName: authorName
         })
     await author.addBook(book)
-    const shelf= await Shelf.findByPk(1)
+    const { userId } = req.params;
+    const user = await User.findOne({where: { id: userId}})
+    const shelf= await Shelf.findOne({where: { shelfName: `${user.name}'s Library`}})
     await shelf.addBook(book)
     .then(data => {
         res.send(data);
