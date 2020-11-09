@@ -59,11 +59,7 @@ const GroupPage = () => {
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">{group.name}</Typography>
-            <Typography variant="h6">Get connected, create new groups here!</Typography>
-            <br />
-            <Button type="button" color="secondary" variant="contained" size="large">Add Group</Button>
-            <br />
-            
+            <Typography variant="h6">This should show info for the selected group but it doesn't!</Typography>
         </Container>
     )
 }
