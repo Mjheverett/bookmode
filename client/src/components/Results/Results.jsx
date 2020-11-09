@@ -6,6 +6,7 @@ import { Container, GridList, GridListTile, GridListTileBar, Typography, IconBut
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import InfoIcon from '@material-ui/icons/Info';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
     resultsDiv:{
@@ -44,7 +45,7 @@ const Results = (props) => {
     const [clicks, setClicks] = useState([])
     const [results, setResults] = useState(null);
     const { data } = props.location.state;
-    
+    const { user } = useAuth0();
     useEffect(() => {
         (async function (){
             const key = process.env.REACT_APP_GOODREADS_KEY;
@@ -78,7 +79,7 @@ const Results = (props) => {
             coverURL: imageURL,
             authorName: author
         };
-        axios.post('http://localhost:3000/results/add', data)
+        axios.post(`http://localhost:3000/results/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };

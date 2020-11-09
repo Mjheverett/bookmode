@@ -25,9 +25,9 @@ exports.create = async (req, res) => {
     console.log('this is what is getting sent in as the req.body: ', req.body)
     //save book in DB
     const {title, coverURL, authorName } = req.body;
-    const book = await Book.findOrCreate({
+    const book = await Book.create({
         title: title,
-        coverURL: coverURL,})
+        coverURL: coverURL})
     const author = await Author.create({
             authorName: authorName
         })
