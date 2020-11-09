@@ -5,13 +5,11 @@ module.exports = app => {
     router.post("/add", users.create);
     // Retrieve all users
     router.get("/", users.findAll);
-    // Retrieve all users with user id
-    router.get("/:userId", users.findAllUser);
     // Retrieve a single group with id
-    router.get("/:id", users.findOne);
+    router.get("/:userId", users.findOne);
     // Update a group with id
-    router.put("/:id", users.update);
+    router.put("/:userId", users.update);
     // Delete a group with id
-    router.delete("/:id", users.delete);
+    router.delete("/:userId", users.delete);
     app.use('/users', router);
     };
