@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, GridListTileBar, Typography, IconButton }  from '@material-ui/core';
+import { Container, GridList, GridListTile, GridListTileBar, Typography, Popover, IconButton }  from '@material-ui/core';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import InfoIcon from '@material-ui/icons/Info';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
+    },
+    typography: {
+        padding: theme.spacing(2),
+        alignItems: 'center',
+        color: '#002B36',
+        backgroundColor: '#768B91',
     },
     div: {
         display: 'flex-inline',
@@ -43,9 +49,11 @@ const useStyles = makeStyles((theme) => ({
 const Results = (props) => {
     const classes = useStyles();
     const [clicks, setClicks] = useState([])
+    const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
     const { data } = props.location.state;
     const { user } = useAuth0();
+    const [anchorEl, setAnchorEl] = React.useState(null);
     useEffect(() => {
         (async function (){
             const key = process.env.REACT_APP_GOODREADS_KEY;
@@ -68,7 +76,16 @@ const Results = (props) => {
     if (results === null) {
         return 'Loading...';
     }
+    
+    const handleClick = (event, popoverId) => {
+        setPopoverId(popoverId);
+        setAnchorEl(event.currentTarget);
+    };
 
+    const handleClose = () => {
+        setPopoverId(null);
+        setAnchorEl(null);
+    };
     const _handleAddLibrary = (id, title, author, imageURL) =>{
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
         let result =  clicks.includes(id) ? clicks.filter(click => click !== id): [...clicks, id]
@@ -106,10 +123,40 @@ const Results = (props) => {
                                     root: classes.titleBar,
                                 }}
                                 actionIcon={
-                                    <IconButton aria-label={`info about ${result.best_book[0].title}`} className={classes.icon}>
+                                    <IconButton aria-label={`info about ${result.best_book[0].title}`} onClick={(e) => handleClick(e, result.id[0]._)} className={classes.icon}>
+                                    
                                     <InfoIcon />
                                     </IconButton>}
+                                    
                             />
+                            <Popover
+                            id={result.id[0]._}
+                            open={popoverId === result.id[0]._}
+                            anchorEl={anchorEl}
+                            className={classes.root}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                        >
+                            <Typography className={classes.typography}>
+                                Title: {result.best_book[0].title}
+                            </Typography>
+                            <Typography className={classes.typography}>
+                                Author: {result.best_book[0].author[0].name[0]}
+                            </Typography>
+                            <Typography className={classes.typography}>
+                                Genre: (update with API data)
+                            </Typography>
+                            <Typography className={classes.typography}>
+                                Reader: (update with API data)
+                            </Typography>
+                        </Popover>
                             <GridListTileBar
                                 classes={{
                                     root: classes.titleBarTop,
