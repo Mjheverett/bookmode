@@ -3,7 +3,7 @@ module.exports = app => {
     const authors = require("../controllers/book.controller.js");
         var router = require("express").Router();
     // Create a new Book
-    router.post("/add", books.create);
+    router.post("/add/:userId", books.create);
     // Retrieve all shelves
     router.get("/", books.findAll);
     // Retrieve a single Shelf with id
