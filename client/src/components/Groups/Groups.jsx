@@ -81,58 +81,53 @@ const Groups = () => {
 
     return (
         <>
-            <Route path="/groups">
-                <Container maxWidth="lg" style={{marginTop: '2rem'}}>
-                    <Typography variant="h2">Groups</Typography>
-                    <Typography variant="h6">Get connected, create new groups here!</Typography>
-                    <br />
-                    <Button type="button" color="secondary" variant="contained" size="large">Add Group</Button>
-                    <br />
-                    <br />
-                    <Typography>
-                        <form onSubmit={_handleCreateGroup}>
-                            <label>Group Name
-                                <div className={classes.search}>
-                                    <InputBase style={{color: '#93A1A1'}}
-                                        placeholder="Type here..."
-                                        classes={{
-                                            root: classes.inputRoot,
-                                            input: classes.inputInput,
-                                        }}
-                                        name='groupName' 
-                                        onChange={(event) => _handleNameChange(event.target.value)} 
-                                    />
-                                </div>
-                            </label>
-                            <br />
-                            <label>Group Description
+            <Container maxWidth="lg" style={{marginTop: '2rem'}}>
+                <Typography variant="h2">Groups</Typography>
+                <Typography variant="h6">Get connected, create new groups here!</Typography>
+                <br />
+                <Button type="button" color="secondary" variant="contained" size="large">Add Group</Button>
+                <br />
+                <br />
+                <Typography>
+                    <form onSubmit={_handleCreateGroup}>
+                        <label>Group Name
                             <div className={classes.search}>
-                                    <InputBase
-                                        style={{color: '#93A1A1'}}
-                                        placeholder="Type here..."
-                                        classes={{
-                                            root: classes.inputRoot,
-                                            input: classes.inputInput,
-                                        }}
-                                        name='groupDescription'
-                                        onChange={(event) => _handleDescChange(event.target.value)} 
-                                    />
+                                <InputBase style={{color: '#93A1A1'}}
+                                    placeholder="Type here..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='groupName' 
+                                    onChange={(event) => _handleNameChange(event.target.value)} 
+                                />
                             </div>
-                            </label>
-                            <br/>
-                            <Button type="submit" color="secondary" variant="contained" size="large">Create New Group</Button>
-                            <Button type="button" className={classes.margin} color="secondary" variant="outlined" size="large">Cancel</Button>
-                        </form>
-                    </Typography>
-                    <br />
-                    <br />
-                    <GroupsList list={"User"} />
-                    <GroupsList list={"All"} />
-                </Container>
-            </Route>
-            <Route path="/groups/:id">
-                <GroupPage />
-            </Route>
+                        </label>
+                        <br />
+                        <label>Group Description
+                        <div className={classes.search}>
+                                <InputBase
+                                    style={{color: '#93A1A1'}}
+                                    placeholder="Type here..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    name='groupDescription'
+                                    onChange={(event) => _handleDescChange(event.target.value)} 
+                                />
+                        </div>
+                        </label>
+                        <br/>
+                        <Button type="submit" color="secondary" variant="contained" size="large">Create New Group</Button>
+                        <Button type="button" className={classes.margin} color="secondary" variant="outlined" size="large">Cancel</Button>
+                    </form>
+                </Typography>
+                <br />
+                <br />
+                <GroupsList list={"User"} />
+                <GroupsList list={"All"} />
+            </Container>
         </>
     )
 }
