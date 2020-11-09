@@ -1,14 +1,13 @@
 const db = require("../models");
 const Shelf = db.shelves;
+const User = db.users;
 const Book = db.books;
 const Author = db.authors;
 const Op = db.Sequelize.Op;
-
-exports.findAll = async (req, res) => {
-    const shelfName = req.body.shelfName;
-    var condition = shelfName ? { title: { [Op.like]: `%${shelfName}%` } } : null;
-    await Shelf.findAll({ where: condition,
-        include: [{model: Book, include: [{model: Author}]}]})
+exports.findAllUser = async (req, res) => {
+    const { userId } = req.params;
+    const user = await User.findOne({where: { id: userId}})
+    await Shelf.findAll({ include: [{model: User, where: user}, {model: Book, include: [{model: Author}]}]})
         .then(data => {
             res.send(data);
         })
@@ -19,7 +18,7 @@ exports.findAll = async (req, res) => {
             });
         });
     };
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
     if (!req.body.shelfName) {
@@ -33,7 +32,13 @@ exports.create = (req, res) => {
         shelfName: req.body.shelfName,
         shelfDescription: req.body.shelfDescription};
     //save shelf in DB
-    Shelf.create(shelf)
+    const shelfAdded = await Shelf.create(shelf)
+        console.log("shelf info is: ", shelfAdded)
+    const { userId } = req.params;
+        console.log('user id is: ', userId)
+    const user = await User.findOne({where: { id: userId}})
+        console.log("user info is: ", user)
+    await user.addShelf(shelfAdded)
         .then (data=> {
             res.send(data).status(200);
         })
