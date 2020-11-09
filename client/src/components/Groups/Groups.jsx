@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     search: {
         position: 'relative',
+        maxWidth: "600px",
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
@@ -40,23 +41,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Groups = () => {
+    const classes = useStyles();
     const [name, setGroupName] = useState('');
     const [description, setGroupDescription] = useState('');
-    const classes = useStyles();
-
     const { user } = useAuth0();
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-
-//     const handleClick = (event) => {
-//             setAnchorEl(event.currentTarget);
-//     };
-
-//     const handleClose = () => {
-//         setAnchorEl(null);
-//     };
-
 
     const _handleNameChange = (data) => {
         console.log(data)
@@ -85,15 +73,12 @@ const Groups = () => {
                 <Typography variant="h2">Groups</Typography>
                 <Typography variant="h6">Get connected, create new groups here!</Typography>
                 <br />
-                <Button type="button" color="secondary" variant="contained" size="large">Add Group</Button>
-                <br />
-                <br />
                 <Typography>
                     <form onSubmit={_handleCreateGroup}>
                         <label>Group Name
                             <div className={classes.search}>
                                 <InputBase style={{color: '#93A1A1'}}
-                                    placeholder="Type here..."
+                                    placeholder="Epic Group Name..."
                                     classes={{
                                         root: classes.inputRoot,
                                         input: classes.inputInput,
@@ -108,7 +93,7 @@ const Groups = () => {
                         <div className={classes.search}>
                                 <InputBase
                                     style={{color: '#93A1A1'}}
-                                    placeholder="Type here..."
+                                    placeholder="Group Description..."
                                     classes={{
                                         root: classes.inputRoot,
                                         input: classes.inputInput,
@@ -120,7 +105,7 @@ const Groups = () => {
                         </label>
                         <br/>
                         <Button type="submit" color="secondary" variant="contained" size="large">Create New Group</Button>
-                        <Button type="button" className={classes.margin} color="secondary" variant="outlined" size="large">Cancel</Button>
+                        <Button type="button" color="secondary" variant="outlined" size="large" className={classes.margin}>Cancel</Button>
                     </form>
                 </Typography>
                 <br />

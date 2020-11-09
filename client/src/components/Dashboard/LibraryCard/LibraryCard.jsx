@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
+import { GridList, GridListTile, Typography }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     dashboardDiv:{
@@ -46,21 +46,33 @@ const LibraryCard = () => {
             .catch(err => console.log(err));
     }, []);
 
+     if (library === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
-            <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to='/library'>Your Library</Link></Typography>
-                <GridListTile cellHeight={'auto'}>
-                    <Typography>
-                        <List>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                        </List>
-                    </Typography>
-                </GridListTile>
-            </div>      
+            {(library.length !== 0) ? (library.map(shelf => (
+                <div className={classes.dashboardDiv}>
+                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/library">Your Library</Link></Typography>
+                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                        {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
+                            return (
+                            <GridListTile cellHeight={'auto'} key={book.id}>
+                            <br />
+                            <div width={'auto'} className={classes.div}>
+                                <img src={book.coverURL} alt={book.title}/>
+                            </div>
+                            <br />
+                            <Typography>{book.title}</Typography>
+                            <br />
+                            </GridListTile>)})) : (
+                            <Typography>No books!!</Typography>
+                                    )}
+                    </GridList> 
+                </div>))) : (
+                <Typography>No Shelves!</Typography>
+            )}
         </>
     )
 }
