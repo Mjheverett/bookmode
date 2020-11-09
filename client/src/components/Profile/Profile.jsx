@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, Typography, Button, CardMedia }  from '@material-ui/core';
 import axios from 'axios';
@@ -29,23 +29,31 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 const Profile = () => {
-    // const { user } = useAuth0();
+    // const { userAuth0 } = useAuth0();
     const classes = useStyles();
-    const { user, setUser } = useState();
+    const [ user, setUser ] = useState(null);
 
     useEffect(() => {
         (async function (){
-            let url = `http://localhost:3000/users/`;
+            const url = await (`http://localhost:3000/users`);
             console.log(url);
-            axios.get(url)
+            const res = axios.get(url)
                 .then(res => {
-                    const data = res.data;
-                    console.log('res.data:', data)
-                    setUser(data)
+                    const data = res.data[3];
+                    console.log('data is:', data)
+                    setUser(data);
                 })
+                
             })();
-    }, []); 
+            
+    },[]);  
+
+    if (user === null) {
+        return 'Loading...';
+    }
 
     return (
         <>
@@ -59,9 +67,9 @@ const Profile = () => {
                 <div className={classes.profileDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile cellHeight={'auto'}>
-                            {/* <Typography variant="h4">{setUser.name} </Typography>
-                            <Typography variant="h5">{setUser.email}</Typography>
-                            <CardMedia><img className="" src={user.picture} alt="Profile"/></CardMedia> */}
+                            <Typography variant="h6">{user.name} </Typography>
+                            <Typography style= {{fontSize: '.75rem'}}variant="h6">{user.email}</Typography>
+                            {/* <CardMedia><img className="" src={userAuth0.picture} alt="Profile"/></CardMedia> */}
                         </GridListTile>
                         <GridListTile cellHeight={'auto'}>
                             <Typography variant="h6" >Info will go here</Typography>
