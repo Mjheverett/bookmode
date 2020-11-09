@@ -18,7 +18,7 @@ const GroupDetail = (props) => {
         <>
             <br />
                 <GridListTile className={classes.groupBar} cellHeight={'auto'}>
-                    <Typography variant="h6">{group.groupName}<Link to={`/groups/${group.id}`}></Link></Typography>
+                    <Link to={`/groups/${group.id}`}><Typography variant="h6">{group.groupName}</Typography></Link>
                     <Typography>{group.groupDescription}</Typography>
                     <br />
                     <Button color="secondary" variant="contained" size="large">
