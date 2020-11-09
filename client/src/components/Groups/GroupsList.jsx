@@ -68,7 +68,7 @@ const GroupsList = (props) => {
             <div className={classes.groupsDiv}>
                 <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                     {(groups.length !== 0) ? (groups.map((group) => (
-                        <GroupDetail group={group} />
+                        <GroupDetail group={group} list={list} />
                     ))) : (
                         <Typography>You're not part of any groups!</Typography>
                     )};
