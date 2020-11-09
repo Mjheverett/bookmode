@@ -17,7 +17,7 @@ const Footer = () => {
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <div className={classes.div}>
-                <Typography variant="h6"><span className="fa fa-heart" /></Typography>
+                <Typography variant="h6">Made with <span className="fa fa-heart" /> by ¡ƎƎ˥ W∀Ǝ┴</Typography>
                 </div>
             </Container>
         </>
