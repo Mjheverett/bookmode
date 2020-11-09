@@ -6,7 +6,7 @@ import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Brightness5OutlinedIcon from '@material-ui/icons/Brightness5Outlined';
 import storage from 'local-storage-fallback';
 
-
+// saves theme preference to local storage so it stays to your preference when you re-login
 function getInitialTheme() {
   const savedTheme = storage.getItem('theme')
   return savedTheme ? JSON.parse(savedTheme) : {mode: 'light'}
@@ -21,6 +21,10 @@ const LightDarkToggle = () => {
     },
     [theme]
   );
+
+
+
+  // Toggle component to switch from light to dark mode 
 
   return (
     <div className="lightDarkToggle">
