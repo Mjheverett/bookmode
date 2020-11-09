@@ -32,17 +32,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Profile = () => {
-    // const { userAuth0 } = useAuth0();
+    const { user } = useAuth0(null);
     const classes = useStyles();
-    const [ user, setUser ] = useState(null);
+    const [ userInfo, setUser ] = useState(null);
 
     useEffect(() => {
         (async function (){
-            const url = await (`http://localhost:3000/users`);
-            console.log(url);
+            const data = {
+                id: user.sub,
+               
+            };
+            console.log("user sub is", user.sub)
+            const url = await `http://localhost:3000/users/${user.sub}`;
             const res = axios.get(url)
                 .then(res => {
-                    const data = res.data[3];
+                    const data = res.data;
                     console.log('data is:', data)
                     setUser(data);
                 })
@@ -51,7 +55,48 @@ const Profile = () => {
             
     },[]);  
 
-    if (user === null) {
+    
+    // trying both updateData and _handleInfoChange for put request
+
+    const updateData = (e) => {
+        e.preventDefault();
+        const data = {
+            id: user.sub,
+            name: user.name,
+            email: user.email
+        };
+        axios.put(`http://localhost:3000/users/${user.sub}`, data)
+            .then(res => {
+                const newData = res.data;
+                setUser(newData);
+                console.log('put data is: ', newData)
+            })
+            .catch(err => console.log(err));
+    }
+
+   
+
+     // trying both _handleInfoChange and updateData for put request
+
+    // const _handleInfoChange = (e) => {
+    //     e.preventDefault();
+    //     const newData = {
+    //         id: user.sub,
+    //         name: user.name,
+    //         email: user.email
+    //     };
+    //     axios.put(`http://localhost:3000/users/${user.sub}`, newData)
+    //         .then(res => console.log(res))
+    //         .catch(err => console.log(err));
+    // };
+
+    const _handleChange = (newData) => {
+        console.log(newData)
+        setUser(newData);
+    };
+
+
+    if (userInfo === null) {
         return 'Loading...';
     }
 
@@ -61,29 +106,29 @@ const Profile = () => {
                 <Typography variant="h2">Profile Page</Typography>
                 
                 <br />
-                <Button color="secondary" variant="contained" size="large">Update Profile</Button>
                 <br />
                 <br />
                 <div className={classes.profileDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile cellHeight={'auto'}>
-                            <Typography variant="h6">{user.name} </Typography>
-                            <Typography variant="h6">{user.email}</Typography>
-                            {/* <CardMedia><img className="" src={userAuth0.picture} alt="Profile"/></CardMedia> */}
+                            <Typography variant="h6">{userInfo.name} </Typography>
+                            <Typography variant="h6">{userInfo.email}</Typography>
+                            <CardMedia><img className="" src={user.picture} alt="Profile"/></CardMedia>
                         </GridListTile>
                         <GridListTile cellHeight={'auto'}>
-                            <Typography variant="h6" >Info will go here</Typography>
-                            <form>
+                            <Typography variant="h6" >Change Profile Info</Typography>
+                            <form onSubmit={(e) => updateData(e)}>
                                 <label>Name 
-                                    <input>
+                                    <input type='text' name='name' onChange={(event) => _handleChange(event.target.value)}>
 
                                     </input>
                                 </label>
                                 <label>Email 
-                                    <input>
+                                    <input type='text' name='email' onChange={(event) => _handleChange(event.target.value)}>
 
                                     </input>
                                 </label>
+                                <Button type="submit" color="secondary" variant="contained" size="large">Update Profile</Button>
                             </form>
                         </GridListTile>
                     </GridList> 
