@@ -27,7 +27,9 @@ exports.create = async (req, res) => {
             shelfDescription: `${user.name}'s Library`
         };
         //save shelf in DB
-        Shelf.create(shelf)
+        const shelfAdded = await Shelf.create(shelf)
+            console.log("shelf info is: ", shelfAdded)
+        await user.addShelf(shelfAdded)
             .then (data=> {
                 res.send(data).status(200);
             })
