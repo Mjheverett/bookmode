@@ -22,9 +22,23 @@ exports.create = async (req, res) => {
     })
     if (created) {
         console.log("user created with id", user.id);
+        const shelf = {
+            shelfName: `${user.name}'s Library`,
+            shelfDescription: `${user.name}'s Library`
+        };
+        //save shelf in DB
+        Shelf.create(shelf)
+            .then (data=> {
+                res.send(data).status(200);
+            })
+            .catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while creating the shelf."
+                });
+            });
     }
     res.send(user);
-    console.log("user data", user);
     
     };
 exports.findAll = (req, res) => {
