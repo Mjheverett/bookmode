@@ -24,24 +24,24 @@ function App() {
             <Route exact path="/">
               <AuthenticatedHome />
             </Route>
-            <Route path="/dashboard">
+            <ProtectedRoute path="/dashboard">
               <Dashboard />
-            </Route>
-            <Route path="/library">
+            </ProtectedRoute>
+            <ProtectedRoute path="/library">
               <Library />
-            </Route>
-            <Route path="/groups">
+            </ProtectedRoute>
+            <ProtectedRoute path="/groups">
               <Groups />
-            </Route>
-            <Route path="/profile">
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile">
               <Profile />
-            </Route>
-            <Route path="/sharing">
+            </ProtectedRoute>
+            <ProtectedRoute path="/sharing">
               <Sharing />
-            </Route>
-            <Route path="/notifications">
+            </ProtectedRoute>
+            <ProtectedRoute path="/notifications">
               <Notifications />
-            </Route>
+            </ProtectedRoute>
             <Route path="/results" render={(props) => <Results {...props}/>}/>
           </Switch>
         </div>
