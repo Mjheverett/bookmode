@@ -2,6 +2,7 @@ const db = require("../models");
 const Book = db.books;
 const Author = db.authors;
 const Shelf = db.shelves;
+const User = db.users;
 
 const Op = db.Sequelize.Op;
 
