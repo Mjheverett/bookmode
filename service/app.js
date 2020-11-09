@@ -16,9 +16,10 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(express.static("./public"));
 
-require("./routes/shelf.routes")(app);
 require("./routes/book.routes")(app);
 require("./routes/group.routes")(app);
+require("./routes/recommendation.routes")(app);
+require("./routes/shelf.routes")(app);
 require("./routes/user.routes")(app);
 
 // set port, listen for requests
