@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
+import { GridList, Typography, List, ListItem }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     dashboardDiv:{
@@ -38,7 +38,7 @@ const GroupsCard = () => {
     const { user } = useAuth0();
 
     useEffect(() => {
-        axios.post(`http://localhost:3000/groups/${user.sub}`)
+        axios.get(`http://localhost:3000/groups/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 setGroups(data);
@@ -46,21 +46,21 @@ const GroupsCard = () => {
             .catch(err => console.log(err));
     }, []);
 
+    if (groups === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
-            <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to='/groups'>Your Groups</Link></Typography>
-                <GridListTile cellHeight={'auto'}>
-                    <Typography>
-                        <List>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                        </List>
-                    </Typography>
-                </GridListTile>
-            </div>
+           {(groups.length !== 0) ? (groups.map((group) => (
+                <div className={classes.dashboardDiv}>
+                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/groups">Your Groups</Link></Typography>
+                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                        
+                    </GridList> 
+                </div>))) : (
+                <Typography>You're not part of any groups!</Typography>
+            )}
         </>
     )
 }
