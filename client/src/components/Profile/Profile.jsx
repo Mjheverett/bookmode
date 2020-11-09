@@ -68,7 +68,7 @@ const Profile = () => {
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile cellHeight={'auto'}>
                             <Typography variant="h6">{user.name} </Typography>
-                            <Typography style= {{fontSize: '.75rem'}}variant="h6">{user.email}</Typography>
+                            <Typography variant="h6">{user.email}</Typography>
                             {/* <CardMedia><img className="" src={userAuth0.picture} alt="Profile"/></CardMedia> */}
                         </GridListTile>
                         <GridListTile cellHeight={'auto'}>
