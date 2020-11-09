@@ -1,10 +1,9 @@
 import React from 'react';
-import { Typography, GridListTile }  from '@material-ui/core';
+import { Typography, GridListTile, Button }  from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     groupBar: {
-        background: '#52781e',
         margin: theme.spacing(2),
         padding: theme.spacing(2),
     },
@@ -19,8 +18,12 @@ const GroupDetail = (props) => {
         <>
             <br />
                 <GridListTile className={classes.groupBar} cellHeight={'auto'}>
-                    <Typography variant="h6" style={{color: '#fff'}}>{group.groupName}</Typography>
-                    <Typography style={{color: '#fff'}}>{group.groupDescription}</Typography>
+                    <Typography variant="h6">{group.groupName}</Typography>
+                    <Typography>{group.groupDescription}</Typography>
+                    <br />
+                    <Button color="secondary" variant="contained" size="large">
+                        Join Group
+                    </Button>
                 </GridListTile>
             <br />
         </>
