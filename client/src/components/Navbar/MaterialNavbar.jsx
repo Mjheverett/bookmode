@@ -4,7 +4,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { AppBar, Toolbar, IconButton, InputBase, Select, MenuItem, Menu, Typography } from '@material-ui/core';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: theme.spacing(1),
             width: 'auto',
         },
     },
@@ -69,30 +68,39 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 1),
-        // vertical padding + font size from searchIcon
-        // paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
         width: '100%',
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('lg')]: {
             width: '20ch',
         },
     },
     select: {
-        margin: theme.spacing(0),
-        minWidth: 40,
-        background: 'secondary',
         color: '#93A1A1',
-
-      },
+        position: 'relative',
+        height: "35px",
+        padding: theme.spacing(1),
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(3),
+            width: 'auto',
+        },
+    },
     sectionDesktop: {
         display: 'none',
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('lg')]: {
             display: 'flex',
         },
     },
     sectionMobile: {
         display: 'flex',
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('lg')]: {
             display: 'none',
         },
     },
@@ -212,7 +220,6 @@ export default function PrimarySearchAppBar() {
             <AppBar position="static" style={{backgroundColor: '#002B36'}}>
                 <Toolbar>
                     <a href="/"><img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} /></a>
-                    <div className={classes.search}>
                         <Select
                             labelId="demo-simple-select-autowidth-label"
                             id="demo-simple-select-autowidth"
@@ -221,12 +228,13 @@ export default function PrimarySearchAppBar() {
                             className={classes.select}
                             autoWidth
                             >
-                            <MenuItem value="all">All</MenuItem>
-                            <MenuItem value="title">Title</MenuItem>
-                            <MenuItem value="author">Author</MenuItem>
-                            <MenuItem value="subject">Subject</MenuItem>
-                            <MenuItem value="ISBN">ISBN</MenuItem>
+                            <MenuItem style={{color: 'rgb(147, 161, 161)'}} value="all">All</MenuItem>
+                            <MenuItem style={{color: 'rgb(147, 161, 161)'}} value="title">Title</MenuItem>
+                            <MenuItem style={{color: 'rgb(147, 161, 161)'}} value="author">Author</MenuItem>
+                            <MenuItem style={{color: 'rgb(147, 161, 161)'}} value="subject">Subject</MenuItem>
+                            <MenuItem style={{color: 'rgb(147, 161, 161)'}} value="ISBN">ISBN</MenuItem>
                         </Select>
+                        <div className={classes.search}>
                         <form onSubmit={e => _handleSubmit(e)}>
                             <InputBase style={{color: '#fff', paddingLeft: '6px'}}
                                 placeholder="Search title, author, ISBN..."
