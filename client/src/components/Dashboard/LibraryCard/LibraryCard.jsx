@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-
-
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
 
@@ -33,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 const LibraryCard = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
@@ -43,6 +40,7 @@ const LibraryCard = () => {
         axios.post(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
+                console.log('res.data:', data)
                 setLibrary(data);
             })
             .catch(err => console.log(err));
@@ -51,7 +49,7 @@ const LibraryCard = () => {
     return (
         <>
             <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to='/library'>Your Libray</Link></Typography>
+                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to='/library'>Your Library</Link></Typography>
                 <GridListTile cellHeight={'auto'}>
                     <Typography>
                         <List>

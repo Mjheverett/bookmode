@@ -27,12 +27,14 @@ exports.create = async (req, res) => {
     const {title, coverURL, authorName } = req.body;
     const book = await Book.create({
         title: title,
-        coverURL: coverURL,})
+        coverURL: coverURL})
     const author = await Author.create({
             authorName: authorName
         })
     await author.addBook(book)
-    const shelf= await Shelf.findByPk(1)
+    const { userId } = req.params;
+    const user = await User.findOne({where: { id: userId}})
+    const shelf= await Shelf.findOne({where: { shelfName: `${user.name}'s Library`}})
     await shelf.addBook(book)
     .then(data => {
         res.send(data);
