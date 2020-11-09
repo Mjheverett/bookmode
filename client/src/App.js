@@ -6,6 +6,7 @@ import MaterialNavbar from './components/Navbar/MaterialNavbar';
 import AuthenticatedHome from './components/Auth0/AuthenticatedHome';
 import Dashboard from './components/Dashboard/Dashboard';
 import Library from './components/Library/Library';
+import LibraryResults from './components/Library/LibraryResults';
 import Groups from './components/Groups/Groups';
 import GroupPage from './components/Groups/GroupPage';
 import Footer from './components/Footer/Footer';
@@ -28,14 +29,15 @@ function App() {
             <ProtectedRoute path="/dashboard">
               <Dashboard />
             </ProtectedRoute>
+            <Route path="/library/results/:query" render={(props) => <LibraryResults {...props}/>} />
             <ProtectedRoute path="/library">
               <Library />
             </ProtectedRoute>
-            <ProtectedRoute exact path="/groups">
-              <Groups />
-            </ProtectedRoute>
             <ProtectedRoute path="/groups/:id">
               <GroupPage />
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/groups">
+              <Groups />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">
               <Profile />
@@ -46,7 +48,7 @@ function App() {
             <ProtectedRoute path="/notifications">
               <Notifications />
             </ProtectedRoute>
-            <Route path="/results" render={(props) => <Results {...props}/>}/>
+            <Route path="/results" render={(props) => <Results {...props} />} />
           </Switch>
         </div>
         <Footer />

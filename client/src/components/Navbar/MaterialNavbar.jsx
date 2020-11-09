@@ -133,6 +133,7 @@ export default function PrimarySearchAppBar() {
     const handleSelect = (event) => {
         setQuery(event.target.value);
         };
+        
     const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     const menuId = 'primary-search-account-menu';

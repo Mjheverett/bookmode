@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Popover, Typography, Button, InputBase }  from '@material-ui/core';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { Container, GridList, GridListTile, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +73,8 @@ const Library = () => {
     const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
+    const [search, setSearch] = useState();
+    const [fireRedirect, setRedirect] = useState(false);
     const { user } = useAuth0();
 
     useEffect(() => {
@@ -118,6 +123,16 @@ const Library = () => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    const _handleChange = (search) => {
+        console.log(search)
+        setSearch(search);
+    };
+
+    const _handleSubmit = (e) => {
+        e.preventDefault();
+        setRedirect(true)
+    };
+
     if (library === null) {
         return 'Loading...';
     }
@@ -126,6 +141,32 @@ const Library = () => {
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Library</Typography>
+                <div className={classes.search}>
+                    <form onSubmit={e => _handleSubmit(e)}>
+                        <InputBase style={{color: '#fff', paddingLeft: '6px'}}
+                            placeholder="Search your library..."
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            endAdornment={<InputAdornment position="end">
+                            <SearchIcon style={{color: '#93A1A1'}}/>
+                        </InputAdornment>}
+                            inputProps={{ 'aria-label': 'search'}}
+                            onChange={(event) => _handleChange(event.target.value)}
+                            
+                        />
+                        
+                    </form>
+                    {fireRedirect && search && (
+                        <Redirect 
+                            to={{
+                                pathname: `/library/results/${search}`,
+                                state: {search: search}
+                            }}
+                        />
+                    )}
+                </div>
                 <Typography variant="h6">
                     Are you a fan of creating shelves? Well, have we got a form for you!!
                 </Typography>
