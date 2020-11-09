@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Button, InputBase }  from '@material-ui/core';
 import GroupsList from './GroupsList';
+import GroupPage from './GroupPage'
 import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -129,4 +131,5 @@ const Groups = () => {
         </>
     )
 }
- export default Groups;
+
+export default Groups;
