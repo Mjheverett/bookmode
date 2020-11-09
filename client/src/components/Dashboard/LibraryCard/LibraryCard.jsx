@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,7 +36,18 @@ const useStyles = makeStyles((theme) => ({
 
 const LibraryCard = () => {
     const classes = useStyles();
-    // const [theme, setTheme] = useState({ mode: "light" });
+    const [library, setLibrary] = useState(null);
+    const { user } = useAuth0();
+
+    useEffect(() => {
+        axios.post(`http://localhost:3000/library/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                setLibrary(data);
+            })
+            .catch(err => console.log(err));
+    }, []);
+
     return (
         <>
             <div className={classes.dashboardDiv}>
