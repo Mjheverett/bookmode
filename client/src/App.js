@@ -7,6 +7,7 @@ import AuthenticatedHome from './components/Auth0/AuthenticatedHome';
 import Dashboard from './components/Dashboard/Dashboard';
 import Library from './components/Library/Library';
 import Groups from './components/Groups/Groups';
+import GroupPage from './components/Groups/GroupPage';
 import Footer from './components/Footer/Footer';
 import Results from './components/Results/Results';
 import Profile from './components/Profile/Profile';
@@ -30,8 +31,11 @@ function App() {
             <ProtectedRoute path="/library">
               <Library />
             </ProtectedRoute>
-            <ProtectedRoute path="/groups">
+            <ProtectedRoute exact path="/groups">
               <Groups />
+            </ProtectedRoute>
+            <ProtectedRoute path="/groups/:id">
+              <GroupPage />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">
               <Profile />
