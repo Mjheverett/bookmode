@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, GridList, GridListTile, Button, TextField}  from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Container, Typography, GridList, GridListTile, Button}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,29 +23,6 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
-    },
-    inputInput: {
-        padding: theme.spacing(1),
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        marginLeft: 0,
-        [theme.breakpoints.up('md')]: {
-            width: '100ch',
-        },
-    },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.15),
-        },
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
-            marginLeft: 0,
-        },
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -73,7 +50,7 @@ const GroupPage = () => {
                 setGroup(data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [groupId.id]);
 
     const _handleJoinGroup = (e) => {
         e.preventDefault();

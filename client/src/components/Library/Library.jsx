@@ -58,10 +58,30 @@ const useStyles = makeStyles((theme) => ({
         },
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
             width: 'auto',
             marginLeft: 0,
         },
+    },
+    librarySearch: {
+        position: 'relative',
+        maxWidth: "215px",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: 'auto',
+            marginLeft: 0,
+        },
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+    },
     },
     margin: {
         margin: theme.spacing(2),
@@ -85,7 +105,7 @@ const Library = () => {
                 console.log('res.data:', data)
                 setLibrary(data)
             });
-    }, []);
+    }, [user.sub]);
 
     // Modal with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -141,7 +161,8 @@ const Library = () => {
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Library</Typography>
-                <div className={classes.search}>
+                <br/>
+                <div className={classes.librarySearch}>
                     <form onSubmit={e => _handleSubmit(e)}>
                         <InputBase style={{color: '#fff', paddingLeft: '6px'}}
                             placeholder="Search your library..."
@@ -150,7 +171,7 @@ const Library = () => {
                                 input: classes.inputInput,
                             }}
                             endAdornment={<InputAdornment position="end">
-                            <SearchIcon style={{color: '#93A1A1'}}/>
+                            <SearchIcon className={classes.searchIcon} style={{color: '#93A1A1'}}/>
                         </InputAdornment>}
                             inputProps={{ 'aria-label': 'search'}}
                             onChange={(event) => _handleChange(event.target.value)}
@@ -167,6 +188,7 @@ const Library = () => {
                         />
                     )}
                 </div>
+                <br/>
                 <Typography variant="h6">
                     Are you a fan of creating shelves? Well, have we got a form for you!!
                 </Typography>
@@ -219,7 +241,7 @@ const Library = () => {
                             <GridListTile cellHeight={'auto'} key={book.id}>
                             <br />
                             <div width={'auto'} className={classes.div}>
-                                <img src={book.coverURL} alt={book.title}/>
+                                <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
                             <br />
 
@@ -244,12 +266,12 @@ const Library = () => {
                                     className={classes.root}
                                     onClose={handleClose}
                                     anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'right',
+                                        vertical: 'top',
+                                        horizontal: 'center',
                                     }}
                                     transformOrigin={{
                                         vertical: 'bottom',
-                                        horizontal: 'left',
+                                        horizontal: 'center',
                                     }}
                                 >
                                     <Typography className={classes.typography}>
