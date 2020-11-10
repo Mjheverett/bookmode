@@ -52,9 +52,9 @@ const GroupsCard = () => {
 
     return (
         <>
-           {(groups.length !== 0) ? (groups.map((group) => (
-                <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/groups">Your Groups</Link></Typography>
+            <div className={classes.dashboardDiv}>
+            <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/groups">Your Groups</Link></Typography>
+                {(groups.length !== 0) ? (groups.map((group) => (
                     <GridList className={classes.gridList} cols={1} cellHeight={'auto'}>
                     <GridListTile cellHeight={'auto'} key={group.id}>
                         <Typography variant="h6">{group.groupName}</Typography>
@@ -62,9 +62,10 @@ const GroupsCard = () => {
                         <Typography>{group.groupDescription}</Typography>
                     </GridListTile>
                     </GridList> 
-                </div>))) : (
-                <Typography>You're not part of any groups!</Typography>
-            )}
+                ))) : (
+                    <Typography>You're not part of any groups!</Typography>
+                )}
+            </div>
         </>
     )
 }
