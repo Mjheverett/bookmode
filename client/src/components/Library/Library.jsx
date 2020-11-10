@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
 
@@ -75,13 +73,9 @@ const useStyles = makeStyles((theme) => ({
             width: 'auto',
             marginLeft: 0,
         },
-    searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
     },
+    titleBarTop: {
+        background: 'rgba(0, 43, 54, .001)',
     },
     margin: {
         margin: theme.spacing(2),
@@ -154,7 +148,11 @@ const Library = () => {
         setRedirect(true)
     };
     if (library === null) {
-        return 'Loading...';
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (
@@ -170,12 +168,8 @@ const Library = () => {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            endAdornment={<InputAdornment position="end">
-                            <SearchIcon className={classes.searchIcon} style={{color: '#93A1A1'}}/>
-                        </InputAdornment>}
                             inputProps={{ 'aria-label': 'search'}}
-                            onChange={(event) => _handleChange(event.target.value)}
-                            
+                            onChange={(event) => _handleChange(event.target.value)} 
                         />
                         
                     </form>
@@ -190,14 +184,15 @@ const Library = () => {
                 </div>
                 <br/>
                 <Typography variant="h6">
-                    Are you a fan of creating shelves? Well, have we got a form for you!!
+                    Are you a fan of creating shelves?
                 </Typography>
                 <br />
                 <Typography>
                     <form onSubmit={_handleCreateShelf}>
                         <label>Shelf Name
                             <div className={classes.search}>
-                                <InputBase style={{color: '#93A1A1'}}
+                                <InputBase 
+                                    style={{color: '#fff'}}
                                     placeholder="Awesome Shelf Name..."
                                     classes={{
                                         root: classes.inputRoot,
@@ -212,7 +207,7 @@ const Library = () => {
                         <label>Shelf Description
                         <div className={classes.search}>
                                 <InputBase
-                                    style={{color: '#93A1A1'}}
+                                    style={{color: '#fff'}}
                                     placeholder="Shelf Description..."
                                     classes={{
                                         root: classes.inputRoot,
@@ -230,8 +225,7 @@ const Library = () => {
                 </Typography>
                 <br />
                 {(library.length !== 0) ? (library.map(shelf => (
-                    <div
-                    >
+                    <div>
                     <Typography variant="h6">{shelf.shelfName}</Typography>
                     <br />
                     <div className={classes.libraryDiv}>
