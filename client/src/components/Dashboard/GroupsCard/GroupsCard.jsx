@@ -42,7 +42,7 @@ const GroupsCard = () => {
                 setGroups(data);
             })
             .catch(err => console.log(err));
-    },[]);
+    },[user.sub]);
 
     if (groups === null) {
         return (

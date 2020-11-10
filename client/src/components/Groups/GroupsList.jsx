@@ -3,7 +3,7 @@ import GroupDetail from './GroupDetail';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { GridList, Typography, Button }  from '@material-ui/core';
+import { GridList, Typography }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     groupsDiv:{
