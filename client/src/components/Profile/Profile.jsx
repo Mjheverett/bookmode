@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
+       
     },
     div: {
         display: 'flex-inline',
@@ -25,7 +26,32 @@ const useStyles = makeStyles((theme) => ({
     gridList: {
         flexWrap: 'nowrap',
         transform: 'translateZ(0)',
+       
     },
+
+    profileForm: {
+        display: 'inline-block',
+        position: 'relative'
+         
+    },
+
+    userPicture: {
+        borderRadius: '70px',
+        marginTop: '0.5rem'
+    },
+
+    updateButton: {
+        marginTop: '0.5rem',
+        marginLeft: '1rem',
+        
+    },
+
+    formInput: {
+        marginLeft: '0.25rem',
+        marginRight: '0.25rem'
+    }
+
+   
 }));
 
 const Profile = () => {
@@ -40,8 +66,7 @@ const Profile = () => {
                
             };
             console.log("user sub is", user.sub)
-            const url = await `http://localhost:3000/users/${user.sub}`;
-            const res = axios.get(url)
+            await axios.get(`http://localhost:3000/users/${user.sub}`, data)
                 .then(res => {
                     const data = res.data;
                     console.log('data is:', data)
@@ -57,14 +82,14 @@ const Profile = () => {
         e.preventDefault();
         const data = {
             id: user.sub,
-            name: user.name,
-            email: user.email
+            name: userInfo.name,
+            email: userInfo.email
         };
         axios.put(`http://localhost:3000/users/${user.sub}`, data)
             .then(res => {
-                const newData = res.data;
-                setUser(newData);
-                console.log('put data is: ', newData)
+                const updateData = res.data;
+                setUser(updateData);
+                console.log('put data is: ', updateData)
             })
             .catch(err => console.log(err));
     }
@@ -75,18 +100,19 @@ const Profile = () => {
 
     // const _handleInfoChange = (e) => {
     //     e.preventDefault();
-    //     const newData = {
+    //     const data = {
     //         id: user.sub,
     //         name: user.name,
     //         email: user.email
     //     };
-    //     axios.put(`http://localhost:3000/users/${user.sub}`, newData)
+    //     axios.put(`http://localhost:3000/users/${user.sub}`, data)
     //         .then(res => console.log(res))
     //         .catch(err => console.log(err));
+          
     // };
 
     const _handleChange = (newData) => {
-        console.log(newData)
+        console.log(newData);
         setUser(newData);
     };
 
@@ -109,25 +135,25 @@ const Profile = () => {
                 <br />
                 <div className={classes.profileDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                        <GridListTile cellHeight={'auto'}>
-                            <Typography variant="h6">{userInfo.name} </Typography>
-                            <Typography variant="h6">{userInfo.email}</Typography>
-                            <CardMedia><img className="" src={user.picture} alt="Profile"/></CardMedia>
+                        <GridListTile className={classes.userInfo} cellHeight={'auto'}>
+                            <Typography variant="h5">{userInfo.name} </Typography>
+                            <Typography style={{fontSize: '70%'}} variant="h6">{userInfo.email}</Typography>
+                            <CardMedia><img className={classes.userPicture} src={user.picture} alt="Profile"/></CardMedia>
                         </GridListTile>
-                        <GridListTile cellHeight={'auto'}>
-                            <Typography variant="h6" >Change Profile Info</Typography>
-                            <form onSubmit={(e) => updateData(e)}>
-                                <label>Name 
-                                    <input type='text' name='name' onChange={(event) => _handleChange(event.target.value)}>
+                        <GridListTile className={classes.profileForm} cellHeight={'auto'}>
+                            <Typography variant="h6" >Edit Profile Info</Typography>
+                            <form  onSubmit={(e) => updateData(e)}>
+                                <Typography><label>Name 
+                                    <input className={classes.formInput} type='text' name='name' onChange={(event) => _handleChange(event.target.value)}>
 
                                     </input>
-                                </label>
-                                <label>Email 
-                                    <input type='text' name='email' onChange={(event) => _handleChange(event.target.value)}>
+                                </label></Typography>
+                                <Typography><label >Email 
+                                    <input className={classes.formInput} type='text' name='email' onChange={(event) => _handleChange(event.target.value)}>
 
                                     </input>
-                                </label>
-                                <Button type="submit" color="secondary" variant="contained" size="large">Update Profile</Button>
+                                </label></Typography>
+                                <Button className={classes.updateButton} type="submit" color="secondary" variant="contained" size="small">Update Profile</Button>
                             </form>
                         </GridListTile>
                     </GridList> 

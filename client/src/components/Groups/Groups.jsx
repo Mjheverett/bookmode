@@ -43,12 +43,10 @@ const Groups = () => {
     const { user } = useAuth0();
 
     const _handleNameChange = (data) => {
-        console.log(data)
         setGroupName(data);
     };
 
     const _handleDescChange = (data) => {
-        console.log(data)
         setGroupDescription(data);
     };
 
@@ -61,6 +59,8 @@ const Groups = () => {
         axios.post(`http://localhost:3000/groups/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
+        setGroupName('');
+        setGroupDescription('');
     };
 
     return (
@@ -82,6 +82,7 @@ const Groups = () => {
                                     }}
                                     name='groupName' 
                                     onChange={(event) => _handleNameChange(event.target.value)} 
+                                    value={name}
                                 />
                             </div>
                         </label>
@@ -97,6 +98,7 @@ const Groups = () => {
                                     }}
                                     name='groupDescription'
                                     onChange={(event) => _handleDescChange(event.target.value)} 
+                                    value={description}
                                 />
                         </div>
                         </label>

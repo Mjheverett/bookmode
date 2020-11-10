@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -15,16 +15,16 @@ import bookmodeLogo from '../../images/bookmode.png';
 const useStyles = makeStyles((theme) => ({
     typography: {
         fontFamily: [
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
         ].join(','),
     },
     grow: {
@@ -113,14 +113,17 @@ export default function PrimarySearchAppBar() {
 
     const classes = useStyles(); 
     
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    const [data, setData] = React.useState([]);
-    const [fireRedirect, setRedirect] = React.useState(false);
-    const [query, setQuery] = React.useState('all');
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+    const [data, setData] = useState('');
+    const [search, setSearch] = useState('');
+    const [fireRedirect, setRedirect] = useState(false);
+    const [query, setQuery] = useState('all');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -142,8 +145,7 @@ export default function PrimarySearchAppBar() {
         setQuery(event.target.value);
         };
         
-    const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
-
+    // Material UI - Menu
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -167,6 +169,7 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
+    // Material UI - Mobile Menu
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
@@ -205,7 +208,6 @@ export default function PrimarySearchAppBar() {
     );
 
     const _handleChange = (data) => {
-        console.log(data)
         setData(data);
     };
 
@@ -240,6 +242,7 @@ export default function PrimarySearchAppBar() {
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
+                                value={data}
                                 endAdornment={<InputAdornment position="end">
                                 <SearchIcon style={{color: '#93A1A1'}}/>
                             </InputAdornment>}
