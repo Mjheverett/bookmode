@@ -127,8 +127,6 @@ const Profile = () => {
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Profile Page</Typography>
-                
-                <br />
                 <br />
                 <br />
                 <div className={classes.profileDiv}>
