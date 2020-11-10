@@ -58,34 +58,30 @@ const Results = (props) => {
         (async function (){
             let url;
             if (query === 'all') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}&page=1`;
             }
             if (query === 'title') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}&page=1`;
             }
             if (query === 'author') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}&page=1`;
             }
             if (query === 'subject') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}&page=1`;
             }
             if (query === 'ISBN') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}&page=1`;
             }
-            
+            console.log(url);
             await axios.get(url)
                 .then(res => {
-                    console.log("response", res);
                     const data = res.data.docs;
-                    console.log("get isbn", data[0].isbn[0]);
                     setResults(data);
                 })
             })();
     }, [data]);    
     
-    if (results === null) {
-        return 'Loading...';
-    }
+    
     
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
@@ -110,6 +106,11 @@ const Results = (props) => {
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
+
+    if (results === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -121,10 +122,11 @@ const Results = (props) => {
                 <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
                         {results.map((result) => {
+
                             return (
                             <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
-                                    <img src={`http://covers.openlibrary.org/b/isbn/${result.isbn}-M.jpg`} alt={result.cover_i} />
+                                    <img src={`http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg`} alt={result.cover_i} />
                                 </div>
                                 <GridListTileBar
                                 title={result.title}
