@@ -94,8 +94,6 @@ const Profile = () => {
             .catch(err => console.log(err));
     }
 
-   
-
      // trying both _handleInfoChange and updateData for put request
 
     // const _handleInfoChange = (e) => {
@@ -129,16 +127,17 @@ const Profile = () => {
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Profile Page</Typography>
-                
-                <br />
                 <br />
                 <br />
                 <div className={classes.profileDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         <GridListTile className={classes.userInfo} cellHeight={'auto'}>
-                            <Typography variant="h5">{userInfo.name} </Typography>
-                            <Typography style={{fontSize: '70%'}} variant="h6">{userInfo.email}</Typography>
+                            <br/>
                             <CardMedia><img className={classes.userPicture} src={user.picture} alt="Profile"/></CardMedia>
+                            <br/>
+                            <Typography variant="h6">{userInfo.name} </Typography>
+                            <Typography>{userInfo.email}</Typography>
+                            <br/>
                         </GridListTile>
                         <GridListTile className={classes.profileForm} cellHeight={'auto'}>
                             <Typography variant="h6" >Edit Profile Info</Typography>
