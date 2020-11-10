@@ -45,7 +45,7 @@ const LibraryCard = () => {
             .catch(err => console.log(err));
     }, [user.sub]);
 
-     if (library === null) {
+    if (library === null) {
         return (
             <>
                 <Typography variant="h6">Loading</Typography>
@@ -71,7 +71,7 @@ const LibraryCard = () => {
                             <br />
                             </GridListTile>)})) : (
                             <Typography>No books!!</Typography>
-                                    )}
+                        )}
                     </GridList> 
                 </div>))) : (
                 <Typography>No Shelves!</Typography>

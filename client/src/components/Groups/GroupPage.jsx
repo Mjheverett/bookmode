@@ -51,6 +51,7 @@ const GroupPage = () => {
         axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
             .then(res => {
                 const data = res.data;
+                console.log("comment response data", data);
                 setComments(data);
             })
             .catch(err => console.log(err));
