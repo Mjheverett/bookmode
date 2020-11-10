@@ -72,19 +72,13 @@ const Results = (props) => {
             if (query === 'ISBN') {
                 url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}&limit=50`;
             }
-            
             await axios.get(url)
                 .then(res => {
-                    console.log("response", res);
                     const data = res.data.docs;
                     setResults(data);
                 })
             })();
     }, [data]);    
-    
-    if (results === null) {
-        return 'Loading...';
-    }
     
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
@@ -117,6 +111,11 @@ const Results = (props) => {
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
+
+    if (results === null) {
+        return 'Loading...';
+    }
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -128,6 +127,7 @@ const Results = (props) => {
                 <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
                         {results.map((result) => {
+
                             return (
                             <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
