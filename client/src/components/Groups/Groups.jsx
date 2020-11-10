@@ -67,6 +67,7 @@ const Groups = () => {
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Groups</Typography>
+                <br />
                 <Typography variant="h6">Get connected, create new groups here!</Typography>
                 <br />
                 <Typography>

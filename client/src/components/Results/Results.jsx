@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, GridListTileBar, Typography, Popover, IconButton }  from '@material-ui/core';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -54,6 +53,7 @@ const Results = (props) => {
     const { data, query } = props.location.state;
     const { user } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
+
     useEffect(() => {
         (async function (){
             let url;
@@ -115,11 +115,11 @@ const Results = (props) => {
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">Books</Typography>
             <br />
-            <Typography variant="h6">Add books to your library from here</Typography>
+            <Typography variant="h6">Add books to your library by clicking the <BookmarkIcon fontSize="medium"/> </Typography>
             <br />
                 <div className={classes.resultsDiv}>
                 <br/>
-                    <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
+                    <GridList className={classes.gridList} cols={2} cellHeight={300} spacing={16}>
                         {results.map((result) => {
                             return (
                             <GridListTile key={result.key}>

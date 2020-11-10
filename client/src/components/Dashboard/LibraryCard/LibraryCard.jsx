@@ -46,7 +46,11 @@ const LibraryCard = () => {
     }, [user.sub]);
 
      if (library === null) {
-        return 'Loading...';
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (

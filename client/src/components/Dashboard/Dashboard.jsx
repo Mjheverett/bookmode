@@ -25,7 +25,11 @@ const Dashboard = () => {
     }, [user.email, user.name, user.sub]);
 
     if (userData === null) {
-        return 'Loading...';
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (
