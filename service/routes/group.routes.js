@@ -17,5 +17,7 @@ module.exports = app => {
     router.delete("/:id", groups.delete);
     // Add comment to Group page
     router.post("/comments/:groupId", groups.createComment);
+    // Get all comments for a group
+    router.get("/comments/:groupId", groups.findAllComments);
     app.use('/groups', router);
     };
