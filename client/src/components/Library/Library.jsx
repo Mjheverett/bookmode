@@ -3,9 +3,10 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Container, GridList, GridListTile, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
+import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { useAuth0 } from '@auth0/auth0-react';
+import CustomizedMenus from './BookMenu';
 
 const useStyles = makeStyles((theme) => ({
     libraryDiv:{
@@ -132,7 +133,6 @@ const Library = () => {
         e.preventDefault();
         setRedirect(true)
     };
-
     if (library === null) {
         return 'Loading...';
     }
@@ -208,12 +208,13 @@ const Library = () => {
                 </Typography>
                 <br />
                 {(library.length !== 0) ? (library.map(shelf => (
-                    <div>
+                    <div
+                    >
                     <Typography variant="h6">{shelf.shelfName}</Typography>
                     <br />
                     <div className={classes.libraryDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                        {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
+                        {(shelf.Books.length !== 0) ? (shelf.Books.slice(0).reverse().map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
                             <br />
@@ -221,6 +222,15 @@ const Library = () => {
                                 <img src={book.coverURL} alt={book.title}/>
                             </div>
                             <br />
+
+                            <GridListTileBar
+                                classes={{
+                                    root: classes.titleBarTop,
+                                }}
+                                titlePosition ={'top'}
+                                actionIcon={
+                                    <CustomizedMenus />}
+                            />
                             <Typography>{book.title}</Typography>
                             <div>
                             <br />
