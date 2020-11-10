@@ -57,7 +57,7 @@ const LibraryCard = () => {
         <>
             {(library.length !== 0) ? (library.map(shelf => (
                 <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/library">Your Library</Link></Typography>
+                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/library">Your Main Library</Link></Typography>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
                             return (
