@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, Typography, Button, CardMedia }  from '@material-ui/core';
 import axios from 'axios';
 
-
 const useStyles = makeStyles((theme) => ({
     profileDiv:{
         position: 'relative',
@@ -29,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
 const Profile = () => {
     const { user } = useAuth0(null);
     const classes = useStyles();
@@ -49,11 +46,9 @@ const Profile = () => {
                     const data = res.data;
                     console.log('data is:', data)
                     setUser(data);
-                })
-                
-            })();
-            
-    },[]);  
+                })  
+            })();       
+    }, [user.sub]);  
 
     
     // trying both updateData and _handleInfoChange for put request

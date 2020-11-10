@@ -81,7 +81,7 @@ const Results = (props) => {
                     setResults(data);
                 })
             })();
-    }, [data]);    
+    }, [data, query]);    
     
     if (results === null) {
         return 'Loading...';

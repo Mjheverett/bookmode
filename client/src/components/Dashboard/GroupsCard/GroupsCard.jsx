@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { GridList, Typography, GridListTile }  from '@material-ui/core';
 
@@ -16,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
-        marginLeft: '1rem',
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -44,7 +42,7 @@ const GroupsCard = () => {
                 setGroups(data);
             })
             .catch(err => console.log(err));
-    }, []);
+    });
 
     if (groups === null) {
         return 'Loading...';
@@ -52,19 +50,22 @@ const GroupsCard = () => {
 
     return (
         <>
-           {(groups.length !== 0) ? (groups.map((group) => (
-                <div className={classes.dashboardDiv}>
+            <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/groups">Your Groups</Link></Typography>
-                    <GridList className={classes.gridList} cols={1} cellHeight={'auto'}>
-                    <GridListTile cellHeight={'auto'} key={group.id}>
-                        <Typography variant="h6">{group.groupName}</Typography>
-                        <br/>
-                        <Typography>{group.groupDescription}</Typography>
-                    </GridListTile>
-                    </GridList> 
-                </div>))) : (
-                <Typography>You're not part of any groups!</Typography>
-            )}
+                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                    {(groups.length !== 0) ? (groups.map((group) => (
+                        <GridListTile cellHeight={'auto'} key={group.id}>
+                             <br />
+                            <Typography variant="h6">{group.groupName}</Typography>
+                            <br/>
+                            <Typography>{group.groupDescription}</Typography>
+                            <br />
+                        </GridListTile>
+                    ))) : (
+                    <Typography>You're not part of any groups!</Typography>
+                    )}
+                    </GridList>
+            </div>
         </>
     )
 }

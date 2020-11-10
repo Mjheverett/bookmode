@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Button, InputBase }  from '@material-ui/core';
 import GroupsList from './GroupsList';
-import GroupPage from './GroupPage'
 import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         transition: theme.transitions.create('width'),
         width: '100%',
-        marginLeft: 0,
         [theme.breakpoints.up('md')]: {
             width: '100ch',
         },
@@ -30,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
         },
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
             width: 'auto',
             marginLeft: 0,
         },

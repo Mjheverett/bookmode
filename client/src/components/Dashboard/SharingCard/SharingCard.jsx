@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
 
@@ -14,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
-        marginRight: '1rem',
     },
     gridList: {
         flexWrap: 'nowrap',

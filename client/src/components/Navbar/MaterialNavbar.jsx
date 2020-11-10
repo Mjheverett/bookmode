@@ -190,9 +190,6 @@ export default function PrimarySearchAppBar() {
             <MenuItem>
                 <Link to="/sharing" className="link">Sharing</Link>
             </MenuItem>
-            <MenuItem>
-                <Link to="/notifications" className="link">Notifications</Link>
-            </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
                     aria-label="account of current user"
@@ -268,7 +265,6 @@ export default function PrimarySearchAppBar() {
                         <Link to="/library" className="link">Library</Link>
                         <Link to="/groups" className="link">Groups</Link>
                         <Link to="/sharing" className="link">Sharing</Link>
-                        <Link to="/notifications" className="link">Notifications</Link>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
