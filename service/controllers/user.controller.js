@@ -70,7 +70,7 @@ exports.findOne = (req, res) => {
     };
 exports.update = (req, res) => {
     const { userId } = req.params;
-    console.log('this is a ' req.body)
+    console.log('this is a ', req.body)
     User.update(req.body, {
         where: { id: userId }
     })
