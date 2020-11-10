@@ -86,6 +86,10 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(2),
     },
+    titleBarTop: {
+        background: 'rgba(0, 43, 54, .001)',
+        color: '#52781e',
+    },
 }));
 
 const Library = () => {
