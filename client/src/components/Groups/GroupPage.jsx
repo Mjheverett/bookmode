@@ -81,12 +81,15 @@ const GroupPage = () => {
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">{group.groupName}</Typography>
+            <br/>
             <Typography variant="h6">{group.groupDescription}</Typography>
+            <br/>
             <form onSubmit={_handleJoinGroup}>
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
             </form>
-            <Typography variant="h6">Members:</Typography>
+            <br />
+            <Typography variant="h6">Members</Typography>
             <div className={classes.groupsDiv}>
                 <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                     {(group.Users.length !== 0) ? (group.Users.map(user => (
