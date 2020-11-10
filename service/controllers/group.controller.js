@@ -140,3 +140,37 @@ exports.delete = (req, res) => {
         });
         });
     };
+
+// Controllers for comments
+exports.createComment = async (req, res) => {
+    //Validate request
+    console.log('this is what is getting sent in as the req.body: ', req.body)
+    if (!req.body.groupName) {
+        res.status(400).send({
+            message: "Name cannot be empty!"
+        });
+        return;
+    }
+    
+    //create a new group
+    const group = {
+        groupName: req.body.groupName,
+        groupDescription: req.body.groupDescription};
+    //save book in DB
+    const groupAdded = await Group.create(group)
+    console.log("group info is: ", groupAdded)
+    const { userId } = req.params;
+    const user = await User.findOne({where: { id: userId}})
+    console.log("user info is: ", user)
+    await user.addGroup(groupAdded, { through: {isAdmin: true} })
+        .then (data=> {
+            res.send(data).status(200);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the book."
+            });
+        });
+    
+    };
