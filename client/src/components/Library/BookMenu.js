@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
@@ -10,6 +9,7 @@ import SendIcon from '@material-ui/icons/Send';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
+
 const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
@@ -33,9 +33,9 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: 'transparent',
       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
+        color: '#52781e',
       },
     },
   },
@@ -71,21 +71,21 @@ export default function CustomizedMenus() {
       >
         <StyledMenuItem>
           <ListItemIcon>
-            <SendIcon fontSize="small" />
+            <SendIcon fontSize="small" style={{color: '#52781e'}}/>
           </ListItemIcon>
-          <ListItemText primary="Send recommendation" />
+          <ListItemText primary="Send recommendation" style={{color: '#93A1A1'}}/>
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
-            <MenuBookIcon fontSize="small" />
+            <MenuBookIcon fontSize="small" style={{color: '#52781e'}}/>
           </ListItemIcon>
-          <ListItemText primary="See book details" />
+          <ListItemText primary="See book details" style={{color: '#93A1A1'}}/>
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
-            <CollectionsBookmarkIcon fontSize="small" />
+            <CollectionsBookmarkIcon fontSize="small" style={{color: '#52781e'}}/>
           </ListItemIcon>
-          <ListItemText primary="Sort book into a different shelf" />
+          <ListItemText primary="Sort book into a different shelf" style={{color: '#93A1A1'}}/>
         </StyledMenuItem>
       </StyledMenu>
     </div>

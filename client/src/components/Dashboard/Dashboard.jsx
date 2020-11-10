@@ -37,7 +37,6 @@ const Dashboard = () => {
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Dashboard</Typography>
                 <br />
-                <br />
                 <Typography variant="h6">Welcome, {userData.name}</Typography>
                 <br />
                 <GridList cols={1} cellHeight={'auto'}>
