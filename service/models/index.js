@@ -44,6 +44,7 @@ db.recommendations = require('./recommendations.model')(sequelize, Sequelize);
 db.shelves = require('./shelves.model')(sequelize, Sequelize);
 db.users = require('./users.model')(sequelize, Sequelize);
 db.user_group = require('./user_group.model')(sequelize, Sequelize);
+db.comments = require('./comment.model')(sequelize, Sequelize);
 
 db.authors.belongsToMany(db.books, { through: 'authors_books' });
 db.books.belongsToMany(db.authors, { through: 'authors_books' });
@@ -57,6 +58,10 @@ db.users.hasMany(db.recommendations);
 db.recommendations.belongsTo(db.users, {as: "sender"})
 db.recommendations.belongsTo(db.users, {as: "receiver"})
 db.books.hasMany(db.recommendations);
+db.groups.hasMany(db.comments);
+db.comments.belongsTo(db.groups);
+db.authors.belongsToMany(db.comments, { through: 'user_comments' });
+db.users.belongsToMany(db.comments, { through: 'user_comments' });
 db.recommendations.belongsTo(db.books)
 db.shelves.belongsToMany(db.books, { through: 'shelves_books' });
 db.books.belongsToMany(db.shelves, { through: 'shelves_books' });
