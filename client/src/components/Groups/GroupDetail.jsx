@@ -8,6 +8,14 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(2),
         padding: theme.spacing(2),
     },
+    typography: {
+        padding: theme.spacing(2),
+        alignItems: 'center',
+        color: '#002B36',
+    },
+    link: {
+        color: '#002B36',
+    },
 }));
 
 const GroupDetail = (props) => {
@@ -18,7 +26,7 @@ const GroupDetail = (props) => {
         <>
             <br />
                 <GridListTile className={classes.groupBar} cellHeight={'auto'}>
-                    <Link to={`/groups/${group.id}`}><Typography variant="h6">{group.groupName}</Typography></Link>
+                    <Typography variant="h6" className={classes.typography}><Link className={classes.link} to={`/groups/${group.id}`}>{group.groupName}</Link></Typography>
                     <Typography>{group.groupDescription}</Typography>
                     <br />
                     {(list !== 'User') ? (

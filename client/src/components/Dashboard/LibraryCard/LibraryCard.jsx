@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
-        marginRight: '1rem',
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -44,10 +43,14 @@ const LibraryCard = () => {
                 setLibrary(data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [user.sub]);
 
      if (library === null) {
-        return 'Loading...';
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (
@@ -61,7 +64,7 @@ const LibraryCard = () => {
                             <GridListTile cellHeight={'auto'} key={book.id}>
                             <br />
                             <div width={'auto'} className={classes.div}>
-                                <img src={book.coverURL} alt={book.title}/>
+                                <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
                             <br />
                             <Typography>{book.title}</Typography>

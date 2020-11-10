@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import AuthenticationButton from '../Auth0/AuthenticationButton';
 import SignupButton from '../Auth0/SignUpButton';
-
 import { Container, Grid, Typography } from '@material-ui/core';
 import './Graphic.css';
-
 import storage from 'local-storage-fallback';
 
 const savedTheme = JSON.parse(storage.getItem('theme'));
 console.log("initial theme is:", savedTheme.mode)
-
 
 const Home = () => {
     return (
@@ -25,7 +22,6 @@ const Home = () => {
                     </Grid>
                     <Grid >
                         <br />
-                        {/* Hero Graphic */}
                         <div className="shapeshifter play" />
                     </Grid>
                 </Grid>

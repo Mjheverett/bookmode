@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react'
 import GroupDetail from './GroupDetail';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { GridList, Typography, Button }  from '@material-ui/core';
-
 
 const useStyles = makeStyles((theme) => ({
     groupsDiv:{
@@ -54,7 +52,7 @@ const GroupsList = (props) => {
                     setGroups(data)
                 })
             })();
-    }, []);  
+    }, [list, user.sub]);  
 
     // return while waiting on axios, then render updated page
     if (groups === null) {
