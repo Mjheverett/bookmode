@@ -114,7 +114,11 @@ const Results = (props) => {
     };
 
     if (results === null) {
-        return 'Loading...';
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (

@@ -71,7 +71,11 @@ const GroupPage = () => {
 
     // return while waiting on axios, then render updated page
     if (group === null) {
-        return 'Loading...';
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (
