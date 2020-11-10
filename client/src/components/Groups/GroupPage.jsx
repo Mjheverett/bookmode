@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, GridList, GridListTile, Button}  from '@material-ui/core';
+import { Container, Typography, GridList, GridListTile, Button, TextField}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
+
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
         color: 'primary',
@@ -58,8 +59,11 @@ const useStyles = makeStyles((theme) => ({
 const GroupPage = () => {
     const classes = useStyles();
     const [group, setGroup] = useState(null);
+    const [newComment, setNewComment] = useState('');
+    const [comments, setComments] = useState([]);
     const groupId = useParams();
     const { user } = useAuth0();
+
     useEffect(() => {
         console.log(groupId.id)
         axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
@@ -80,6 +84,13 @@ const GroupPage = () => {
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
+
+    const _handleAddComment = (e) => {
+        e.preventDefault();
+        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    }
 
     // return while waiting on axios, then render updated page
     if (group === null) {
@@ -109,6 +120,31 @@ const GroupPage = () => {
                     )};
                 </GridList> 
             </div>
+            <div>
+                <h4>Add new comments</h4>
+            </div>
+            <form onSubmit={_handleAddComment} className={classes.root} noValidate autoComplete="off">
+                <TextField 
+                    id="filled-multiline-static"
+                    label="New Comment"
+                    multiline
+                    rows={4}
+                    defaultValue="Default Value"
+                    variant="filled" 
+                    value={newComment}
+                />
+                <Button type="submit" color="secondary" variant="contained" size="medium">Add Comment</Button>
+            </form>
+            <div>
+                <p>Display all group comments</p>
+            </div>
+            {(comments.length !== 0) ? (
+                comments.map((comment) => {
+                    <p>Comment is: {comment}</p>
+                })
+            ) : (
+                <p>This group has no comments yet! Why don't you add one?</p>
+            )}
         </Container>
     )
 }

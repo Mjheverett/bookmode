@@ -58,21 +58,20 @@ const Results = (props) => {
         (async function (){
             let url;
             if (query === 'all') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}&page=1`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}&limit=50`;
             }
             if (query === 'title') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}&page=1`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}&limit=50`;
             }
             if (query === 'author') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}&page=1`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}&limit=50`;
             }
             if (query === 'subject') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}&page=1`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}&limit=50`;
             }
             if (query === 'ISBN') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}&page=1`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}&limit=50`;
             }
-            console.log(url);
             await axios.get(url)
                 .then(res => {
                     const data = res.data.docs;
@@ -80,8 +79,6 @@ const Results = (props) => {
                 })
             })();
     }, [data]);    
-    
-    
     
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
