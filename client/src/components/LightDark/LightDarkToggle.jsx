@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LightDarkMode from "./LightDarkMode";
 import { ThemeProvider } from "styled-components";
-import { FormControlLabel, Switch, FormGroup } from '@material-ui/core';
+import { FormGroup, Button } from '@material-ui/core';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Brightness5OutlinedIcon from '@material-ui/icons/Brightness5Outlined';
 import storage from 'local-storage-fallback';
@@ -30,13 +30,13 @@ const LightDarkToggle = () => {
       <ThemeProvider theme={theme}>
         <LightDarkMode />
         
-        <FormGroup >
-        <FormControlLabel
-        control={<Switch style={{color: '#52781e'}} size="Normal" onChange={(e) =>
+        <FormGroup>
+        
+        <Button startIcon={theme.mode === 'light' ? <NightsStayIcon style={{color: '#93A1A1'}} fontSize='small'/> : <Brightness5OutlinedIcon style={{color: '#93A1A1'}} fontSize='small'/>} style={{color: '#52781e'}} size="Normal" onClick={(e) =>
         setTheme(
           theme.mode === "dark" ? { mode: "light" } : { mode: "dark" }
-        )} />}
-        label={theme.mode === 'light' ? <NightsStayIcon style={{color: '#93A1A1'}} fontSize='small'/> : <Brightness5OutlinedIcon style={{color: '#93A1A1'}} fontSize='small'/>} /> 
+        )} />
+         
 
         </FormGroup>
         

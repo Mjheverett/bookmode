@@ -204,6 +204,9 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <Link to="/profile" className="link">Profile</Link>
             </MenuItem>
+            <MenuItem>
+             <LightDarkToggle />
+            </MenuItem>
         </Menu>
     );
 
@@ -279,6 +282,8 @@ export default function PrimarySearchAppBar() {
                             <AccountCircle />
                         </IconButton>
                     </Typography>
+                    <LightDarkToggle />
+                    
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton
@@ -291,7 +296,7 @@ export default function PrimarySearchAppBar() {
                             <MoreIcon />
                         </IconButton>
                     </div>
-                    <LightDarkToggle />
+                   
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
