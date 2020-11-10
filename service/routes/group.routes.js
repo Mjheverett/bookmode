@@ -5,6 +5,8 @@ module.exports = app => {
     router.post("/add/:userId", groups.create);
     // Join a group
     router.post("/join/:userId", groups.joinOne);
+    // Leave a group
+    router.post("/leave/:userId", groups.leaveOne);
     // Retrieve all groups with user id
     router.get("/:userId", groups.findAllUser);
     // Retrieve all groups
