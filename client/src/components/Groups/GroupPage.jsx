@@ -140,7 +140,13 @@ const GroupPage = () => {
             </div>
             {(comments.length !== 0) ? (
                 comments.map((comment) => {
-                    <p>Comment is: {comment}</p>
+                    return (
+                        <>
+                            <p>Username</p>
+                            <p>Date Added</p>
+                            <p>Comment is: </p>
+                        </>
+                    )
                 })
             ) : (
                 <p>This group has no comments yet! Why don't you add one?</p>
