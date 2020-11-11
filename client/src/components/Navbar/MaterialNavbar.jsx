@@ -9,7 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
-import bookmodeLogo from '../../images/bookmode.png';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,6 +79,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         height: "35px",
         padding: theme.spacing(1),
+        paddingRight: '0px',
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
         },
         marginRight: theme.spacing(2),
         marginLeft: 0,
-        width: '100%',
+        width: '25%',
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(3),
             width: 'auto',
@@ -94,19 +95,18 @@ const useStyles = makeStyles((theme) => ({
     },
     sectionDesktop: {
         display: 'none',
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up('md')]: {
             display: 'flex',
         },
     },
     sectionMobile: {
         display: 'flex',
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up('md')]: {
             display: 'none',
         },
     },
-    logo: {
-        maxWidth: 160,
-    },
+   
+    
 }));
 
 export default function PrimarySearchAppBar() {
@@ -121,7 +121,7 @@ export default function PrimarySearchAppBar() {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+   
     const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     const handleProfileMenuOpen = (event) => {
@@ -171,7 +171,7 @@ export default function PrimarySearchAppBar() {
     // Material UI - Mobile Menu
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
-        <Menu
+        <Menu 
             anchorEl={mobileMoreAnchorEl}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             id={mobileMenuId}
@@ -203,12 +203,9 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <Link to="/profile" className="link">Profile</Link>
             </MenuItem>
-            <MenuItem>
-                <LightDarkToggle />
-            </MenuItem>
         </Menu>
     );
-
+    
     const _handleChange = (data) => {
         setData(data);
     };
@@ -221,8 +218,7 @@ export default function PrimarySearchAppBar() {
         <div className={classes.grow}>
             <AppBar position="static" style={{backgroundColor: '#002B36'}}>
                 <Toolbar>
-                    <a href="/"><img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} /></a>
-                        <Select
+                        <Select 
                             labelId="demo-simple-select-autowidth-label"
                             id="demo-simple-select-autowidth"
                             value={query}
@@ -281,7 +277,8 @@ export default function PrimarySearchAppBar() {
                             <AccountCircle />
                         </IconButton>
                     </Typography>
-                    <LightDarkToggle />
+                    
+                    
                     
                     </div>
                     <div className={classes.sectionMobile}>
@@ -295,8 +292,9 @@ export default function PrimarySearchAppBar() {
                             <MoreIcon />
                         </IconButton>
                     </div>
-                   
+                    <LightDarkToggle  />    
                 </Toolbar>
+                
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
