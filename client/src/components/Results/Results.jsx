@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import image from '../../images/book_cover.png';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, GridListTileBar, Typography, Popover, IconButton }  from '@material-ui/core';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -54,44 +54,45 @@ const Results = (props) => {
     const { data, query } = props.location.state;
     const { user } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
+
     useEffect(() => {
         (async function (){
             let url;
             if (query === 'all') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}&limit=50`;
             }
             if (query === 'title') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}&limit=50`;
             }
             if (query === 'author') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}&limit=50`;
             }
             if (query === 'subject') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}&limit=50`;
             }
             if (query === 'ISBN') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}`;
+                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}&limit=50`;
             }
-            
             await axios.get(url)
                 .then(res => {
-                    console.log("response", res);
                     const data = res.data.docs;
-                    console.log("get isbn", data[0].isbn[0]);
                     setResults(data);
                 })
             })();
-    }, [data]);    
-    
-    if (results === null) {
-        return 'Loading...';
-    }
+    }, [data, query]);    
     
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
         setAnchorEl(event.currentTarget);
     };
-
+    const checkRegex =(obj)=>{
+        let narArr = []
+        const regTest = /Narrator/
+        narArr = obj.filter(narrator =>(
+            regTest.test(narrator)
+        ))
+        return narArr
+    }
     const handleClose = () => {
         setPopoverId(null);
         setAnchorEl(null);
@@ -101,6 +102,7 @@ const Results = (props) => {
         let result =  clicks.includes(id) ? clicks.filter(click => click !== id): [...clicks, id]
         setClicks(result)
         console.log(title, imageURL, author)
+        author = author.length >= 2 ? author.join(', ') : author[0]
         const data = {
             title: title,
             coverURL: imageURL,
@@ -110,25 +112,36 @@ const Results = (props) => {
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
+
+    if (results === null) {
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
+    }
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">Books</Typography>
             <br />
-            <Typography variant="h6">Add books to your library from here</Typography>
+            <Typography variant="h6">Add books to your library by clicking the <BookmarkIcon fontSize="medium"/> </Typography>
             <br />
                 <div className={classes.resultsDiv}>
                 <br/>
-                    <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
+                    <GridList className={classes.gridList} cols={2} cellHeight={300} spacing={16}>
                         {results.map((result) => {
+
                             return (
                             <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
-                                    <img src={`http://covers.openlibrary.org/b/isbn/${result.isbn}-M.jpg`} alt={result.cover_i} />
+                                    <img src={!!result.cover_i ? `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg` : image}
+                                    alt={result.cover_i} />
                                 </div>
                                 <GridListTileBar
                                 title={result.title}
-                                subtitle={<span>by: {result.author_name}</span>}
+                                subtitle= {<span>by: {!!result.author_name ? result.author_name.length !==1 ? result.author_name.join(', ') : result.author_name : `no author listed`} </span>}
                                 classes={{
                                     root: classes.titleBar,
                                 }}
@@ -157,14 +170,17 @@ const Results = (props) => {
                             <Typography className={classes.typography}>
                                 Title: {result.title}
                             </Typography>
+                                {!!result.subtitle ?
+                                <Typography className={classes.typography}>
+                                    Subtitle: {result.subtitle} 
+                                    </Typography>
+                                    : null}
                             <Typography className={classes.typography}>
-                                Author: {result.author_name}
+                                {!!result.author_name ? result.author_name.length !==1 ? `Authors: ${result.author_name.join(', ')}` : `Author: ${result.author_name}`: `This title has no author listed.`}
                             </Typography>
+                                {!!result.contributor ? !!checkRegex(result.contributor).length ? checkRegex(result.contributor).length !==1 ? <Typography className={classes.typography}> Narrators: {checkRegex(result.contributor).join(', ')} </Typography> : <Typography className={classes.typography}>Narrator: {checkRegex(result.contributor).join(', ')} </Typography> : null : null}
                             <Typography className={classes.typography}>
-                                Genre: (update with API data)
-                            </Typography>
-                            <Typography className={classes.typography}>
-                                Reader: (update with API data)
+                            {!!result.ebook_count_i ? result.ebook_count_i !==0 ? result.ebook_count_i !==1 ? `This title has ${result.ebook_count_i} available versions on ebook.` : `This title has 1 available version on ebook.` : `This title has no available versions on ebook.` : `This title has no available versions on ebook.`}
                             </Typography>
                         </Popover>
                             <GridListTileBar
@@ -173,7 +189,7 @@ const Results = (props) => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, result.cover_i)}>
+                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg`)}>
                                     {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
                                     {clicks.includes(result.key) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
                                     </IconButton> }

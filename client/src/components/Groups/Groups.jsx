@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Button, InputBase }  from '@material-ui/core';
 import GroupsList from './GroupsList';
-import GroupPage from './GroupPage'
 import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(1),
         transition: theme.transitions.create('width'),
         width: '100%',
-        marginLeft: 0,
         [theme.breakpoints.up('md')]: {
             width: '100ch',
         },
@@ -30,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
         },
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
             width: 'auto',
             marginLeft: 0,
         },
@@ -47,12 +43,10 @@ const Groups = () => {
     const { user } = useAuth0();
 
     const _handleNameChange = (data) => {
-        console.log(data)
         setGroupName(data);
     };
 
     const _handleDescChange = (data) => {
-        console.log(data)
         setGroupDescription(data);
     };
 
@@ -65,12 +59,15 @@ const Groups = () => {
         axios.post(`http://localhost:3000/groups/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
+        setGroupName('');
+        setGroupDescription('');
     };
 
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Groups</Typography>
+                <br />
                 <Typography variant="h6">Get connected, create new groups here!</Typography>
                 <br />
                 <Typography>
@@ -85,6 +82,7 @@ const Groups = () => {
                                     }}
                                     name='groupName' 
                                     onChange={(event) => _handleNameChange(event.target.value)} 
+                                    value={name}
                                 />
                             </div>
                         </label>
@@ -100,6 +98,7 @@ const Groups = () => {
                                     }}
                                     name='groupDescription'
                                     onChange={(event) => _handleDescChange(event.target.value)} 
+                                    value={description}
                                 />
                         </div>
                         </label>

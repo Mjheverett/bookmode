@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
-        marginRight: '1rem',
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -44,31 +43,35 @@ const LibraryCard = () => {
                 setLibrary(data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [user.sub]);
 
-     if (library === null) {
-        return 'Loading...';
+    if (library === null) {
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (
         <>
             {(library.length !== 0) ? (library.map(shelf => (
                 <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/library">Your Library</Link></Typography>
+                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/library">Your Main Library</Link></Typography>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                         {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
                             <br />
                             <div width={'auto'} className={classes.div}>
-                                <img src={book.coverURL} alt={book.title}/>
+                                <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
                             <br />
                             <Typography>{book.title}</Typography>
                             <br />
                             </GridListTile>)})) : (
                             <Typography>No books!!</Typography>
-                                    )}
+                        )}
                     </GridList> 
                 </div>))) : (
                 <Typography>No Shelves!</Typography>

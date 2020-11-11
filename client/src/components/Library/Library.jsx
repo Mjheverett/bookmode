@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import { Container, GridList, GridListTile, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
+import CustomizedMenus from './BookMenu';
 
 const useStyles = makeStyles((theme) => ({
     libraryDiv:{
@@ -57,13 +56,33 @@ const useStyles = makeStyles((theme) => ({
         },
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
             width: 'auto',
             marginLeft: 0,
         },
     },
+    librarySearch: {
+        position: 'relative',
+        maxWidth: "215px",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: 'auto',
+            marginLeft: 0,
+        },
+    },
+    titleBarTop: {
+        background: 'rgba(0, 43, 54, .001)',
+    },
     margin: {
         margin: theme.spacing(2),
+    },
+    titleBarTop: {
+        background: 'rgba(0, 43, 54, .001)',
+        color: '#52781e',
     },
 }));
 
@@ -84,7 +103,7 @@ const Library = () => {
                 console.log('res.data:', data)
                 setLibrary(data)
             });
-    }, []);
+    }, [user.sub]);
 
     // Modal with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -132,29 +151,29 @@ const Library = () => {
         e.preventDefault();
         setRedirect(true)
     };
-
     if (library === null) {
-        return 'Loading...';
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
     }
 
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Library</Typography>
-                <div className={classes.search}>
+                <br/>
+                <div className={classes.librarySearch}>
                     <form onSubmit={e => _handleSubmit(e)}>
-                        <InputBase style={{color: '#fff', paddingLeft: '6px'}}
+                        <InputBase style={{color: '#93A1A1', paddingLeft: '6px'}}
                             placeholder="Search your library..."
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
-                            endAdornment={<InputAdornment position="end">
-                            <SearchIcon style={{color: '#93A1A1'}}/>
-                        </InputAdornment>}
                             inputProps={{ 'aria-label': 'search'}}
-                            onChange={(event) => _handleChange(event.target.value)}
-                            
+                            onChange={(event) => _handleChange(event.target.value)} 
                         />
                         
                     </form>
@@ -167,15 +186,17 @@ const Library = () => {
                         />
                     )}
                 </div>
+                <br/>
                 <Typography variant="h6">
-                    Are you a fan of creating shelves? Well, have we got a form for you!!
+                    Are you a fan of creating shelves?
                 </Typography>
                 <br />
                 <Typography>
                     <form onSubmit={_handleCreateShelf}>
                         <label>Shelf Name
                             <div className={classes.search}>
-                                <InputBase style={{color: '#93A1A1'}}
+                                <InputBase 
+                                    style={{color: '#93A1A1'}}
                                     placeholder="Awesome Shelf Name..."
                                     classes={{
                                         root: classes.inputRoot,
@@ -213,14 +234,23 @@ const Library = () => {
                     <br />
                     <div className={classes.libraryDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                        {(shelf.Books.length !== 0) ? (shelf.Books.map(book => { 
+                        {(shelf.Books.length !== 0) ? (shelf.Books.slice(0).reverse().map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
                             <br />
                             <div width={'auto'} className={classes.div}>
-                                <img src={book.coverURL} alt={book.title}/>
+                                <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
                             <br />
+
+                            <GridListTileBar
+                                classes={{
+                                    root: classes.titleBarTop,
+                                }}
+                                titlePosition ={'top'}
+                                actionIcon={
+                                    <CustomizedMenus />}
+                            />
                             <Typography>{book.title}</Typography>
                             <div>
                             <br />
@@ -234,12 +264,12 @@ const Library = () => {
                                     className={classes.root}
                                     onClose={handleClose}
                                     anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'right',
+                                        vertical: 'top',
+                                        horizontal: 'center',
                                     }}
                                     transformOrigin={{
                                         vertical: 'bottom',
-                                        horizontal: 'left',
+                                        horizontal: 'center',
                                     }}
                                 >
                                     <Typography className={classes.typography}>

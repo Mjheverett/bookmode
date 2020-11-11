@@ -1,4 +1,5 @@
 const db = require("../models");
+const Comment = db.comments;
 const Group = db.groups;
 const User = db.users;
 const Op = db.Sequelize.Op;
@@ -138,5 +139,49 @@ exports.delete = (req, res) => {
         res.status(500).send({
             message: "Could not delete Shelf with id=" + id
         });
+        });
+    };
+
+// Controllers for comments
+exports.createComment = async (req, res) => {
+    //Validate request
+    console.log('this is what is getting sent in as the req.body: ', req.body)
+    if (!req.body.content) {
+        res.status(400).send({
+            message: "Comment content cannot be empty!"
+        });
+        return;
+    }
+    const { groupId } = req.params;
+    const { content, userId } = req.body;
+    const comment = await Comment.create({
+        content: content 
+    })
+    const user = await User.findOne({where: { id: userId }})
+    await user.addComment(comment)
+    const group = await Group.findOne({where: { id: groupId }})
+    await group.addComment(comment)
+        .then (data=> {
+            res.send(data).status(200);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the book."
+            });
+        });
+    
+    };
+exports.findAllComments = async (req, res) => {
+    const { groupId } = req.params;
+    Comment.findAll({where: { GroupId: groupId}})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving groups."
+            });
         });
     };

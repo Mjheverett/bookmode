@@ -52,8 +52,8 @@ const Results = (props) => {
     const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
     const { search } = props.location.state;
-    const { user } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
+
     useEffect(() => {
         (async function (){
             await axios.get(`http://localhost:3000/library/search/${search}`)
@@ -65,9 +65,7 @@ const Results = (props) => {
             })();
     }, [search]);    
     
-    if (results === null) {
-        return 'Loading...';
-    }
+    
     
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
@@ -78,20 +76,15 @@ const Results = (props) => {
         setPopoverId(null);
         setAnchorEl(null);
     };
-    const _handleAddLibrary = (id, title, author, imageURL) =>{
-        //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
-        let result =  clicks.includes(id) ? clicks.filter(click => click !== id): [...clicks, id]
-        setClicks(result)
-        console.log(title, imageURL, author)
-        const data = {
-            title: title,
-            coverURL: imageURL,
-            authorName: author
-        };
-        axios.post(`http://localhost:3000/results/add/${user.sub}`, data)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-    };
+
+    if (search === null) {
+        return (
+            <>
+                <Typography variant="h6">Loading</Typography>
+            </>
+        )
+    }
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -102,7 +95,7 @@ const Results = (props) => {
                 <div className={classes.resultsDiv}>
                 <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
-                        {results.map((result) => {
+                        {search.map((result) => {
                             return (
                             <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
@@ -155,7 +148,7 @@ const Results = (props) => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, result.cover_i)}>
+                                    <IconButton aria-label={`${result.key}`} >
                                     {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
                                     {clicks.includes(result.key) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
                                     </IconButton> }
