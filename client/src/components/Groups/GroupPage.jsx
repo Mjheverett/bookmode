@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, GridList, GridListTile, Button, TextField}  from '@material-ui/core';
+import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
+// import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
@@ -40,6 +41,17 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.15),
         },
+    },
+    avatar: {
+        backgroundColor: '#52781e',
+    },
+    card: {
+        width: 'auto',
+        margin: theme.spacing(2),
+        padding: theme.spacing(2),
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        color: '#002B36',
+        textAlign: 'left',
     },
 }));
 
@@ -172,22 +184,38 @@ const GroupPage = () => {
                 </form>
                 <br />
             </Typography>
-            <div>
-                <Typography>Display all group comments</Typography>
+            <div className={classes.groupsDiv}>
+                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                {(comments.length !== 0) ? (
+                    comments.map((comment) => {
+                        return (
+                            <div>
+                                <GridListTile cellHeight={'auto'}>
+                                <br />
+                                <Card className={classes.card}>
+                                    <CardHeader
+                                        avatar={
+                                        <Avatar className={classes.avatar}>
+                                            {comment.Users[0].name[0]}
+                                        </Avatar>
+                                        }
+                                        title={comment.Users[0].name}
+                                        subheader={comment.createdAt}
+                                    />
+                                    <CardContent>
+                                        <Typography style={{color: '#002B36'}}>{comment.content}</Typography>
+                                    </CardContent>
+                                </Card>
+                                <br />
+                                </GridListTile>
+                            </div>
+                        )
+                    })
+                ) : (
+                    <Typography>This group has no comments yet! Why don't you add one?</Typography>
+                )}
+                </GridList> 
             </div>
-            {(comments.length !== 0) ? (
-                comments.map((comment) => {
-                    return (
-                        <div>
-                            <p>{comment.Users[0].name}</p>
-                            <p>{comment.createdAt}</p>
-                            <p>{comment.content}</p>
-                        </div>
-                    )
-                })
-            ) : (
-                <p>This group has no comments yet! Why don't you add one?</p>
-            )}
         </Container>
     )
 }
