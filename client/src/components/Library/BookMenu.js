@@ -114,14 +114,15 @@ const CustomizedMenus = (props) => {
   const [personName, setPersonName] = useState([]);
   const [content, setContent] = useState(null);
   const { user } = useAuth0();
+  const url = `http://localhost:3000/users`
   useEffect(() => {
-    axios.get(`http://localhost:3000/users`)
+    axios.get(url)
         .then(res => {
             const data = res.data;
             console.log('res.data:', data)
             setUsers(data)
         });
-}, [users.name]);
+}, [url]);
   const handleChangeName = (event) => {
     setPersonName(event.target.value);
   };
@@ -158,12 +159,13 @@ const handleCreateRec= (e) => {
   e.preventDefault();
   setOpen(false);
    const data = {
-      personName: personName[0],
+      receiverName: personName[0],
        bookId: book.id,
-       content: content
+       content: content,
+       senderId: user.sub
    };
    console.log(data)
-  axios.post(`http://localhost:3000/recommendations/add/${user.sub}`, data)
+  axios.post(`http://localhost:3000/recommendations/add`, data)
       .then(res => console.log(res))
       .catch(err => console.log(err));
 }
@@ -204,6 +206,7 @@ const handleCreateRec= (e) => {
           className={clsx(classes.margin, classes.textField)}
         />
         <br />
+        <br />
       <Button type="submit" color="secondary" variant="contained" size="large">Send your recommendation</Button>
       </form>
     </div>
@@ -235,13 +238,13 @@ const handleMobileMenuOpen = (event) => {
           onClose={handleMenuClose}
       >
         {(shelves.length !== 0) ? (shelves.map(shelf => (
-        <>
+        <div>
         <MenuItem 
           key={shelf.id}
           onClick={() => handleClick(book.id, shelf.id)}>
           {shelf.shelfName}
         </MenuItem>
-        </>
+        </div>
         ))) : (<MenuItem>No shelves!</MenuItem>)}
       </Menu>
   );
