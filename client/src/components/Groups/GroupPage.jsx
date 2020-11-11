@@ -88,7 +88,7 @@ const GroupPage = () => {
             userId: user.sub
         }
         console.log("add comment data", data);
-        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`, data)
+        axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }
@@ -158,6 +158,7 @@ const GroupPage = () => {
                 comments.map((comment) => {
                     return (
                         <div>
+                            <p>{comment.Users[0].name}</p>
                             <p>{comment.createdAt}</p>
                             <p>{comment.content}</p>
                         </div>

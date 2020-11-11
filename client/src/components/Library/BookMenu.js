@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
@@ -33,9 +34,9 @@ const StyledMenu = withStyles({
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     '&:focus': {
-      backgroundColor: 'transparent',
+      backgroundColor: theme.palette.primary.main,
       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: '#52781e',
+        color: theme.palette.common.white,
       },
     },
   },
@@ -71,21 +72,21 @@ export default function CustomizedMenus() {
       >
         <StyledMenuItem>
           <ListItemIcon>
-            <SendIcon fontSize="small" style={{color: '#52781e'}}/>
+            <SendIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Send recommendation" style={{color: '#93A1A1'}}/>
+          <ListItemText primary="Send recommendation" />
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
-            <MenuBookIcon fontSize="small" style={{color: '#52781e'}}/>
+            <MenuBookIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="See book details" style={{color: '#93A1A1'}}/>
+          <ListItemText primary="See book details" />
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
-            <CollectionsBookmarkIcon fontSize="small" style={{color: '#52781e'}}/>
+            <CollectionsBookmarkIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Sort book into a different shelf" style={{color: '#93A1A1'}}/>
+          <ListItemText primary="Sort book into a different shelf" />
         </StyledMenuItem>
       </StyledMenu>
     </div>
