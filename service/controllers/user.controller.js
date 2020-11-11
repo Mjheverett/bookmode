@@ -70,21 +70,6 @@ exports.findOne = (req, res) => {
     };
 exports.update = (req, res) => {
     const { userId } = req.params;
-<<<<<<< HEAD
-    // console.log('this is a ' req.body)
-    User.update(req.body, {
-        where: { id: userId }
-    })
-        .then(num => {
-        if (num == 1) {
-            res.send({
-                message: "User was updated successfully."
-            });
-        } else {
-            res.send({
-                message: `Cannot update User with id=${userId}. Maybe the User was not found or req.body is empty!`
-            });
-=======
     console.log('this is a req.body:', req.body)
     const { name, email } = req.body
     if (name !== null){
@@ -126,7 +111,6 @@ exports.update = (req, res) => {
                         message: "Could not update User with id=" + userId
                     });
                 });}
->>>>>>> f926c451348aeba3915968880257f23c5c1726e3
         }
 exports.delete = (req, res) => {
     const { userId } = req.params;
