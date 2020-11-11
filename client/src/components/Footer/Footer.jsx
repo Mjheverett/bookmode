@@ -22,9 +22,7 @@ const Footer = () => {
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <div className={classes.div}>
                 <a href="/"><img src={bookmodeLogo} alt="bookmode logo" className={classes.logo} /></a> 
-            </div>
-            <div className={classes.div}>
-                <Typography variant="h6">Made with <span className="fa fa-heart" /> by ¡ƎƎ˥ W∀Ǝ┴</Typography>
+                <Typography>Made with <span className="fa fa-heart" /> by ¡ƎƎ˥ W∀Ǝ┴</Typography>
             </div>
             </Container>
         </>
