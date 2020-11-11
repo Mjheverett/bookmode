@@ -166,7 +166,7 @@ const Library = () => {
                 <br/>
                 <div className={classes.librarySearch}>
                     <form onSubmit={e => _handleSubmit(e)}>
-                        <InputBase style={{color: '#fff', paddingLeft: '6px'}}
+                        <InputBase style={{color: '#93A1A1', paddingLeft: '6px'}}
                             placeholder="Search your library..."
                             classes={{
                                 root: classes.inputRoot,
@@ -196,7 +196,7 @@ const Library = () => {
                         <label>Shelf Name
                             <div className={classes.search}>
                                 <InputBase 
-                                    style={{color: '#fff'}}
+                                    style={{color: '#93A1A1'}}
                                     placeholder="Awesome Shelf Name..."
                                     classes={{
                                         root: classes.inputRoot,
@@ -211,7 +211,7 @@ const Library = () => {
                         <label>Shelf Description
                         <div className={classes.search}>
                                 <InputBase
-                                    style={{color: '#fff'}}
+                                    style={{color: '#93A1A1'}}
                                     placeholder="Shelf Description..."
                                     classes={{
                                         root: classes.inputRoot,

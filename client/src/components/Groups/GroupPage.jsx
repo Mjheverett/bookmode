@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, GridList, GridListTile, Button, TextField}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -31,6 +31,16 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(2),
     },
+    textField: {
+        position: 'relative',
+        width: '100%',
+        maxWidth: "600px",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
+    },
 }));
 
 const GroupPage = () => {
@@ -42,12 +52,17 @@ const GroupPage = () => {
     const { user } = useAuth0();
 
     useEffect(() => {
-        console.log(groupId.id)
         axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
             .then(res => {
-                console.log("individual group", res);
                 const data = res.data;
                 setGroup(data);
+            })
+            .catch(err => console.log(err));
+        axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
+            .then(res => {
+                const data = res.data;
+                console.log("comment response data", data);
+                setComments(data);
             })
             .catch(err => console.log(err));
     }, [groupId.id]);
@@ -62,9 +77,18 @@ const GroupPage = () => {
             .catch(err => console.log(err));
     };
 
+    const _handleComment = (data) => {
+        setNewComment(data);
+    }
+
     const _handleAddComment = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`)
+        const data = {
+            content: newComment,
+            userId: user.sub
+        }
+        console.log("add comment data", data);
+        axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }
@@ -81,12 +105,15 @@ const GroupPage = () => {
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">{group.groupName}</Typography>
+            <br/>
             <Typography variant="h6">{group.groupDescription}</Typography>
+            <br/>
             <form onSubmit={_handleJoinGroup}>
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
             </form>
-            <Typography variant="h6">Members:</Typography>
+            <br />
+            <Typography variant="h6">Members</Typography>
             <div className={classes.groupsDiv}>
                 <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                     {(group.Users.length !== 0) ? (group.Users.map(user => (
@@ -102,31 +129,39 @@ const GroupPage = () => {
                 </GridList> 
             </div>
             <div>
-                <h4>Add new comments</h4>
+                <Typography variant="h6">Comments</Typography>
             </div>
-            <form onSubmit={_handleAddComment} className={classes.root} noValidate autoComplete="off">
-                <TextField 
-                    id="filled-multiline-static"
-                    label="New Comment"
-                    multiline
-                    rows={4}
-                    defaultValue="Default Value"
-                    variant="filled" 
-                    value={newComment}
-                />
-                <Button type="submit" color="secondary" variant="contained" size="medium">Add Comment</Button>
-            </form>
+            <Typography>
+                <form onSubmit={_handleAddComment} style={{color: '#93A1A1'}} noValidate autoComplete="off">
+                    <TextField 
+                        id="filled-multiline-static"
+                        className={classes.textField}
+                        placeholder="New Comment"
+                        multiline
+                        rows={4}
+                        defaultValue="Default Value"
+                        variant="filled" 
+                        onChange={(event) => _handleComment(event.target.value)}
+                        value={newComment}
+                        style={{color: '#93A1A1'}}
+                    />
+                    <br />
+                    <br />
+                    <Button type="submit" color="secondary" variant="contained" size="large">Add Comment</Button>
+                </form>
+                <br />
+            </Typography>
             <div>
-                <p>Display all group comments</p>
+                <Typography>Display all group comments</Typography>
             </div>
             {(comments.length !== 0) ? (
                 comments.map((comment) => {
                     return (
-                        <>
-                            <p>Username</p>
-                            <p>Date Added</p>
-                            <p>Comment is: </p>
-                        </>
+                        <div>
+                            <p>{comment.Users[0].name}</p>
+                            <p>{comment.createdAt}</p>
+                            <p>{comment.content}</p>
+                        </div>
                     )
                 })
             ) : (

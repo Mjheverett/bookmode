@@ -22,7 +22,7 @@ const Dashboard = () => {
                 setUserData(data);
             })
             .catch(err => console.log(err));
-    }, [user.email, user.name, user.sub]);
+    }, []);
 
     if (userData === null) {
         return (

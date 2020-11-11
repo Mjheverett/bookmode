@@ -1,4 +1,5 @@
 const db = require("../models");
+const Comment = db.comments;
 const Group = db.groups;
 const User = db.users;
 const Op = db.Sequelize.Op;
@@ -83,8 +84,6 @@ exports.joinOne = async (req, res) => {
     };
 exports.findOne = (req, res) => {
     const { groupId } = req.params;
-    console.log("req params of findOne", req.params)
-    console.log("group id is:", groupId);
     Group.findOne({ where: { id: groupId }, include: [{model: User}]})
         .then(data => {
             res.send(data);
@@ -145,24 +144,21 @@ exports.delete = (req, res) => {
 exports.createComment = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
-    if (!req.body.groupName) {
+    if (!req.body.content) {
         res.status(400).send({
-            message: "Name cannot be empty!"
+            message: "Comment content cannot be empty!"
         });
         return;
     }
-    
-    //create a new group
-    const group = {
-        groupName: req.body.groupName,
-        groupDescription: req.body.groupDescription};
-    //save book in DB
-    const groupAdded = await Group.create(group)
-    console.log("group info is: ", groupAdded)
-    const { userId } = req.params;
-    const user = await User.findOne({where: { id: userId}})
-    console.log("user info is: ", user)
-    await user.addGroup(groupAdded, { through: {isAdmin: true} })
+    const { groupId } = req.params;
+    const { content, userId } = req.body;
+    const comment = await Comment.create({
+        content: content 
+    })
+    const user = await User.findOne({where: { id: userId }})
+    await user.addComment(comment)
+    const group = await Group.findOne({where: { id: groupId }})
+    await group.addComment(comment)
         .then (data=> {
             res.send(data).status(200);
         })
@@ -173,4 +169,18 @@ exports.createComment = async (req, res) => {
             });
         });
     
+    };
+exports.findAllComments = async (req, res) => {
+    const { groupId } = req.params;
+    console.log(Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]}))
+    Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]})
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving groups."
+            });
+        });
     };
