@@ -10,6 +10,8 @@ import SendIcon from '@material-ui/icons/Send';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
+import DeleteIcon from '@material-ui/icons/Delete';
+import axios from 'axios';
 
 const StyledMenu = withStyles({
   paper: {
@@ -42,8 +44,9 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function CustomizedMenus() {
+export default function CustomizedMenus(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { book } = props;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -52,6 +55,16 @@ export default function CustomizedMenus() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const _handleDeleteBook = () => {
+    const data = {
+      id: book.id,
+      shelfId: book.shelves_books.ShelfId
+    }
+    axios.delete(`http://localhost:3000/library/book/${data.id}`, data)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
 
   return (
     <div>
@@ -87,6 +100,12 @@ export default function CustomizedMenus() {
             <CollectionsBookmarkIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Sort book into a different shelf" />
+        </StyledMenuItem>
+        <StyledMenuItem>
+          <ListItemIcon>
+            <DeleteIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Remove from Shelf" onClick={_handleDeleteBook} />
         </StyledMenuItem>
       </StyledMenu>
     </div>

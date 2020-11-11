@@ -11,5 +11,7 @@ module.exports = app => {
     router.put("/:id", shelves.update);
     // Delete a Shelf with id
     router.delete("/:id", shelves.delete);
+    // Delete a book from shelf
+    router.delete("/book/:id", shelves.deleteBook);
     app.use('/library', router);
     };

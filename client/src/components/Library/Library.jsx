@@ -260,7 +260,7 @@ const Library = () => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <CustomizedMenus />}
+                                    <CustomizedMenus book={book} />}
                             />
                             <Typography>{book.title}</Typography>
                             <div>

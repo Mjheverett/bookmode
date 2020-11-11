@@ -105,3 +105,32 @@ exports.delete = (req, res) => {
         });
         });
     };
+exports.deleteBook = async (req, res) => {
+    const { id } = req.params;
+    const { shelfId } = req.body;
+
+    const shelf = await Shelf.findOne({where: { id: shelfId }})
+    console.log("shelf", shelf);
+    console.log(Shelf.destroy({ where: { BookId: id }, include: [{model: Book}]}))
+
+    shelf.destroy({
+        where: { BookId: id }, 
+        include: [{model: Book}]
+    })
+        .then(num => {
+        if (num == 1) {
+            res.send({
+            message: "Shelf was deleted successfully!"
+            });
+        } else {
+            res.send({
+            message: `Cannot delete Shelf with id=${id}. Maybe Shelf was not found!`
+            });
+        }
+        })
+        .catch(err => {
+        res.status(500).send({
+            message: "Could not delete Shelf with id=" + id
+        });
+        });
+    };
