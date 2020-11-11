@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, GridList, GridListTile, Button, TextField}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -30,6 +30,16 @@ const useStyles = makeStyles((theme) => ({
     },
     margin: {
         margin: theme.spacing(2),
+    },
+    textField: {
+        position: 'relative',
+        width: '100%',
+        maxWidth: "600px",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
     },
 }));
 
@@ -119,23 +129,30 @@ const GroupPage = () => {
                 </GridList> 
             </div>
             <div>
-                <h4>Add new comments</h4>
+                <Typography variant="h6">Comments</Typography>
             </div>
-            <form onSubmit={_handleAddComment} className={classes.root} noValidate autoComplete="off">
-                <TextField 
-                    id="filled-multiline-static"
-                    label="New Comment"
-                    multiline
-                    rows={4}
-                    defaultValue="Default Value"
-                    variant="filled" 
-                    onChange={(event) => _handleComment(event.target.value)}
-                    value={newComment}
-                />
-                <Button type="submit" color="secondary" variant="contained" size="medium">Add Comment</Button>
-            </form>
+            <Typography>
+                <form onSubmit={_handleAddComment} style={{color: '#93A1A1'}} noValidate autoComplete="off">
+                    <TextField 
+                        id="filled-multiline-static"
+                        className={classes.textField}
+                        placeholder="New Comment"
+                        multiline
+                        rows={4}
+                        defaultValue="Default Value"
+                        variant="filled" 
+                        onChange={(event) => _handleComment(event.target.value)}
+                        value={newComment}
+                        style={{color: '#93A1A1'}}
+                    />
+                    <br />
+                    <br />
+                    <Button type="submit" color="secondary" variant="contained" size="large">Add Comment</Button>
+                </form>
+                <br />
+            </Typography>
             <div>
-                <p>Display all group comments</p>
+                <Typography>Display all group comments</Typography>
             </div>
             {(comments.length !== 0) ? (
                 comments.map((comment) => {
