@@ -116,7 +116,6 @@ export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const [data, setData] = useState('');
-    const [search, setSearch] = useState('');
     const [fireRedirect, setRedirect] = useState(false);
     const [query, setQuery] = useState('all');
 

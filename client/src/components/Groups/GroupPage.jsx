@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, GridList, GridListTile, Button, TextField}  from '@material-ui/core';
+import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
+// import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
@@ -41,6 +42,17 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.common.white, 0.15),
         },
     },
+    avatar: {
+        backgroundColor: '#52781e',
+    },
+    card: {
+        width: 'auto',
+        margin: theme.spacing(2),
+        padding: theme.spacing(2),
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        color: '#002B36',
+        textAlign: 'left',
+    },
 }));
 
 const GroupPage = () => {
@@ -77,6 +89,16 @@ const GroupPage = () => {
             .catch(err => console.log(err));
     };
 
+    const _handleLeaveGroup = (e) => {
+        e.preventDefault();
+        const data = {
+            groupId: group.id
+        };
+        axios.post(`http://localhost:3000/groups/leave/${user.sub}`, data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
+
     const _handleComment = (data) => {
         setNewComment(data);
     }
@@ -88,9 +110,16 @@ const GroupPage = () => {
             userId: user.sub
         }
         console.log("add comment data", data);
-        axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
-            .then(res => console.log(res))
+        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`, data)
+            .then(res => console.log("comment response", res))
             .catch(err => console.log(err));
+        const newCommentData = {
+            content: newComment,
+            userId: user.sub,
+            createdAt: 'Just Now'
+        };
+        setComments([...comments, newCommentData]);    
+        setNewComment('');
     }
 
     // return while waiting on axios, then render updated page
@@ -111,6 +140,10 @@ const GroupPage = () => {
             <form onSubmit={_handleJoinGroup}>
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
+            </form>
+            <form onSubmit={_handleLeaveGroup}>
+                <input value={group.id} name="groupId" hidden></input>
+                <Button type="submit" color="secondary" variant="contained" size="large">Leave This Group</Button>
             </form>
             <br />
             <Typography variant="h6">Members</Typography>
@@ -151,22 +184,38 @@ const GroupPage = () => {
                 </form>
                 <br />
             </Typography>
-            <div>
-                <Typography>Display all group comments</Typography>
+            <div className={classes.groupsDiv}>
+                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                {(comments.length !== 0) ? (
+                    comments.map((comment) => {
+                        return (
+                            <div>
+                                <GridListTile cellHeight={'auto'}>
+                                <br />
+                                <Card className={classes.card}>
+                                    <CardHeader
+                                        avatar={
+                                        <Avatar className={classes.avatar}>
+                                            {comment.Users[0].name[0]}
+                                        </Avatar>
+                                        }
+                                        title={comment.Users[0].name}
+                                        subheader={comment.createdAt}
+                                    />
+                                    <CardContent>
+                                        <Typography style={{color: '#002B36'}}>{comment.content}</Typography>
+                                    </CardContent>
+                                </Card>
+                                <br />
+                                </GridListTile>
+                            </div>
+                        )
+                    })
+                ) : (
+                    <Typography>This group has no comments yet! Why don't you add one?</Typography>
+                )}
+                </GridList> 
             </div>
-            {(comments.length !== 0) ? (
-                comments.map((comment) => {
-                    return (
-                        <div>
-                            <p>{comment.Users[0].name}</p>
-                            <p>{comment.createdAt}</p>
-                            <p>{comment.content}</p>
-                        </div>
-                    )
-                })
-            ) : (
-                <p>This group has no comments yet! Why don't you add one?</p>
-            )}
         </Container>
     )
 }
