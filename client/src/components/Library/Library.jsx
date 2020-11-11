@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
+
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
 
@@ -95,7 +96,7 @@ const Library = () => {
     const [search, setSearch] = useState();
     const [fireRedirect, setRedirect] = useState(false);
     const { user } = useAuth0();
-
+    //gets shelves and respective books/authors
     useEffect(() => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
@@ -105,29 +106,27 @@ const Library = () => {
             });
     }, [user.sub]);
 
-    // Modal with information about each book.
+    // popover with information about each book.
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
-
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setPopoverId(null);
         setAnchorEl(null);
     };
-
+    //functions for shelf name/description
     const _handleNameChange = (data) => {
         console.log(data)
         setShelfName(data);
     };
-
     const _handleDescChange = (data) => {
         console.log(data)
         setShelfDescription(data);
     };
-
+    //function for adding the shelf named/described above
     const _handleCreateShelf = (e) => {
         e.preventDefault();
         const data = {
@@ -138,19 +137,18 @@ const Library = () => {
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
+    //library search functions
     const _handleChange = (search) => {
         console.log(search)
         setSearch(search);
     };
-
     const _handleSubmit = (e) => {
         e.preventDefault();
         setRedirect(true)
     };
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+    //loading page while the axios runs
     if (library === null) {
         return (
             <>
@@ -158,7 +156,6 @@ const Library = () => {
             </>
         )
     }
-
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -175,7 +172,6 @@ const Library = () => {
                             inputProps={{ 'aria-label': 'search'}}
                             onChange={(event) => _handleChange(event.target.value)} 
                         />
-                        
                     </form>
                     {fireRedirect && search && (
                         <Redirect 
@@ -242,14 +238,13 @@ const Library = () => {
                                 <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
                             <br />
-
                             <GridListTileBar
                                 classes={{
                                     root: classes.titleBarTop,
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <CustomizedMenus />}
+                                    <CustomizedMenus book={book} shelves={library.slice(1)}/>}
                             />
                             <Typography>{book.title}</Typography>
                             <div>
@@ -299,5 +294,4 @@ const Library = () => {
         </>
     )
 }
-
 export default Library;

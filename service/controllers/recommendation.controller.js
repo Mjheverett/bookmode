@@ -6,9 +6,8 @@ const User = db.users;
 const Recommendation = db.recommendations
 
 exports.create = async (req, res) => {
-    const { id }= req.params
-    const { userId } = req.params;
     console.log('this is what is getting sent in as the req.body: ', req.body)
+    const { userId } = req.params;
     const { comment, receiverName } = req.body;
     const receiver = await User.findOne({where: { name: receiverName}})
     await Recommendation.create({

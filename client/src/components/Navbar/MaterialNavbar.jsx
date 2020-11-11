@@ -158,10 +158,10 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
             {isAuthenticated ? (
-                <>
+                <div>
                     <MenuItem><Link to="/profile" className="menu-link">My account</Link></MenuItem>
                     <MenuItem onClick={() => logout({ returnTo: window.location.origin })}>Logout</MenuItem>
-                </>
+                </div>
             ) : (
                 <MenuItem onClick={() => loginWithRedirect({ returnTo: window.location.origin })}>Login</MenuItem>
             )}
