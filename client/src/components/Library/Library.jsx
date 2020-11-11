@@ -154,8 +154,6 @@ const Library = () => {
         setRedirect(true)
     };
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
 // Render Loading while pulling Library Info
     if (library === null) {
         return (
