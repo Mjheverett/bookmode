@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
     const { user } = useAuth0(null);
     const classes = useStyles();
-    const [ userInfo, setUser ] = useState(null);
+    const [ userName, setName ] = useState(null);
+    const [ userEmail, setEmail ] = useState(null)
+    const [userInfo, setUser ] = useState(null)
 
     useEffect(() => {
         (async function (){
@@ -80,40 +82,30 @@ const Profile = () => {
 
     const updateData = (e) => {
         e.preventDefault();
+    let name = !!userName ? userName : null
+    let email = !!userEmail ? userEmail: null
         const data = {
             id: user.sub,
-            name: userInfo.name,
-            email: userInfo.email
+            name,
+            email
         };
         axios.put(`http://localhost:3000/users/${user.sub}`, data)
             .then(res => {
                 const updateData = res.data;
                 setUser(updateData);
-                console.log('put data is: ', updateData)
+                console.log(updateData)
+                setName(null)
+                setEmail(null)
             })
             .catch(err => console.log(err));
     }
 
-     // trying both _handleInfoChange and updateData for put request
-
-    // const _handleInfoChange = (e) => {
-    //     e.preventDefault();
-    //     const data = {
-    //         id: user.sub,
-    //         name: user.name,
-    //         email: user.email
-    //     };
-    //     axios.put(`http://localhost:3000/users/${user.sub}`, data)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.log(err));
-          
-    // };
-
-    const _handleChange = (newData) => {
-        console.log(newData);
-        setUser(newData);
+    const _handleChangeName = (newData) => {
+        setName(newData);
     };
-
+    const _handleChangeEmail = (newData) => {
+        setEmail(newData);
+    };
 
     if (userInfo === null) {
         return (
@@ -143,12 +135,12 @@ const Profile = () => {
                             <Typography variant="h6" >Edit Profile Info</Typography>
                             <form  onSubmit={(e) => updateData(e)}>
                                 <Typography><label>Name 
-                                    <input className={classes.formInput} type='text' name='name' onChange={(event) => _handleChange(event.target.value)}>
+                                    <input className={classes.formInput} type='text' name='name' onChange={(event) => _handleChangeName(event.target.value)}>
 
                                     </input>
                                 </label></Typography>
                                 <Typography><label >Email 
-                                    <input className={classes.formInput} type='text' name='email' onChange={(event) => _handleChange(event.target.value)}>
+                                    <input className={classes.formInput} type='text' name='email' onChange={(event) => _handleChangeEmail(event.target.value)}>
 
                                     </input>
                                 </label></Typography>
