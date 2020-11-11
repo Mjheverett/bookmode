@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Typography, GridList, GridListTile, Button, TextField }  from '@material-ui/core';
+import { Container, Typography, GridList, GridListTile, Button, TextField}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,12 +42,17 @@ const GroupPage = () => {
     const { user } = useAuth0();
 
     useEffect(() => {
-        console.log(groupId.id)
         axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
             .then(res => {
-                console.log("individual group", res);
                 const data = res.data;
                 setGroup(data);
+            })
+            .catch(err => console.log(err));
+        axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
+            .then(res => {
+                const data = res.data;
+                console.log("comment response data", data);
+                setComments(data);
             })
             .catch(err => console.log(err));
     }, [groupId.id]);
@@ -62,9 +67,18 @@ const GroupPage = () => {
             .catch(err => console.log(err));
     };
 
+    const _handleComment = (data) => {
+        setNewComment(data);
+    }
+
     const _handleAddComment = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`)
+        const data = {
+            content: newComment,
+            userId: user.sub
+        }
+        console.log("add comment data", data);
+        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     }
@@ -81,12 +95,15 @@ const GroupPage = () => {
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">{group.groupName}</Typography>
+            <br/>
             <Typography variant="h6">{group.groupDescription}</Typography>
+            <br/>
             <form onSubmit={_handleJoinGroup}>
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
             </form>
-            <Typography variant="h6">Members:</Typography>
+            <br />
+            <Typography variant="h6">Members</Typography>
             <div className={classes.groupsDiv}>
                 <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
                     {(group.Users.length !== 0) ? (group.Users.map(user => (
@@ -112,6 +129,7 @@ const GroupPage = () => {
                     rows={4}
                     defaultValue="Default Value"
                     variant="filled" 
+                    onChange={(event) => _handleComment(event.target.value)}
                     value={newComment}
                 />
                 <Button type="submit" color="secondary" variant="contained" size="medium">Add Comment</Button>
@@ -122,11 +140,10 @@ const GroupPage = () => {
             {(comments.length !== 0) ? (
                 comments.map((comment) => {
                     return (
-                        <>
-                            <p>Username</p>
-                            <p>Date Added</p>
-                            <p>Comment is: </p>
-                        </>
+                        <div>
+                            <p>{comment.createdAt}</p>
+                            <p>{comment.content}</p>
+                        </div>
                     )
                 })
             ) : (

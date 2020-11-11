@@ -64,8 +64,7 @@ const Profile = () => {
     useEffect(() => {
         (async function (){
             const data = {
-                id: user.sub,
-               
+                id: user.sub,    
             };
             console.log("user sub is", user.sub)
             await axios.get(`http://localhost:3000/users/${user.sub}`, data)
@@ -118,7 +117,7 @@ const Profile = () => {
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
-                <Typography variant="h2">Profile Page</Typography>
+                <Typography variant="h2">Profile</Typography>
                 <br />
                 <br />
                 <div className={classes.profileDiv}>
