@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
-
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
 
@@ -75,9 +74,6 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: 0,
         },
     },
-    titleBarTop: {
-        background: 'rgba(0, 43, 54, .001)',
-    },
     margin: {
         margin: theme.spacing(2),
     },
@@ -117,7 +113,10 @@ const Library = () => {
         setPopoverId(null);
         setAnchorEl(null);
     };
-    //functions for shelf name/description
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+// Create Shelf Functions
     const _handleNameChange = (data) => {
         console.log(data)
         setShelfName(data);
@@ -136,8 +135,16 @@ const Library = () => {
         axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
+        const newShelf = {
+            shelfName: name,
+            shelfDescription: description,
+            Books: []
+        }
+        setLibrary([...library, newShelf]);
+        setShelfName('');
+        setShelfDescription('');
     }
-    //library search functions
+// Library Search Functions
     const _handleChange = (search) => {
         console.log(search)
         setSearch(search);
@@ -146,9 +153,10 @@ const Library = () => {
         e.preventDefault();
         setRedirect(true)
     };
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-    //loading page while the axios runs
+// Render Loading while pulling Library Info
     if (library === null) {
         return (
             <>
@@ -199,7 +207,8 @@ const Library = () => {
                                         input: classes.inputInput,
                                     }}
                                     name='shelfName' 
-                                    onChange={(event) => _handleNameChange(event.target.value)} 
+                                    onChange={(event) => _handleNameChange(event.target.value)}
+                                    value={name}
                                 />
                             </div>
                         </label>
@@ -214,7 +223,8 @@ const Library = () => {
                                         input: classes.inputInput,
                                     }}
                                     name='shelfDescription'
-                                    onChange={(event) => _handleDescChange(event.target.value)} 
+                                    onChange={(event) => _handleDescChange(event.target.value)}
+                                    value={description}
                                 />
                         </div>
                         </label>
