@@ -42,7 +42,7 @@ const GroupsCard = () => {
                 setGroups(data);
             })
             .catch(err => console.log(err));
-    },[]);
+    },[user.sub]);
 
     if (groups === null) {
         return (
@@ -60,7 +60,7 @@ const GroupsCard = () => {
                     {(groups.length !== 0) ? (groups.map((group) => (
                         <GridListTile cellHeight={'auto'} key={group.id}>
                             <br />
-                            <Typography variant="h6">{group.groupName}</Typography>
+                            <Link to={`/groups/${group.id}`}><Typography variant="h6">{group.groupName}</Typography></Link>
                             <br/>
                             <Typography>{group.groupDescription}</Typography>
                             <br />
