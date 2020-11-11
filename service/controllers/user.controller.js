@@ -70,27 +70,48 @@ exports.findOne = (req, res) => {
     };
 exports.update = (req, res) => {
     const { userId } = req.params;
-    console.log('this is a ', req.body)
-    User.update(req.body, {
-        where: { id: userId }
-    })
-        .then(num => {
-        if (num == 1) {
-            res.send({
-                message: "User was updated successfully."
-            });
-        } else {
-            res.send({
-                message: `Cannot update User with id=${userId}. Maybe the User was not found or req.body is empty!`
-            });
+    console.log('this is a req.body:', req.body)
+    const { name, email } = req.body
+    if (name !== null){
+            User.update({
+            name: name}, {
+            where: { id: userId }})
+            .then(num => {
+                if (num == 1) {
+                    res.send({
+                        message: "User was updated successfully!"
+                    });
+                } else {
+                    res.send({
+                        message: `Cannot update User with id=${userId}. Maybe User was not found!`
+                    });
+                }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: "Could not update User with id=" + userId
+                    });
+                });}
+    if (email !== null){User.update({
+        email: email}, {
+            where: { id: userId }})
+            .then(num => {
+                if (num == 1) {
+                    res.send({
+                        message: "User was updated successfully!"
+                    });
+                } else {
+                    res.send({
+                        message: `Cannot update User with id=${userId}. Maybe User was not found!`
+                    });
+                }
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: "Could not update User with id=" + userId
+                    });
+                });}
         }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error updating User with id=" + userId
-            });
-        });
-    };
 exports.delete = (req, res) => {
     const { userId } = req.params;
     
