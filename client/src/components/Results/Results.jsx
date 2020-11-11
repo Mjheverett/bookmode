@@ -198,6 +198,7 @@ const Results = (props) => {
                             )})}
                     </GridList> 
                 </div>
+                <Typography style={{textAlign: 'end'}}>Scroll For More <span class="fas fa-long-arrow-alt-right"></span></Typography>
             </Container>
         </>
     );
