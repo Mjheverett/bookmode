@@ -32,7 +32,7 @@ const LightDarkToggle = () => {
         
         <FormGroup >
         
-        <Button startIcon={theme.mode === 'light' ? <NightsStayIcon style={{color: '#93A1A1'}} fontSize='small'/> : <Brightness5OutlinedIcon style={{color : '#93A1A1'}} fontSize='small'/>} style={{color: '#52781e'}} onClick={(e) =>
+        <Button startIcon={theme.mode === 'light' ? <NightsStayIcon style={{color: '#93A1A1'}} fontSize='small'/> : <Brightness5OutlinedIcon style={{color : '#93A1A1'}} fontSize='small'/>} style={{color: '#52781e'}} onClick={() =>
         setTheme(
           theme.mode === "dark" ? { mode: "light" } : { mode: "dark" }
         )} > </Button>
