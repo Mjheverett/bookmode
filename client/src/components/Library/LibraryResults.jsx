@@ -3,10 +3,8 @@ import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, GridListTileBar, Typography, Popover, IconButton }  from '@material-ui/core';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import InfoIcon from '@material-ui/icons/Info';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
-import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme) => ({
     resultsDiv:{
@@ -46,9 +44,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Results = (props) => {
+const LibraryResults = (props) => {
     const classes = useStyles();
-    const [clicks, setClicks] = useState([])
     const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
     const { search } = props.location.state;
@@ -64,8 +61,6 @@ const Results = (props) => {
                 })
             })();
     }, [search]);    
-    
-    
     
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
@@ -95,7 +90,7 @@ const Results = (props) => {
                 <div className={classes.resultsDiv}>
                 <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
-                        {search.map((result) => {
+                        {results.map((result) => {
                             return (
                             <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
@@ -149,9 +144,9 @@ const Results = (props) => {
                                 titlePosition ={'top'}
                                 actionIcon={
                                     <IconButton aria-label={`${result.key}`} >
-                                    {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
-                                    {clicks.includes(result.key) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
-                                    </IconButton> }
+                                        <BookmarkIcon fontSize="large" className={classes.title} /> 
+                                    </IconButton> 
+                                }
                             />
                             </GridListTile>
                             )})}
@@ -162,4 +157,4 @@ const Results = (props) => {
     );
 }
 
-export default Results;
+export default LibraryResults;

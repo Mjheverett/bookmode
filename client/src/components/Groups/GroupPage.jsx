@@ -77,6 +77,16 @@ const GroupPage = () => {
             .catch(err => console.log(err));
     };
 
+    const _handleLeaveGroup = (e) => {
+        e.preventDefault();
+        const data = {
+            groupId: group.id
+        };
+        axios.post(`http://localhost:3000/groups/leave/${user.sub}`, data)
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
+    };
+
     const _handleComment = (data) => {
         setNewComment(data);
     }
@@ -88,9 +98,16 @@ const GroupPage = () => {
             userId: user.sub
         }
         console.log("add comment data", data);
-        axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
-            .then(res => console.log(res))
+        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`, data)
+            .then(res => console.log("comment response", res))
             .catch(err => console.log(err));
+        const newCommentData = {
+            content: newComment,
+            userId: user.sub,
+            createdAt: 'Just Now'
+        };
+        setComments([...comments, newCommentData]);    
+        setNewComment('');
     }
 
     // return while waiting on axios, then render updated page
@@ -111,6 +128,10 @@ const GroupPage = () => {
             <form onSubmit={_handleJoinGroup}>
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
+            </form>
+            <form onSubmit={_handleLeaveGroup}>
+                <input value={group.id} name="groupId" hidden></input>
+                <Button type="submit" color="secondary" variant="contained" size="large">Leave This Group</Button>
             </form>
             <br />
             <Typography variant="h6">Members</Typography>

@@ -78,7 +78,24 @@ exports.joinOne = async (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the book."
+                    err.message || "Some error occurred while joining the group."
+            });
+        });
+    };
+exports.leaveOne = async (req, res) => {
+    const { userId } = req.params;
+    const { groupId } = req.body;
+    const groupLeft = await Group.findByPk(groupId)
+    const user = await User.findOne({where: {id: userId}})
+    console.log("user info is: ", user)
+    await user.addGroup(groupLeft, { through: {isAdmin: false} })
+        .then (data=> {
+            res.send(data).status(200);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while leaving the group."
             });
         });
     };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Button, InputBase }  from '@material-ui/core';
@@ -40,7 +40,26 @@ const Groups = () => {
     const classes = useStyles();
     const [name, setGroupName] = useState('');
     const [description, setGroupDescription] = useState('');
+    const [userGroups, setUserGroups] = useState([]);
+    const [allGroups, setAllGroups] = useState([]);
     const { user } = useAuth0();
+
+    useEffect(() => {
+        (async function (){
+            axios.get(`http://localhost:3000/groups/${user.sub}`)
+                .then(res => {
+                    const data = res.data;
+                    // console.log('res.data:', data)
+                    setUserGroups(data)
+                })
+            axios.get(`http://localhost:3000/groups/`)
+                .then(res => {
+                    const data = res.data;
+                    // console.log('res.data:', data)
+                    setAllGroups(data)
+                })
+            })();
+    }, [user.sub]);
 
     const _handleNameChange = (data) => {
         setGroupName(data);
@@ -56,8 +75,19 @@ const Groups = () => {
             groupName: name,
             groupDescription: description
         };
+        
         axios.post(`http://localhost:3000/groups/add/${user.sub}`, data)
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res)
+                const data = res.data;
+                const newGroupData = {
+                    id: data.GroupId,
+                    groupName: name,
+                    groupDescription: description
+                };
+                setUserGroups([...userGroups, newGroupData]);
+                setAllGroups([...allGroups, newGroupData]);
+            })
             .catch(err => console.log(err));
         setGroupName('');
         setGroupDescription('');
@@ -109,8 +139,8 @@ const Groups = () => {
                 </Typography>
                 <br />
                 <br />
-                <GroupsList list={"User"} />
-                <GroupsList list={"All"} />
+                <GroupsList list={"User"} groups={userGroups} />
+                <GroupsList list={"All"} groups={allGroups} />
             </Container>
         </>
     )

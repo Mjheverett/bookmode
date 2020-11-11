@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import GroupDetail from './GroupDetail';
-import axios from 'axios';
-import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { GridList, Typography, Button }  from '@material-ui/core';
+import { GridList, Typography }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     groupsDiv:{
@@ -31,28 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GroupsList = (props) => {
     const classes = useStyles();
-    const { list } = props;
-    const [groups, setGroups] = useState(null);
-    
-    const { user } = useAuth0();
-
-    useEffect(() => {
-        (async function (){
-            let url = ``;
-            if (list === 'All') {
-                url = `http://localhost:3000/groups/`
-            } else {
-                url = `http://localhost:3000/groups/${user.sub}`
-            }
-            console.log(url);
-            axios.get(url)
-                .then(res => {
-                    const data = res.data;
-                    // console.log('res.data:', data)
-                    setGroups(data)
-                })
-            })();
-    }, [list, user.sub]);  
+    const { list, groups } = props;
 
     // return while waiting on axios, then render updated page
     if (groups === null) {
