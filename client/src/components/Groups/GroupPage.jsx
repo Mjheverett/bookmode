@@ -99,17 +99,14 @@ const GroupPage = () => {
         }
         console.log("add comment data", data);
         axios.post(`http://localhost:3000/groups/comments/${groupId.id}`, data)
-            .then(res => {
-                console.log("comment response", res)
-                const data = res.data;
-                const newCommentData = {
-                    content: newComment,
-                    userId: user.sub,
-                    createdAt: 'Just Now'
-                };
-                setComments([...comments, newCommentData]);
-            })
+            .then(res => console.log("comment response", res))
             .catch(err => console.log(err));
+        const newCommentData = {
+            content: newComment,
+            userId: user.sub,
+            createdAt: 'Just Now'
+        };
+        setComments([...comments, newCommentData]);    
         setNewComment('');
     }
 

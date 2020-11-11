@@ -115,6 +115,10 @@ const Library = () => {
         setAnchorEl(null);
     };
 
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+// Create Shelf Functions
     const _handleNameChange = (data) => {
         console.log(data)
         setShelfName(data);
@@ -134,11 +138,17 @@ const Library = () => {
         axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
+        const newShelf = {
+            shelfName: name,
+            shelfDescription: description,
+            Books: []
+        }
+        setLibrary([...library, newShelf]);
+        setShelfName('');
+        setShelfDescription('');
     }
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
+// Library Search Functions
     const _handleChange = (search) => {
         console.log(search)
         setSearch(search);
@@ -148,6 +158,8 @@ const Library = () => {
         e.preventDefault();
         setRedirect(true)
     };
+
+// Render Loading while pulling Library Info
     if (library === null) {
         return (
             <>
@@ -200,7 +212,8 @@ const Library = () => {
                                         input: classes.inputInput,
                                     }}
                                     name='shelfName' 
-                                    onChange={(event) => _handleNameChange(event.target.value)} 
+                                    onChange={(event) => _handleNameChange(event.target.value)}
+                                    value={name}
                                 />
                             </div>
                         </label>
@@ -215,7 +228,8 @@ const Library = () => {
                                         input: classes.inputInput,
                                     }}
                                     name='shelfDescription'
-                                    onChange={(event) => _handleDescChange(event.target.value)} 
+                                    onChange={(event) => _handleDescChange(event.target.value)}
+                                    value={description}
                                 />
                         </div>
                         </label>
