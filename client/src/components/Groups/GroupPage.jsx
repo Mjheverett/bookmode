@@ -53,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         textAlign: 'left',
     },
+    commentsMobile: {
+        display: 'inlineBlock',
+        width: '100%',
+        
+        
+    },
 }));
 
 const GroupPage = () => {
@@ -62,6 +68,12 @@ const GroupPage = () => {
     const [comments, setComments] = useState([]);
     const groupId = useParams();
     const { user } = useAuth0();
+ 
+    
+    //Grabbing screen width on load. Pulling into comments classes.
+    const lWidth = window.screen.width;
+    console.log("screen width is",lWidth);
+   
 
     useEffect(() => {
         axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
@@ -141,7 +153,7 @@ const GroupPage = () => {
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
             </form>
-            <form onSubmit={_handleLeaveGroup}>
+            <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Leave This Group</Button>
             </form>
@@ -184,15 +196,15 @@ const GroupPage = () => {
                 </form>
                 <br />
             </Typography>
-            <div className={classes.groupsDiv}>
-                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+            <div className={classes.groupsDiv}> 
+                <GridList  className={lWidth > 575 ? classes.gridList : classes.commentsMobile} cols={lWidth > 575 ? 2 : 1} cellHeight={'auto'} >
                 {(comments.length !== 0) ? (
                     comments.map((comment) => {
                         return (
                             <div>
                                 <GridListTile cellHeight={'auto'}>
                                 <br />
-                                <Card className={classes.card}>
+                                <Card className={classes.card} >
                                     <CardHeader
                                         avatar={
                                         <Avatar className={classes.avatar}>
@@ -208,13 +220,15 @@ const GroupPage = () => {
                                 </Card>
                                 <br />
                                 </GridListTile>
+
                             </div>
                         )
                     })
                 ) : (
                     <Typography>This group has no comments yet! Why don't you add one?</Typography>
                 )}
-                </GridList> 
+                </GridList>
+                
             </div>
         </Container>
     )
