@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
     },
     titleBar: {
         background: '#52781e',
-        color: '#fffff'
+        color: '#fffff',
+        borderRadius: '4px',
     },
     titleBarTop: {
         background: 'rgba(0, 43, 54, .001)',
@@ -59,19 +60,19 @@ const Results = (props) => {
         (async function (){
             let url;
             if (query === 'all') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?q=${data}&limit=50`;
+                url = `http://openlibrary.org/search.json?q=${data}&limit=50`;
             }
             if (query === 'title') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?title=${data}&limit=50`;
+                url = `http://openlibrary.org/search.json?title=${data}&limit=50`;
             }
             if (query === 'author') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?author=${data}&limit=50`;
+                url = `http://openlibrary.org/search.json?author=${data}&limit=50`;
             }
             if (query === 'subject') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?subject=${data}&limit=50`;
+                url = `http://openlibrary.org/search.json?subject=${data}&limit=50`;
             }
             if (query === 'ISBN') {
-                url = `https://cors-anywhere.herokuapp.com/http://openlibrary.org/search.json?ISBN=${data}&limit=50`;
+                url = `http://openlibrary.org/search.json?ISBN=${data}&limit=50`;
             }
             await axios.get(url)
                 .then(res => {
@@ -130,14 +131,14 @@ const Results = (props) => {
             <br />
                 <div className={classes.resultsDiv}>
                 <br/>
-                    <GridList className={classes.gridList} cols={2} cellHeight={300} spacing={16}>
+                    <GridList className={classes.gridList} cols={2} cellHeight={240} spacing={16}>
                         {results.map((result) => {
 
                             return (
                             <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
                                     <img src={!!result.cover_i ? `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg` : image}
-                                    alt={result.cover_i} />
+                                    alt={result.cover_i} style={{height: '139px'}}/>
                                 </div>
                                 <GridListTileBar
                                 title={result.title}
@@ -159,7 +160,7 @@ const Results = (props) => {
                             className={classes.root}
                             onClose={handleClose}
                             anchorOrigin={{
-                                vertical: 'bottom',
+                                vertical: 'top',
                                 horizontal: 'center',
                             }}
                             transformOrigin={{
@@ -198,7 +199,7 @@ const Results = (props) => {
                             )})}
                     </GridList> 
                 </div>
-                <Typography style={{textAlign: 'end'}}>Scroll For More <span class="fas fa-long-arrow-alt-right"></span></Typography>
+                <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
             </Container>
         </>
     );

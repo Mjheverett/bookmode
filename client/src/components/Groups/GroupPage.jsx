@@ -216,7 +216,7 @@ const GroupPage = () => {
                 )}
                 </GridList> 
             </div>
-            <Typography style={{textAlign: 'end'}}>Scroll For More <span class="fas fa-long-arrow-alt-right"></span></Typography>
+            <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
         </Container>
     )
 }
