@@ -26,22 +26,22 @@ const LightDarkToggle = () => {
   // Toggle component to switch from light to dark mode 
 
   return (
-    <div className="lightDarkToggle">
+    <>
       <ThemeProvider theme={theme}>
-        <LightDarkMode />
+        <LightDarkMode  />
         
-        <FormGroup>
+        <FormGroup >
         
-        <Button startIcon={theme.mode === 'light' ? <NightsStayIcon style={{color: '#93A1A1'}} fontSize='small'/> : <Brightness5OutlinedIcon style={{color: '#93A1A1'}} fontSize='small'/>} style={{color: '#52781e'}} size="Normal" onClick={(e) =>
+        <Button startIcon={theme.mode === 'light' ? <NightsStayIcon style={{color: '#93A1A1'}} fontSize='small'/> : <Brightness5OutlinedIcon style={{color : '#93A1A1'}} fontSize='small'/>} style={{color: '#52781e'}} onClick={() =>
         setTheme(
           theme.mode === "dark" ? { mode: "light" } : { mode: "dark" }
-        )} />
+        )} > </Button>
          
 
         </FormGroup>
         
       </ThemeProvider>
-    </div>
+    </>
   );
 };
 
