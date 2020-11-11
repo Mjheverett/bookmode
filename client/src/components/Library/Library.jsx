@@ -103,7 +103,6 @@ const Library = () => {
     }, [user.sub]);
 
     // popover with information about each book.
-    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
@@ -283,12 +282,6 @@ const Library = () => {
                                     <Typography className={classes.typography}>
                                         Author: {book.Authors[0].authorName}
                                     </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: Self Improvement
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: None
-                                    </Typography>
                                 </Popover>
                             </div>
                             <br />
@@ -297,6 +290,7 @@ const Library = () => {
                         )}
                     </GridList> 
                     </div>
+                    <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
                     </div>))) : (
                     <Typography>No Shelves!</Typography>
                 )}
