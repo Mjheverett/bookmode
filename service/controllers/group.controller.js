@@ -101,8 +101,6 @@ exports.leaveOne = async (req, res) => {
     };
 exports.findOne = (req, res) => {
     const { groupId } = req.params;
-    console.log("req params of findOne", req.params)
-    console.log("group id is:", groupId);
     Group.findOne({ where: { id: groupId }, include: [{model: User}]})
         .then(data => {
             res.send(data);
@@ -191,7 +189,8 @@ exports.createComment = async (req, res) => {
     };
 exports.findAllComments = async (req, res) => {
     const { groupId } = req.params;
-    Comment.findAll({where: { GroupId: groupId}})
+    console.log(Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]}))
+    Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]})
         .then(data => {
             res.send(data);
         })

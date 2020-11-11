@@ -60,7 +60,7 @@ db.recommendations.belongsTo(db.users, {as: "receiver"})
 db.books.hasMany(db.recommendations);
 db.groups.hasMany(db.comments);
 db.comments.belongsTo(db.groups);
-db.authors.belongsToMany(db.comments, { through: 'user_comments' });
+db.comments.belongsToMany(db.users, { through: 'user_comments' });
 db.users.belongsToMany(db.comments, { through: 'user_comments' });
 db.recommendations.belongsTo(db.books)
 db.shelves.belongsToMany(db.books, { through: 'shelves_books' });
