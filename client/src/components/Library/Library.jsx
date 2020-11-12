@@ -125,11 +125,9 @@ const Library = () => {
     const id = open ? 'simple-popover' : undefined;
 // Create Shelf Functions
     const _handleNameChange = (data) => {
-        console.log(data)
         setShelfName(data);
     };
     const _handleDescChange = (data) => {
-        console.log(data)
         setShelfDescription(data);
     };
     //function for adding the shelf named/described above
