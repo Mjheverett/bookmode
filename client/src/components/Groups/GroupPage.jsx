@@ -4,7 +4,7 @@ import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
-// import moment from 'moment';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
@@ -55,9 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
     commentsMobile: {
         display: 'inlineBlock',
-        width: '100%',
-        
-        
+        width: '100%',   
     },
 }));
 
@@ -213,7 +211,7 @@ const GroupPage = () => {
                                         </Avatar>
                                         }
                                         title={comment.Users[0].name}
-                                        subheader={comment.createdAt}
+                                        subheader={moment(comment.createdAt).format('MMMM Do YYYY, h:mm a')}
                                     />
                                     <CardContent>
                                         <Typography style={{color: '#002B36'}}>{comment.content}</Typography>
@@ -221,7 +219,6 @@ const GroupPage = () => {
                                 </Card>
                                 <br />
                                 </GridListTile>
-
                             </div>
                         )
                     })
