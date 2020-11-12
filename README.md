@@ -21,6 +21,7 @@
 
 * [About the Project](#about-the-project)
   * [Built With](#built-with)
+* [How to Get Started](#how-to-get-started)
 * [Acknowledgements](#acknowledgements)
 
 
