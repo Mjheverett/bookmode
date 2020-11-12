@@ -288,7 +288,10 @@ const handleMobileMenuOpen = (event) => {
                 <ListItemText primary="Send recommendation" />
             </MenuItem>
             <MenuItem>
-                <Link to="/library" className="link">
+                <Link to={{
+                                    pathname: `${book.editionKey}`,
+                                    editionKey: book.editionKey
+                                }}>
                 <ListItemIcon
                 color="secondary">
                   <MenuBookIcon fontSize="small" />

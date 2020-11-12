@@ -14,6 +14,7 @@ import Results from './components/Results/Results';
 import Profile from './components/Profile/Profile';
 import Sharing from './components/Sharing/Sharing';
 import Notifications from './components/Notifications/Notifications';
+import BookPage from './components/Library/BookPage'
 import './App.css';
 
 
@@ -49,6 +50,7 @@ function App() {
               <Notifications />
             </ProtectedRoute>
             <Route path="/results" render={(props) => <Results {...props} />} />
+            <Route path="/works/:editionKey" render={(props) => <BookPage {...props} />} />
           </Switch>
         </div>
         <Footer />

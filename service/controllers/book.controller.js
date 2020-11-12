@@ -3,6 +3,7 @@ const Book = db.books;
 const Author = db.authors;
 const Shelf = db.shelves;
 const User = db.users;
+const Reader = db.readers;
 
 const Op = db.Sequelize.Op;
 
@@ -24,14 +25,16 @@ exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
     //save book in DB
-    const {title, coverURL, authorName } = req.body;
+    const {title, coverURL, authorName, editionKey, readerName } = req.body;
     const book = await Book.create({
         title: title,
-        coverURL: coverURL})
+        coverURL: coverURL,
+        editionKey: editionKey,})
     const author = await Author.create({
             authorName: authorName
         })
-    await author.addBook(book)
+    !!readerName ? await Reader.create({readerName: readerName}).addBook(book) : null
+    await author.addBook(book) 
     const { userId } = req.params;
     const user = await User.findOne({where: { id: userId}})
     const shelf= await Shelf.findOne({where: { shelfName: `${user.name}'s Library`}})
