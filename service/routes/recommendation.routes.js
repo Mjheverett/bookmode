@@ -1,11 +1,11 @@
 module.exports = app => {
-    const recs = require("../controllers/recommendation.controller.js");
+    const recommendations = require("../controllers/recommendation.controller.js");
         var router = require("express").Router();
     // Create a new recommendation
-    router.post("/add/:userId", recs.create);
-    // Get recs by sent 
-    router.get("/sent/:userId", recs.findAllSent);
-    // Get recs by received
-    router.get("/received/:userId", recs.findAllReceived);
+    router.post("/add", recommendations.create);
+    // Get recommendations by sent 
+    router.get("/sent/:userId", recommendations.findAllSent);
+    // Get recommendationsby received
+    router.get("/received/:userId", recommendations.findAllReceived);
     app.use('/recommendations', router);
     };
