@@ -295,15 +295,6 @@ const CustomizedMenus = (props) => {
             </ListItemIcon>
               <ListItemText primary="Send recommendation" />
           </MenuItem>
-          <MenuItem>
-              <Link to="/library" className="link">
-              <ListItemIcon
-              color="secondary">
-                <MenuBookIcon fontSize="small" />
-              </ListItemIcon>
-                <ListItemText primary="Send recommendation" />
-                </Link>
-            </MenuItem>
             <MenuItem>
                 <Link to={{
                                     pathname: `${book.editionKey}`,
