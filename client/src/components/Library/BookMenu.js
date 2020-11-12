@@ -108,7 +108,7 @@ const StyledMenu = withStyles({
 // }))(MenuItem);
 
 const CustomizedMenus = (props) => {
-  const {shelves, book} = props
+  const {shelves, users, book} = props
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [modalStyle] = useState(getModalStyle);
@@ -117,20 +117,12 @@ const CustomizedMenus = (props) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
-  const [users, setUsers] = useState([]);
+ 
   const [personName, setPersonName] = useState([]);
   const [content, setContent] = useState(null);
   const { user } = useAuth0();
-  const url = `http://localhost:3000/users`
   
-  useEffect(() => {
-    axios.get(url)
-        .then(res => {
-            const data = res.data;
-            console.log('res.data:', data)
-            setUsers(data)
-        });
-  }, [url]);
+  
 
   const handleChangeName = (event) => {
     setPersonName(event.target.value);
@@ -303,15 +295,6 @@ const CustomizedMenus = (props) => {
             </ListItemIcon>
               <ListItemText primary="Send recommendation" />
           </MenuItem>
-          <MenuItem>
-              <Link to="/library" className="link">
-              <ListItemIcon
-              color="secondary">
-                <MenuBookIcon fontSize="small" />
-              </ListItemIcon>
-                <ListItemText primary="Send recommendation" />
-                </Link>
-            </MenuItem>
             <MenuItem>
                 <Link to={{
                                     pathname: `${book.editionKey}`,

@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const GroupPage = () => {
+const BookPage = () => {
     const classes = useStyles();
     const [book, setBook] = useState(null);
     const editionKey = useParams();
@@ -69,7 +69,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         console.log(editionKey)
-        axios.get(`https://openlibrary.org/works/${editionKey.editionKey}.json/`)
+        axios.get(`https://openlibrary.org/works/${editionKey.editionKey}.json/`, { crossdomain: true })
             .then(res => {
                 const data = res.data;
                 setBook(data);
@@ -145,4 +145,4 @@ const GroupPage = () => {
     )
 }
 
-export default GroupPage;
+export default BookPage;

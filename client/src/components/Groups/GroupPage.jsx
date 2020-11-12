@@ -133,7 +133,7 @@ const GroupPage = () => {
                 name: user.name
             }],
             content: newComment,
-            createdAt: 'Just Now'
+            createdAt: moment().format()
         };
         setComments([...comments, newCommentData]);    
         setNewComment('');

@@ -103,7 +103,7 @@ const Results = (props) => {
         let result =  clicks.includes(id) ? clicks.filter(click => click !== id): [...clicks, id]
         setClicks(result)
         console.log(title, author, imageURL, editionKey, reader)
-        author = author.length >= 2 ? author.join(', ') : author[0]
+        author = !!author ? author.length >= 2 ? author.join(', ') : author[0] : null
         const data = {
             title: title,
             coverURL: imageURL,
