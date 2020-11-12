@@ -155,7 +155,6 @@ const Library = () => {
         setRedirect(true)
     };
 
-
 // Render Loading while pulling Library Info
 
     if (library === null) {
