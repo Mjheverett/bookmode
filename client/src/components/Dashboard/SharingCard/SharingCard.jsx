@@ -44,7 +44,8 @@ const SharingCard = () => {
                         </List>
                     </Typography>
                 </GridListTile>
-            </div>      
+            </div> 
+            <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>     
         </>
     )
 }
