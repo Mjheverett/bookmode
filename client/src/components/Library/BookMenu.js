@@ -310,6 +310,7 @@ const CustomizedMenus = (props) => {
                 <MenuBookIcon fontSize="small" />
               </ListItemIcon>
                 <ListItemText primary="Send recommendation" />
+                </Link>
             </MenuItem>
             <MenuItem>
                 <Link to={{
