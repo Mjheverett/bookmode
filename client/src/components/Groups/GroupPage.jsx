@@ -92,7 +92,8 @@ const GroupPage = () => {
     const _handleLeaveGroup = (e) => {
         e.preventDefault();
         const data = {
-            groupId: group.id
+            groupId: group.id,
+            userId: user.sub
         };
         axios.post(`http://localhost:3000/groups/leave/${user.sub}`, data)
             .then(res => console.log(res))
