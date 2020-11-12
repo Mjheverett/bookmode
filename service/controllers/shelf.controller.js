@@ -5,7 +5,8 @@ const Book = db.books;
 const Author = db.authors;
 const Op = db.Sequelize.Op;
 exports.findAllUser = async (req, res) => {
-    const { userId } = req.params
+    const { userId } = req.params;
+    console.log(userId);
     await Shelf.findAll({ include: [{model: User, where: { id: userId}}, {model: Book, order: [['updatedAt', 'ASC']], include: [{model: Author}]}]})
         .then(data => {
             res.send(data);
@@ -117,7 +118,7 @@ exports.deleteBook = async (req, res) => {
     console.log("shelf", shelf);
     console.log(Shelf.destroy({ where: { BookId: id }, include: [{model: Book}]}))
 
-    shelf.destroy({
+    shelf.addBook({
         where: { BookId: id }, 
         include: [{model: Book}]
     })

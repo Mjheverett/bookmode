@@ -105,7 +105,7 @@ const GroupPage = () => {
             groupId: group.id
         };
         axios.post(`http://localhost:3000/groups/leave/${user.sub}`, data)
-            .then(res => console.log(res))
+            .then(res => console.log("leave group response", res))
             .catch(err => console.log(err));
     };
 
