@@ -91,7 +91,9 @@ const Library = () => {
     const [description, setShelfDescription] = useState('');
     const [search, setSearch] = useState();
     const [fireRedirect, setRedirect] = useState(false);
+    const [users, setUsers] = useState([]);
     const { user } = useAuth0();
+    const url = `http://localhost:3000/users`
     //gets shelves and respective books/authors
     useEffect(() => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
@@ -99,6 +101,12 @@ const Library = () => {
                 const data = res.data;
                 console.log('library data: ', data)
                 setLibrary(data)
+            });
+        axios.get(url)
+            .then(res => {
+                const data = res.data;
+                console.log('res.data:', data)
+                setUsers(data)
             });
     }, [user.sub]);
 
@@ -254,7 +262,7 @@ const Library = () => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <CustomizedMenus book={book} shelves={library.slice(1)}/>}
+                                    <CustomizedMenus users={users} book={book} shelves={library.slice(1)}/>}
                             />
                             <Typography>{book.title}</Typography>
                             <div>
