@@ -68,12 +68,10 @@ const GroupPage = () => {
     const [comments, setComments] = useState([]);
     const groupId = useParams();
     const { user } = useAuth0();
- 
     
     //Grabbing screen width on load. Pulling into comments classes.
     const lWidth = window.screen.width;
-    console.log("screen width is",lWidth);
-   
+    // console.log("screen width is",lWidth);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
@@ -118,16 +116,24 @@ const GroupPage = () => {
     const _handleAddComment = (e) => {
         e.preventDefault();
         const data = {
-            content: newComment,
-            userId: user.sub
+            GroupId: groupId.id,
+            Users: [{
+                id: user.sub,
+                name: user.name
+            }],
+            content: newComment
         }
         console.log("add comment data", data);
-        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`, data)
+        axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
             .then(res => console.log("comment response", res))
             .catch(err => console.log(err));
         const newCommentData = {
+            GroupId: groupId.id,
+            Users: [{
+                id: user.sub,
+                name: user.name
+            }],
             content: newComment,
-            userId: user.sub,
             createdAt: 'Just Now'
         };
         setComments([...comments, newCommentData]);    
