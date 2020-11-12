@@ -10,8 +10,6 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
 import LightDarkToggle from '../LightDark/LightDarkToggle';
 
-
-
 const useStyles = makeStyles((theme) => ({
     typography: {
         fontFamily: [
@@ -105,7 +103,6 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
-   
     
 }));
 
@@ -116,12 +113,13 @@ export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const [data, setData] = useState('');
+    const [search, setSearch] = useState('');
     const [fireRedirect, setRedirect] = useState(false);
     const [query, setQuery] = useState('all');
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-   
+
     const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     const handleProfileMenuOpen = (event) => {
@@ -212,6 +210,8 @@ export default function PrimarySearchAppBar() {
 
     const _handleSubmit = (e) => {
         e.preventDefault();
+        const newSearch = data.replace(/\s+/g, '+');
+        setSearch(newSearch);
         setRedirect(true)
     };
     return (
@@ -254,7 +254,7 @@ export default function PrimarySearchAppBar() {
                             <Redirect 
                                 to={{
                                     pathname: '/results',
-                                    state: {data: data, query: query}
+                                    state: {data: search, query: query}
                                 }}
                             />
                         )}
