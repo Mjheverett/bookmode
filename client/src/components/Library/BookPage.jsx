@@ -69,7 +69,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         console.log(editionKey)
-        axios.get(`https://openlibrary.org/works/${editionKey.editionKey}.json/`)
+        axios.get(`https://openlibrary.org/works/${editionKey.editionKey}.json/`, { crossdomain: true })
             .then(res => {
                 const data = res.data;
                 setBook(data);
