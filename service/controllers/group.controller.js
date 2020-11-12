@@ -86,6 +86,7 @@ exports.leaveOne = async (req, res) => {
     const { userId } = req.params;
     const { groupId } = req.body;
     const groupLeft = await Group.findByPk(groupId)
+    console.log("group to leave", groupLeft);
     const user = await User.findOne({where: {id: userId}})
     console.log("user info is: ", user)
     await user.addGroup(groupLeft, { through: {isAdmin: false} })

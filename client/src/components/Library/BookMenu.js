@@ -96,16 +96,16 @@ const StyledMenu = withStyles({
   />
 ));
 
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-}))(MenuItem);
+// const StyledMenuItem = withStyles((theme) => ({
+//   root: {
+//     '&:focus': {
+//       backgroundColor: theme.palette.primary.main,
+//       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+//         color: theme.palette.common.white,
+//       },
+//     },
+//   },
+// }))(MenuItem);
 
 const CustomizedMenus = (props) => {
   const {shelves, book} = props
@@ -140,16 +140,16 @@ const CustomizedMenus = (props) => {
     setContent(event.target.value);
   };
 
-  const handleChangeMultiple = (event) => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    setPersonName(value);
-  };
+  // const handleChangeMultiple = (event) => {
+  //   const { options } = event.target;
+  //   const value = [];
+  //   for (let i = 0, l = options.length; i < l; i += 1) {
+  //     if (options[i].selected) {
+  //       value.push(options[i].value);
+  //     }
+  //   }
+  //   setPersonName(value);
+  // };
 
   const handleClick = (bookId, shelfId) => {
     console.log("bookId: ",bookId, "shelf id: ", shelfId);
