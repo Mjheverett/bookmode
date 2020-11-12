@@ -4,7 +4,7 @@ import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
-// import moment from 'moment';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
@@ -55,9 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
     commentsMobile: {
         display: 'inlineBlock',
-        width: '100%',
-        
-        
+        width: '100%',   
     },
 }));
 
@@ -68,12 +66,10 @@ const GroupPage = () => {
     const [comments, setComments] = useState([]);
     const groupId = useParams();
     const { user } = useAuth0();
- 
     
     //Grabbing screen width on load. Pulling into comments classes.
     const lWidth = window.screen.width;
-    console.log("screen width is",lWidth);
-   
+    // console.log("screen width is",lWidth);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
@@ -104,10 +100,11 @@ const GroupPage = () => {
     const _handleLeaveGroup = (e) => {
         e.preventDefault();
         const data = {
-            groupId: group.id
+            groupId: group.id,
+            userId: user.sub
         };
         axios.post(`http://localhost:3000/groups/leave/${user.sub}`, data)
-            .then(res => console.log(res))
+            .then(res => console.log("leave group response", res))
             .catch(err => console.log(err));
     };
 
@@ -118,16 +115,24 @@ const GroupPage = () => {
     const _handleAddComment = (e) => {
         e.preventDefault();
         const data = {
-            content: newComment,
-            userId: user.sub
+            GroupId: groupId.id,
+            Users: [{
+                id: user.sub,
+                name: user.name
+            }],
+            content: newComment
         }
         console.log("add comment data", data);
-        axios.post(`http://localhost:3000/groups/comments/${groupId.id}`, data)
+        axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
             .then(res => console.log("comment response", res))
             .catch(err => console.log(err));
         const newCommentData = {
+            GroupId: groupId.id,
+            Users: [{
+                id: user.sub,
+                name: user.name
+            }],
             content: newComment,
-            userId: user.sub,
             createdAt: 'Just Now'
         };
         setComments([...comments, newCommentData]);    
@@ -212,7 +217,7 @@ const GroupPage = () => {
                                         </Avatar>
                                         }
                                         title={comment.Users[0].name}
-                                        subheader={comment.createdAt}
+                                        subheader={moment(comment.createdAt).format('MMMM Do YYYY, h:mm a')}
                                     />
                                     <CardContent>
                                         <Typography style={{color: '#002B36'}}>{comment.content}</Typography>
@@ -220,7 +225,6 @@ const GroupPage = () => {
                                 </Card>
                                 <br />
                                 </GridListTile>
-
                             </div>
                         )
                     })

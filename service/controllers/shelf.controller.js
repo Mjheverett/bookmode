@@ -118,7 +118,7 @@ exports.deleteBook = async (req, res) => {
     console.log("shelf", shelf);
     console.log(Shelf.destroy({ where: { BookId: id }, include: [{model: Book}]}))
 
-    shelf.destroy({
+    shelf.addBook({
         where: { BookId: id }, 
         include: [{model: Book}]
     })
