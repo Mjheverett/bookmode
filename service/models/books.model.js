@@ -20,9 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         isSeries: {
             type: DataTypes.BOOLEAN
         },
-        subgenre: {
-            type: DataTypes.STRING,
+        editionKey: {
+            type: DataTypes.STRING(1234),
         }
+
         });
     
         return Book;

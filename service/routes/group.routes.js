@@ -5,6 +5,8 @@ module.exports = app => {
     router.post("/add/:userId", groups.create);
     // Join a group
     router.post("/join/:userId", groups.joinOne);
+    // Leave a group
+    router.post("/leave/:userId", groups.leaveOne);
     // Retrieve all groups with user id
     router.get("/:userId", groups.findAllUser);
     // Retrieve all groups
@@ -16,7 +18,7 @@ module.exports = app => {
     // Delete a group with id
     router.delete("/:id", groups.delete);
     // Add comment to Group page
-    router.post("/comments/:groupId", groups.createComment);
+    router.post("/comments/add/:groupId", groups.createComment);
     // Get all comments for a group
     router.get("/comments/:groupId", groups.findAllComments);
     app.use('/groups', router);

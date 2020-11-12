@@ -5,11 +5,13 @@ module.exports = app => {
     router.post("/add/:userId", shelves.create);
     // Retrieve all shelves
     router.get("/:userId", shelves.findAllUser);
-    // Retrieve a single Shelf with id
-    router.get("/:id", shelves.findOne);
+    // Add a single book to a shelf
+    router.post("/:shelfId/:bookId", shelves.findOne);
     // Update a Shelf with id
     router.put("/:id", shelves.update);
     // Delete a Shelf with id
     router.delete("/:id", shelves.delete);
+    // Delete a book from shelf
+    router.delete("/book/:id", shelves.deleteBook);
     app.use('/library', router);
     };

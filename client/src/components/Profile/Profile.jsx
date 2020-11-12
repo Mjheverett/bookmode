@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Typography, Button, CardMedia }  from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import { Container, GridList, GridListTile, Typography, Button, CardMedia, InputBase }  from '@material-ui/core';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,36 +28,50 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translateZ(0)',
        
     },
-
+    inputRoot: {
+        color: 'primary',
+    },
+    inputInput: {
+        padding: theme.spacing(1),
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        marginLeft: 0,
+        [theme.breakpoints.up('md')]: {
+            width: '100ch',
+        },
+    },
+    search: {
+        position: 'relative',
+        maxWidth: "600px",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.15),
+        },
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: 'auto',
+            marginLeft: 0,
+        },
+    },
     profileForm: {
         display: 'inline-block',
         position: 'relative'
          
     },
-
     userPicture: {
         borderRadius: '70px',
         marginTop: '0.5rem'
     },
-
-    updateButton: {
-        marginTop: '0.5rem',
-        marginLeft: '1rem',
-        
-    },
-
-    formInput: {
-        marginLeft: '0.25rem',
-        marginRight: '0.25rem'
-    }
-
-   
 }));
 
 const Profile = () => {
     const { user } = useAuth0(null);
     const classes = useStyles();
-    const [ userInfo, setUser ] = useState(null);
+    const [ userName, setName ] = useState(null);
+    const [ userEmail, setEmail ] = useState(null);
+    const [userInfo, setUser ] = useState(null);
+    const { logout } = useAuth0();
 
     useEffect(() => {
         (async function (){
@@ -74,45 +88,32 @@ const Profile = () => {
             })();       
     }, [user.sub]);  
 
-    
-    // trying both updateData and _handleInfoChange for put request
-
     const updateData = (e) => {
         e.preventDefault();
+    let name = !!userName ? userName : null
+    let email = !!userEmail ? userEmail: null
         const data = {
             id: user.sub,
-            name: userInfo.name,
-            email: userInfo.email
+            name,
+            email
         };
         axios.put(`http://localhost:3000/users/${user.sub}`, data)
             .then(res => {
                 const updateData = res.data;
                 setUser(updateData);
-                console.log('put data is: ', updateData)
+                console.log(updateData)
+                setName(null)
+                setEmail(null)
             })
             .catch(err => console.log(err));
-    }
-
-     // trying both _handleInfoChange and updateData for put request
-
-    // const _handleInfoChange = (e) => {
-    //     e.preventDefault();
-    //     const data = {
-    //         id: user.sub,
-    //         name: user.name,
-    //         email: user.email
-    //     };
-    //     axios.put(`http://localhost:3000/users/${user.sub}`, data)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.log(err));
-          
-    // };
-
-    const _handleChange = (newData) => {
-        console.log(newData);
-        setUser(newData);
     };
 
+    const _handleChangeName = (newData) => {
+        setName(newData);
+    };
+    const _handleChangeEmail = (newData) => {
+        setEmail(newData);
+    };
 
     if (userInfo === null) {
         return (
@@ -120,16 +121,51 @@ const Profile = () => {
                 <Typography variant="h6">Loading</Typography>
             </>
         )
-    }
+    };
 
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Profile</Typography>
                 <br />
+                <Typography variant="h6" >Edit Profile Information</Typography>
                 <br />
+                <Typography>
+                    <form onSubmit={(e) => updateData(e)}>
+                        <label>Name
+                            <div className={classes.search}>
+                                <InputBase 
+                                    style={{color: '#93A1A1'}}
+                                    placeholder="New name..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    type='text' name='name' onChange={(event) => _handleChangeName(event.target.value)}
+                                />
+                            </div>
+                        </label>
+                        <br />
+                        <label>Email
+                        <div className={classes.search}>
+                                <InputBase
+                                    style={{color: '#93A1A1'}}
+                                    placeholder="New email..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    type='text' name='email' onChange={(event) => _handleChangeEmail(event.target.value)}
+                                />
+                        </div>
+                        </label>
+                        <br/>
+                        <Button type="submit" color="secondary" variant="contained" size="large">Update Profile</Button>
+                    </form>
+                    <br />
+                </Typography>
                 <div className={classes.profileDiv}>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                    <GridList className={classes.gridList} cols={1} cellHeight={'auto'}>
                         <GridListTile className={classes.userInfo} cellHeight={'auto'}>
                             <br/>
                             <CardMedia><img className={classes.userPicture} src={user.picture} alt="Profile"/></CardMedia>
@@ -138,24 +174,9 @@ const Profile = () => {
                             <Typography>{userInfo.email}</Typography>
                             <br/>
                         </GridListTile>
-                        <GridListTile className={classes.profileForm} cellHeight={'auto'}>
-                            <Typography variant="h6" >Edit Profile Info</Typography>
-                            <form  onSubmit={(e) => updateData(e)}>
-                                <Typography><label>Name 
-                                    <input className={classes.formInput} type='text' name='name' onChange={(event) => _handleChange(event.target.value)}>
-
-                                    </input>
-                                </label></Typography>
-                                <Typography><label >Email 
-                                    <input className={classes.formInput} type='text' name='email' onChange={(event) => _handleChange(event.target.value)}>
-
-                                    </input>
-                                </label></Typography>
-                                <Button className={classes.updateButton} type="submit" color="secondary" variant="contained" size="small">Update Profile</Button>
-                            </form>
-                        </GridListTile>
                     </GridList> 
                 </div>
+                <Button type="button" color="secondary" variant="contained" size="large" onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
             </Container>
         </>
     )

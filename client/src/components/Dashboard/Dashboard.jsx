@@ -22,7 +22,7 @@ const Dashboard = () => {
                 setUserData(data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [user.sub, user.name, user.email]);
 
     if (userData === null) {
         return (
@@ -50,6 +50,7 @@ const Dashboard = () => {
                         <SharingCard />
                     </GridListTile>
                 </GridList>
+                <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
             </Container>
         </>
     )

@@ -78,14 +78,30 @@ exports.joinOne = async (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the book."
+                    err.message || "Some error occurred while joining the group."
+            });
+        });
+    };
+exports.leaveOne = async (req, res) => {
+    const { userId } = req.params;
+    const { groupId } = req.body;
+    const groupLeft = await Group.findByPk(groupId)
+    console.log("group to leave", groupLeft);
+    const user = await User.findOne({where: {id: userId}})
+    console.log("user info is: ", user)
+    await user.addGroup(groupLeft, { through: {isAdmin: false} })
+        .then (data=> {
+            res.send(data).status(200);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while leaving the group."
             });
         });
     };
 exports.findOne = (req, res) => {
     const { groupId } = req.params;
-    console.log("req params of findOne", req.params)
-    console.log("group id is:", groupId);
     Group.findOne({ where: { id: groupId }, include: [{model: User}]})
         .then(data => {
             res.send(data);
@@ -153,11 +169,12 @@ exports.createComment = async (req, res) => {
         return;
     }
     const { groupId } = req.params;
-    const { content, userId } = req.body;
+    const { content, Users } = req.body;
+    console.log("Users", Users[0])
     const comment = await Comment.create({
         content: content 
     })
-    const user = await User.findOne({where: { id: userId }})
+    const user = await User.findOne({where: { id: Users[0].id }})
     await user.addComment(comment)
     const group = await Group.findOne({where: { id: groupId }})
     await group.addComment(comment)
@@ -174,7 +191,8 @@ exports.createComment = async (req, res) => {
     };
 exports.findAllComments = async (req, res) => {
     const { groupId } = req.params;
-    Comment.findAll({where: { GroupId: groupId}})
+    console.log(Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]}))
+    Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]})
         .then(data => {
             res.send(data);
         })

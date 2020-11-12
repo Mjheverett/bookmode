@@ -3,10 +3,11 @@ const Shelf = db.shelves;
 const User = db.users;
 const Book = db.books;
 const Author = db.authors;
+const Reader = db.readers
 const Op = db.Sequelize.Op;
 exports.findAllUser = async (req, res) => {
-    const { userId } = req.params;
-    await Shelf.findAll({ include: [{model: User, where: { id: userId}}, {model: Book, include: [{model: Author}]}]})
+    const { userId } = req.params
+    await Shelf.findAll({ include: [{model: User, where: { id: userId}}, {model: Book, include: [{model: Author}, {model: Reader}]}]})
         .then(data => {
             res.send(data);
         })
@@ -48,12 +49,16 @@ exports.create = async (req, res) => {
             });
         });
     };
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-    Shelf.findByPk(id)
+exports.findOne = async (req, res) => {
+    const {shelfId, bookId} = req.params;
+    console.log(req.params)
+    const shelf = await Shelf.findOne({where : { id : shelfId }})
+    console.log(shelf)
+    const book = await Book.findOne({where : { id : bookId }})
+    console.log(book)
+    await shelf.addBook(book)
         .then(data => {
-        res.send(data);
-        })
+            console.log(data)})
         .catch(err => {
         res.status(500).send({
             message: "Error retrieving Shelf with id=" + id
@@ -87,6 +92,35 @@ exports.delete = (req, res) => {
     
     Shelf.destroy({
         where: { id: id }
+    })
+        .then(num => {
+        if (num == 1) {
+            res.send({
+            message: "Shelf was deleted successfully!"
+            });
+        } else {
+            res.send({
+            message: `Cannot delete Shelf with id=${id}. Maybe Shelf was not found!`
+            });
+        }
+        })
+        .catch(err => {
+        res.status(500).send({
+            message: "Could not delete Shelf with id=" + id
+        });
+        });
+    };
+exports.deleteBook = async (req, res) => {
+    const { id } = req.params;
+    const { shelfId } = req.body;
+
+    const shelf = await Shelf.findOne({where: { id: shelfId }})
+    console.log("shelf", shelf);
+    console.log(Shelf.destroy({ where: { BookId: id }, include: [{model: Book}]}))
+
+    shelf.addBook({
+        where: { BookId: id }, 
+        include: [{model: Book}]
     })
         .then(num => {
         if (num == 1) {

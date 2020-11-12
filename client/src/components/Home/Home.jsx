@@ -5,7 +5,7 @@ import { Container, Grid, Typography } from '@material-ui/core';
 import './Graphic.css';
 import storage from 'local-storage-fallback';
 
-const savedTheme = JSON.parse(storage.getItem('theme')) || 'dark';
+const savedTheme = JSON.parse(storage.getItem('theme')) || 'light';
 console.log("initial theme is:", savedTheme.mode)
 
 const Home = () => {
