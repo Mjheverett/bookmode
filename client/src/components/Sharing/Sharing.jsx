@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Typography, List, ListItem, AccordionSummary, Accordion, AccordionDetails}  from '@material-ui/core';
+import { Container, Typography, AccordionSummary, Accordion, AccordionDetails}  from '@material-ui/core';
 import BigList from './List';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -20,13 +20,14 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
         width: '100%',
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-      },
-      heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightBold,
-      },
-      inline: {
+        backgroundColor: 'transparent',
+    },
+    typography: {
+        padding: theme.spacing(2),
+        alignItems: 'center',
+        color: '#002B36',
+    },
+    inline: {
         display: 'inline',
       },
 }));
@@ -36,6 +37,11 @@ const Sharing = () => {
     const [sent, setSent] = useState([]);
     const [received, setReceived] = useState([]);
     const { user } = useAuth0();
+
+    //Grabbing screen width on load. Pulling into comments classes.
+    const lWidth = window.screen.width;
+    console.log("screen width is",lWidth);
+
     useEffect(() => {
         axios.get(`http://localhost:3000/recommendations/sent/${user.sub}`)
             .then(res => {
@@ -50,6 +56,7 @@ const Sharing = () => {
             setReceived(data)
         });
     }, [user.sub]);
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -58,36 +65,34 @@ const Sharing = () => {
                 <Typography variant="h6">View Recommendations</Typography>
                 <br />
                 <div className={classes.notificationDiv}>
-                        <div className={classes.root}>
-                            <Accordion className={classes.root}>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                >
-                                <Typography className={classes.heading}>Received recommendations</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    {received.length ? <BigList received = {received}/> : <p>You haven't received any recommendations yet.</p>}
-                                    
-                                </AccordionDetails>
-                            
-                            </Accordion>
-                            <Accordion className={classes.root}>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                                >
-                                <Typography className={classes.heading}>Sent recommendations</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    {sent.length ? <BigList sent = {sent}/> : <p>You haven't sent any recommendations yet.</p>}
-                                </AccordionDetails>
-                            </Accordion>
-                            </div>
-                        
+                    <div className={classes.root}>
+                        <Accordion className={classes.root}>
+                            <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            >
+                            <Typography variant="h6" className={classes.typography}>Received recommendations</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                {received.length ? <BigList received = {received}/> : <Typography className={classes.typography}>You haven't received any recommendations yet.</Typography>}
+                            </AccordionDetails>                        
+                        </Accordion>
+                        <Accordion className={classes.root}>
+                            <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel2a-content"
+                            id="panel2a-header"
+                            >
+                            <Typography variant="h6" className={classes.typography}>Sent recommendations</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                {sent.length ? <BigList sent = {sent}/> : <Typography className={classes.typography}>You haven't sent any recommendations yet.</Typography>}
+                            </AccordionDetails>
+                        </Accordion>
+                    </div>   
                 </div>
+                <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
             </Container>
         </>
     )
