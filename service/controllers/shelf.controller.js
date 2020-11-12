@@ -7,7 +7,7 @@ const Reader = db.readers
 const Op = db.Sequelize.Op;
 exports.findAllUser = async (req, res) => {
     const { userId } = req.params
-    await Shelf.findAll({ include: [{model: User, where: { id: userId}}, {model: Book, include: [{model: Author}, {model: Reader}]}]})
+    await Shelf.findAll({ include: [{model: User, where: { id: userId}}, {model: Book, include: [{model: Author}, {model: Reader}]}], order: [['id', 'ASC']]})
         .then(data => {
             res.send(data);
         })
