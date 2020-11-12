@@ -112,9 +112,9 @@ const Library = () => {
         setPopoverId(null);
         setAnchorEl(null);
     };
+
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-
 // Create Shelf Functions
     const _handleNameChange = (data) => {
         console.log(data)
@@ -143,7 +143,9 @@ const Library = () => {
         setShelfName('');
         setShelfDescription('');
     }
+
 // Library Search Functions
+
     const _handleChange = (search) => {
         console.log(search)
         setSearch(search);
@@ -153,9 +155,9 @@ const Library = () => {
         setRedirect(true)
     };
 
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+
 // Render Loading while pulling Library Info
+
     if (library === null) {
         return (
             <>
