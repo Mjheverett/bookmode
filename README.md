@@ -7,7 +7,7 @@
   <h3 align="center">Bookmode</h3>
 
   <p align="center">
-    An niche app for book enthusiasts!
+    A niche app for book enthusiasts!
     <br />
     <a href="#">View Demo</a>
   </p>
