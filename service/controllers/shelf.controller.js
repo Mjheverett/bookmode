@@ -5,8 +5,8 @@ const Book = db.books;
 const Author = db.authors;
 const Op = db.Sequelize.Op;
 exports.findAllUser = async (req, res) => {
-    const { userId } = req.params;
-    await Shelf.findAll({ include: [{model: User, where: { id: userId}}, {model: Book, include: [{model: Author}]}]})
+    const { userId } = req.params
+    await Shelf.findAll({ include: [{model: User, where: { id: userId}}, {model: Book, order: [['updatedAt', 'ASC']], include: [{model: Author}]}]})
         .then(data => {
             res.send(data);
         })
@@ -48,12 +48,16 @@ exports.create = async (req, res) => {
             });
         });
     };
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-    Shelf.findByPk(id)
+exports.findOne = async (req, res) => {
+    const {shelfId, bookId} = req.params;
+    console.log(req.params)
+    const shelf = await Shelf.findOne({where : { id : shelfId }})
+    console.log(shelf)
+    const book = await Book.findOne({where : { id : bookId }})
+    console.log(book)
+    await shelf.addBook(book)
         .then(data => {
-        res.send(data);
-        })
+            console.log(data)})
         .catch(err => {
         res.status(500).send({
             message: "Error retrieving Shelf with id=" + id

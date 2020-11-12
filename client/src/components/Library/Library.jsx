@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase }  from '@material-ui/core';
+import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
 
@@ -92,7 +92,7 @@ const Library = () => {
     const [search, setSearch] = useState();
     const [fireRedirect, setRedirect] = useState(false);
     const { user } = useAuth0();
-
+    //gets shelves and respective books/authors
     useEffect(() => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
@@ -102,19 +102,16 @@ const Library = () => {
             });
     }, [user.sub]);
 
-    // Modal with information about each book.
+    // popover with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
-
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setPopoverId(null);
         setAnchorEl(null);
     };
-
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -123,12 +120,11 @@ const Library = () => {
         console.log(data)
         setShelfName(data);
     };
-
     const _handleDescChange = (data) => {
         console.log(data)
         setShelfDescription(data);
     };
-
+    //function for adding the shelf named/described above
     const _handleCreateShelf = (e) => {
         e.preventDefault();
         const data = {
@@ -147,18 +143,18 @@ const Library = () => {
         setShelfName('');
         setShelfDescription('');
     }
-
 // Library Search Functions
     const _handleChange = (search) => {
         console.log(search)
         setSearch(search);
     };
-
     const _handleSubmit = (e) => {
         e.preventDefault();
         setRedirect(true)
     };
 
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 // Render Loading while pulling Library Info
     if (library === null) {
         return (
@@ -167,7 +163,6 @@ const Library = () => {
             </>
         )
     }
-
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -184,7 +179,6 @@ const Library = () => {
                             inputProps={{ 'aria-label': 'search'}}
                             onChange={(event) => _handleChange(event.target.value)} 
                         />
-                        
                     </form>
                     {fireRedirect && search && (
                         <Redirect 
@@ -253,14 +247,13 @@ const Library = () => {
                                 <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
                             <br />
-
                             <GridListTileBar
                                 classes={{
                                     root: classes.titleBarTop,
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <CustomizedMenus book={book} />}
+                                    <CustomizedMenus book={book} shelves={library.slice(1)}/>}
                             />
                             <Typography>{book.title}</Typography>
                             <div>
@@ -289,12 +282,6 @@ const Library = () => {
                                     <Typography className={classes.typography}>
                                         Author: {book.Authors[0].authorName}
                                     </Typography>
-                                    <Typography className={classes.typography}>
-                                        Genre: Self Improvement
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Reader: None
-                                    </Typography>
                                 </Popover>
                             </div>
                             <br />
@@ -303,6 +290,7 @@ const Library = () => {
                         )}
                     </GridList> 
                     </div>
+                    <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
                     </div>))) : (
                     <Typography>No Shelves!</Typography>
                 )}
@@ -310,5 +298,4 @@ const Library = () => {
         </>
     )
 }
-
 export default Library;
