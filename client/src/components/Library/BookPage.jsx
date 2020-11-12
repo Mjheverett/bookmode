@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const GroupPage = () => {
+const BookPage = () => {
     const classes = useStyles();
     const [book, setBook] = useState(null);
     const editionKey = useParams();
@@ -145,4 +145,4 @@ const GroupPage = () => {
     )
 }
 
-export default GroupPage;
+export default BookPage;
