@@ -97,7 +97,7 @@ const Library = () => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('res.data:', data)
+                console.log('library data: ', data)
                 setLibrary(data)
             });
     }, [user.sub]);

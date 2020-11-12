@@ -98,16 +98,18 @@ const Results = (props) => {
         setPopoverId(null);
         setAnchorEl(null);
     };
-    const _handleAddLibrary = (id, title, author, imageURL) =>{
+    const _handleAddLibrary = (id, title, author, imageURL, editionKey, reader) =>{
         //adds the ID of the clicked item to the array if it isn't there and removes from array if it is there
         let result =  clicks.includes(id) ? clicks.filter(click => click !== id): [...clicks, id]
         setClicks(result)
-        console.log(title, imageURL, author)
+        console.log(title, author, imageURL, editionKey, reader)
         author = author.length >= 2 ? author.join(', ') : author[0]
         const data = {
             title: title,
             coverURL: imageURL,
-            authorName: author
+            authorName: author,
+            readerName: reader, 
+            editionKey: editionKey
         };
         axios.post(`http://localhost:3000/results/add/${user.sub}`, data)
             .then(res => console.log(res))
@@ -190,7 +192,7 @@ const Results = (props) => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg`)}>
+                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg`, result.key, !!result.contributor ? !!checkRegex(result.contributor).length ? checkRegex(result.contributor).join(', ') : null : null)}>
                                     {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
                                     {clicks.includes(result.key) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
                                     </IconButton> }

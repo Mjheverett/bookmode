@@ -309,29 +309,32 @@ const CustomizedMenus = (props) => {
               color="secondary">
                 <MenuBookIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText primary="See book details" />
-              </Link>
-          </MenuItem>
-          <MenuItem onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">
-              <IconButton
-                  aria-label="account of current user"
-                  color="secondary"
-              >
-                  <CollectionsBookmarkIcon />
-              </IconButton>
-              <ListItemText primary="Sort book into a different shelf" />
-          </MenuItem>
-          <MenuItem onClick={_handleDeleteBook} aria-controls={menuId} aria-haspopup="true" color="secondary">
-              <IconButton
-                  aria-label="account of current user"
-              >
-                  <DeleteIcon />
-              </IconButton>
-              <ListItemText primary="Delete Book from Shelf" />
-          </MenuItem>
-      </StyledMenu>
-        {renderMenu}
-      <Modal
+                <ListItemText primary="Send recommendation" />
+            </MenuItem>
+            <MenuItem>
+                <Link to={{
+                                    pathname: `${book.editionKey}`,
+                                    editionKey: book.editionKey
+                                }}>
+                <ListItemIcon
+                color="secondary">
+                  <MenuBookIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="See book details" />
+                </Link>
+            </MenuItem>
+            <MenuItem onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">
+                <IconButton
+                    aria-label="account of current user"
+                    color="secondary"
+                >
+                    <CollectionsBookmarkIcon />
+                </IconButton>
+                <ListItemText primary="Sort book into a different shelf" />
+            </MenuItem>
+        </StyledMenu>
+            {renderMenu}
+  <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
