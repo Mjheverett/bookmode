@@ -33,8 +33,14 @@ exports.create = async (req, res) => {
     const author = await Author.create({
             authorName: authorName
         })
-    !!readerName ? await Reader.create({readerName: readerName}).addBook(book) : null
-    await author.addBook(book) 
+    // let newReader=[]
+    // if (!!newReader){
+    //     newReader = await readerName.split(',')
+    //     newReader.map(async reader =>{
+    //     const instance = await Reader.create({reader})
+    //     await instance.addBook(book)})}
+    //     else{
+    //     null}
     const { userId } = req.params;
     const user = await User.findOne({where: { id: userId}})
     const shelf= await Shelf.findOne({where: { shelfName: `${user.name}'s Library`}})
