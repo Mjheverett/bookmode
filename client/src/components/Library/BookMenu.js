@@ -216,6 +216,16 @@ const handleCreateRec= (e) => {
     setAnchorEl(event.currentTarget);
 };
 
+  const _handleDeleteBook = () => {
+    const data = {
+      id: book.id,
+      shelfId: book.shelves_books.ShelfId
+    }
+    axios.delete(`http://localhost:3000/library/book/${data.id}`, data)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
+    
 const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
 };
@@ -224,6 +234,7 @@ const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
 };
+
 const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);}
   const menuId = book;

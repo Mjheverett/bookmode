@@ -237,7 +237,7 @@ const Library = () => {
                 <br />
                 {(library.length !== 0) ? (library.map(shelf => (
                     <div>
-                    <Typography variant="h6">{shelf.shelfName}</Typography>
+                    <Typography variant="h6" key={shelf.id}>{shelf.shelfName}</Typography>
                     <br />
                     <div className={classes.libraryDiv}>
                     <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
