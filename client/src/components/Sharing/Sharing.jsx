@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, Typography, List, ListItem, AccordionSummary, Accordion, AccordionDetails}  from '@material-ui/core';
+import { Container, Typography, AccordionSummary, Accordion, AccordionDetails}  from '@material-ui/core';
 import BigList from './List';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         backgroundColor: 'rgba(255, 255, 255, 0)',
-      },
-      heading: {
+    },
+    heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightBold,
-      },
-      inline: {
+    },
+    inline: {
         display: 'inline',
-      },
+    },
 }));
 
 const Sharing = () => {
