@@ -60,7 +60,7 @@ const GroupsCard = () => {
                     {(groups.length !== 0) ? (groups.map((group) => (
                         <GridListTile cellHeight={'auto'} key={group.id}>
                             <br />
-                            <Link to={`/groups/${group.id}`}><Typography variant="h6">{group.groupName}</Typography></Link>
+                            <Typography variant="h6" className={classes.typography}><Link className={classes.link} to={`/groups/${group.id}`}>{group.groupName}</Link></Typography>
                             <br/>
                             <Typography>{group.groupDescription}</Typography>
                             <br />
