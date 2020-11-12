@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState}  from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { GridListTile, Typography, List, ListItem }  from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import { GridListTile, Typography, Card, CardHeader, GridList, CardContent }  from '@material-ui/core';
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
+import moment from 'moment';
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
     dashboardDiv:{
@@ -26,26 +30,68 @@ const useStyles = makeStyles((theme) => ({
     link: {
         color: '#002B36',
     },
+    avatar: {
+        backgroundColor: '#52781e',
+    },
+    card: {
+        width: 'auto',
+        margin: theme.spacing(2),
+        padding: theme.spacing(2),
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        color: '#002B36',
+        textAlign: 'left',
+    },
+    commentsMobile: {
+        display: 'inlineBlock',
+        width: '100%',   
+    },  
 }));
+
+
 
 const SharingCard = () => {
     const classes = useStyles();
+    const [received, setReceived] = useState([]);
+    const { user } = useAuth0();
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/recommendations/received/${user.sub}`)
+        .then(res => {
+            const data = res.data;
+            console.log('res.data.received:', data)
+            setReceived(data)
+        });
+    }, [user.sub]);
+
+
     return (
         <>
             <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Sharing</Link></Typography>
-                <GridListTile cellHeight={'auto'}>
-                    <Typography>
-                        <List>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                            <ListItem>Lorem ipsum dolor sit amet, consectetur</ListItem>
-                        </List>
-                    </Typography>
-                </GridListTile>
-            </div> 
-            <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>     
+                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Your Sharing</Link></Typography>
+                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}> 
+                {(received.map(prop=>(
+                    <GridListTile cellHeight={'auto'}>
+                    <br />
+                    <Card className={classes.card} >
+                        <CardHeader
+                            avatar={
+                            <Avatar className={classes.avatar}>
+                                {prop.sender.name[0]}
+                            </Avatar>
+                            }
+                            title={prop.sender.name}
+                            subheader={moment(prop.createdAt).format('MMMM Do YYYY, h:mm a')}
+                        />
+                        <CardContent>
+                            <Typography variant="h6" style={{color: '#002B36'}}>{prop.Book.title}</Typography>
+                            <Typography style={{color: '#002B36'}}>{prop.comment}</Typography>
+                        </CardContent>
+                    </Card>
+                    <br />
+                    </GridListTile>
+                    )))}
+                </GridList>
+            </div>
         </>
     )
 }
