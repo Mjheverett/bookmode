@@ -9,8 +9,17 @@ db.sequelize.sync();
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 // });
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  "Access-Control-Allow-Origin": '*',
+  "Access-Control-Allow-Headers":
+    "Origin, X-Requested-With, Content-Type, Accept"
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(logger('dev'));

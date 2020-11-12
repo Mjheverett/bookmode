@@ -133,7 +133,7 @@ const Results = (props) => {
             <br />
                 <div className={classes.resultsDiv}>
                 <br/>
-                    <GridList className={classes.gridList} cols={2} cellHeight={240} spacing={16}>
+                    <GridList className={classes.gridList} cols={3} cellHeight={240} spacing={16}>
                         {results.map((result) => {
 
                             return (
