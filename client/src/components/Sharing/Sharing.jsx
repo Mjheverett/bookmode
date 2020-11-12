@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
         width: '100%',
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: theme.typography.fontWeightBold,
         backgroundColor: 'transparent',
     },
     typography: {
@@ -29,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     inline: {
         display: 'inline',
-      },
+    },
 }));
 
 const Sharing = () => {

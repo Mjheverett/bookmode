@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase, Select }  from '@material-ui/core';
+import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
 
