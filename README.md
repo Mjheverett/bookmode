@@ -43,7 +43,7 @@ This project was built using:
 * Sequelize
 * Node.js
 * Docker
-* AuthO for user login
+* Auth0 for user login
 * Material UI
 
 <!-- Installation -->
