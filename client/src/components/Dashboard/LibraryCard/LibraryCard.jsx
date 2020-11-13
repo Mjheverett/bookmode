@@ -39,7 +39,7 @@ const LibraryCard = () => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('The library is', data)
+                // console.log('The library is', data)
                 setLibrary(data);
             })
             .catch(err => console.log(err));
@@ -52,8 +52,8 @@ const LibraryCard = () => {
             </>
         )
     }
-    console.log('lib 0 is', library);
-    console.log('lib 0 Books are', library[0].Books)
+    // console.log('lib 0 is', library);
+    // console.log('lib 0 Books are', library[0].Books)
 
     return (
         <>

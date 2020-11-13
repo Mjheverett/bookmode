@@ -99,16 +99,16 @@ const Library = () => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('library data: ', data)
+                // console.log('library data: ', data)
                 setLibrary(data)
             });
         axios.get(url)
             .then(res => {
                 const data = res.data;
-                console.log('res.data:', data)
+                // console.log('res.data:', data)
                 setUsers(data)
             });
-    }, [user.sub]);
+    }, [user.sub, url]);
 
     // popover with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -123,39 +123,46 @@ const Library = () => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+
 // Create Shelf Functions
+
     const _handleNameChange = (data) => {
-        console.log(data)
         setShelfName(data);
     };
     const _handleDescChange = (data) => {
-        console.log(data)
         setShelfDescription(data);
     };
+
     //function for adding the shelf named/described above
-    const _handleCreateShelf = (e) => {
+    const _handleCreateShelf = async (e) => {
         e.preventDefault();
         const data = {
             shelfName: name,
             shelfDescription: description
         };
-        axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
+        await axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
-        const newShelf = {
-            shelfName: name,
-            shelfDescription: description,
-            Books: []
-        }
-        setLibrary([...library, newShelf]);
         setShelfName('');
         setShelfDescription('');
+        await axios.get(`http://localhost:3000/library/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                // console.log('library data: ', data)
+                setLibrary(data)
+            });
+        await axios.get(url)
+            .then(res => {
+                const data = res.data;
+                // console.log('res.data:', data)
+                setUsers(data)
+            });
     }
 
 // Library Search Functions
 
     const _handleChange = (search) => {
-        console.log(search)
+        // console.log(search)
         setSearch(search);
     };
     const _handleSubmit = (e) => {

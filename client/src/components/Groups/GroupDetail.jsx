@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Typography, GridListTile, Button }  from '@material-ui/core';
+import { Typography, GridListTile }  from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,10 +29,10 @@ const GroupDetail = (props) => {
                     <Typography variant="h6" className={classes.typography}><Link className={classes.link} to={`/groups/${group.id}`}>{group.groupName}</Link></Typography>
                     <Typography>{group.groupDescription}</Typography>
                     <br />
-                    {(list !== 'User') ? (
+                    {/* {(list !== 'User') ? (
                         <Button color="secondary" variant="contained" size="large">
                             Join Group
-                        </Button>
+                        </Button> */}
                     ) : null
                     }
                 </GridListTile>
