@@ -65,6 +65,14 @@ exports.findOne = async (req, res) => {
         });
         });
     };
+exports.search = async (req, res) => {
+    const { shelfId } = req.body;
+
+    const shelf = await Shelf.findOne({where : { id : shelfId }})
+    console.log(shelf)
+    
+    
+    };
 exports.update = (req, res) => {
     const id = req.params.id;
     Shelf.update(req.body, {

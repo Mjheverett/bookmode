@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
 const Library = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
+    const [libraryId, setLibraryId] = useState();
     const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
@@ -101,7 +102,9 @@ const Library = () => {
             .then(res => {
                 const data = res.data;
                 // console.log('library data: ', data)
+                // console.log('library id', data[0].id)
                 setLibrary(data)
+                setLibraryId(data[0].id)
             });
         axios.get(url)
             .then(res => {
@@ -204,7 +207,7 @@ const Library = () => {
                         <Redirect 
                             to={{
                                 pathname: `/library/results/${search}`,
-                                state: {search: search}
+                                state: {search: search, shelfId: libraryId}
                             }}
                         />
                     )}
