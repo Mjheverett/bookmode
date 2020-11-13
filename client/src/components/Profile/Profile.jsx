@@ -175,7 +175,7 @@ const Profile = () => {
                         </GridListTile>
                     </GridList> 
                 </div>
-                <Button type="button" color="secondary" variant="contained" size="large" onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
+                <Button type="button" color="secondary" variant="outlined" size="large" onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
             </Container>
         </>
     )
