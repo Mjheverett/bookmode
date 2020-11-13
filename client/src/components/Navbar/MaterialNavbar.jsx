@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('lg')]: {
-            width: '20ch',
+            width: '30ch',
         },
     },
     select: {
@@ -242,9 +242,6 @@ export default function PrimarySearchAppBar() {
                                     input: classes.inputInput,
                                 }}
                                 value={data}
-                                endAdornment={<InputAdornment position="end">
-                                    <SearchIcon style={{color: '#93A1A1'}}/>
-                                </InputAdornment>}
                                 inputProps={{ 'aria-label': 'search'}}
                                 onChange={(event) => _handleChange(event.target.value)}
                             />
