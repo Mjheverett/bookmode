@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
@@ -192,6 +194,10 @@ const Library = () => {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
+                            value={search}
+                            endAdornment={<InputAdornment position="end">
+                                <SearchIcon style={{color: '#93A1A1'}}/>
+                            </InputAdornment>}
                             inputProps={{ 'aria-label': 'search'}}
                             onChange={(event) => _handleChange(event.target.value)} 
                         />
