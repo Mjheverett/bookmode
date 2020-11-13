@@ -169,12 +169,11 @@ exports.createComment = async (req, res) => {
         return;
     }
     const { groupId } = req.params;
-    const { content, Users } = req.body;
-    console.log("Users", Users[0])
+    const { content, userId } = req.body;
     const comment = await Comment.create({
         content: content 
     })
-    const user = await User.findOne({where: { id: Users[0].id }})
+    const user = await User.findOne({where: { id: userId }})
     await user.addComment(comment)
     const group = await Group.findOne({where: { id: groupId }})
     await group.addComment(comment)

@@ -47,8 +47,6 @@ const useStyles = makeStyles((theme) => ({
     },  
 }));
 
-
-
 const SharingCard = () => {
     const classes = useStyles();
     const [received, setReceived] = useState([]);
@@ -58,7 +56,7 @@ const SharingCard = () => {
         axios.get(`http://localhost:3000/recommendations/received/${user.sub}`)
         .then(res => {
             const data = res.data;
-            console.log('res.data.received:', data)
+            // console.log('res.data.received:', data)
             setReceived(data)
         });
     }, [user.sub]);

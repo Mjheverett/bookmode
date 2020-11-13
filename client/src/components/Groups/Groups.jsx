@@ -69,28 +69,29 @@ const Groups = () => {
         setGroupDescription(data);
     };
 
-    const _handleCreateGroup = (e) => {
+    const _handleCreateGroup = async (e) => {
         e.preventDefault();
         const data = {
             groupName: name,
             groupDescription: description
         };
-        
-        axios.post(`http://localhost:3000/groups/add/${user.sub}`, data)
-            .then(res => {
-                console.log(res)
-                const data = res.data;
-                const newGroupData = {
-                    id: data.GroupId,
-                    groupName: name,
-                    groupDescription: description
-                };
-                setUserGroups([...userGroups, newGroupData]);
-                setAllGroups([...allGroups, newGroupData]);
-            })
+        await axios.post(`http://localhost:3000/groups/add/${user.sub}`, data)
+            .then(res => console.log(res))
             .catch(err => console.log(err));
         setGroupName('');
         setGroupDescription('');
+        await axios.get(`http://localhost:3000/groups/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                // console.log('res.data:', data)
+                setUserGroups(data)
+            })
+        await axios.get(`http://localhost:3000/groups/`)
+            .then(res => {
+                const data = res.data;
+                // console.log('res.data:', data)
+                setAllGroups(data)
+            })
     };
 
     return (
