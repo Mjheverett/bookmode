@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -50,13 +49,17 @@ const GroupsCard = () => {
                 <Typography variant="h6">Loading</Typography>
             </>
         )
-    }
+    };
+
+    // Finds screen width and updates the columns display
+    const width = window.screen.width;
+    const columns = width === 'xs' || width === 'sm' ? 1 : 2;
 
     return (
         <>
             <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/groups">Your Groups</Link></Typography>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                <GridList className={classes.gridList} cols={columns} cellHeight={'auto'}>
                     {(groups.length !== 0) ? (groups.map((group) => (
                         <GridListTile cellHeight={'auto'} key={group.id}>
                             <br />
@@ -66,9 +69,10 @@ const GroupsCard = () => {
                             <br />
                         </GridListTile>
                     ))) : (
-                    <Typography>You're not part of any groups!</Typography>
+                    <Typography>You're not part of any groups! <Link style={{color: '#52781e'}} to="/groups">Join here.</Link></Typography>
                     )}
-                    </GridList>
+                </GridList>
+                <br />
             </div>
         </>
     )
