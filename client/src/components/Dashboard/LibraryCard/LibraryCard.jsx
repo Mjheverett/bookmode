@@ -83,7 +83,7 @@ const LibraryCard = () => {
             {(library.length !== 0) ?  
                 <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography} key={library[0].id}><Link className={classes.link} to="/library">Your Main Library</Link></Typography>
-                    <GridList className={classes.gridList} cols={columnsSize()} cellHeight={'auto'}> 
+                    <GridList className={classes.gridList} cols={library[0].Books.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}> 
                         {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
