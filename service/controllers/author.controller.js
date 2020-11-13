@@ -16,6 +16,7 @@ exports.findAll = (req, res) => {
             });
         });
     };
+
 exports.create = (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
@@ -41,6 +42,7 @@ exports.create = (req, res) => {
             });
         });
     };
+    
 exports.findOne = (req, res) => {
     const id = req.params.id;
     Author.findByPk(id)
@@ -53,6 +55,7 @@ exports.findOne = (req, res) => {
         });
         });
     };
+
 exports.update = (req, res) => {
     const id = req.params.id;
     Author.update(req.body, {
@@ -75,6 +78,7 @@ exports.update = (req, res) => {
         });
         });
     };
+    
 exports.delete = (req, res) => {
     const id = req.params.id;
     

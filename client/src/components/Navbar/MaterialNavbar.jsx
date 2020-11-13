@@ -242,13 +242,11 @@ export default function PrimarySearchAppBar() {
                                 }}
                                 value={data}
                                 endAdornment={<InputAdornment position="end">
-                                <SearchIcon style={{color: '#93A1A1'}}/>
-                            </InputAdornment>}
+                                    <SearchIcon style={{color: '#93A1A1'}}/>
+                                </InputAdornment>}
                                 inputProps={{ 'aria-label': 'search'}}
                                 onChange={(event) => _handleChange(event.target.value)}
-                                
                             />
-                            
                         </form>
                         {fireRedirect && data && (
                             <Redirect 

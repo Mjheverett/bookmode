@@ -18,6 +18,7 @@ exports.findAllUser = async (req, res) => {
             });
         });
     };
+
 exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
@@ -49,6 +50,7 @@ exports.create = async (req, res) => {
             });
         });
     };
+
 exports.findOne = async (req, res) => {
     const {shelfId, bookId} = req.params;
     console.log(req.params)
@@ -65,6 +67,16 @@ exports.findOne = async (req, res) => {
         });
         });
     };
+
+exports.search = async (req, res) => {
+    const { shelfId } = req.body;
+
+    const shelf = await Shelf.findOne({where : { id : shelfId }})
+    console.log(shelf)
+    
+    
+    };
+
 exports.update = (req, res) => {
     const id = req.params.id;
     Shelf.update(req.body, {
@@ -87,6 +99,7 @@ exports.update = (req, res) => {
         });
         });
     };
+
 exports.delete = (req, res) => {
     const id = req.params.id;
     
@@ -110,6 +123,7 @@ exports.delete = (req, res) => {
         });
         });
     };
+    
 exports.deleteBook = async (req, res) => {
     const { id } = req.params;
     const { shelfId } = req.body;
