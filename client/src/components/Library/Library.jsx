@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -99,16 +98,16 @@ const Library = () => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('library data: ', data)
+                // console.log('library data: ', data)
                 setLibrary(data)
             });
         axios.get(url)
             .then(res => {
                 const data = res.data;
-                console.log('res.data:', data)
+                // console.log('res.data:', data)
                 setUsers(data)
             });
-    }, [user.sub]);
+    }, [user.sub, url]);
 
     // popover with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -123,37 +122,45 @@ const Library = () => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
+
 // Create Shelf Functions
+
     const _handleNameChange = (data) => {
         setShelfName(data);
     };
     const _handleDescChange = (data) => {
         setShelfDescription(data);
     };
+
     //function for adding the shelf named/described above
-    const _handleCreateShelf = (e) => {
+    const _handleCreateShelf = async (e) => {
         e.preventDefault();
         const data = {
             shelfName: name,
             shelfDescription: description
         };
-        axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
+        await axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
-        const newShelf = {
-            shelfName: name,
-            shelfDescription: description,
-            Books: []
-        }
-        setLibrary([...library, newShelf]);
         setShelfName('');
         setShelfDescription('');
+        await axios.get(`http://localhost:3000/library/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                // console.log('library data: ', data)
+                setLibrary(data)
+            });
+        await axios.get(url)
+            .then(res => {
+                const data = res.data;
+                // console.log('res.data:', data)
+                setUsers(data)
+            });
     }
 
-// Library Search Functions
-
+    // Library Search Functions
     const _handleChange = (search) => {
-        console.log(search)
+        // console.log(search)
         setSearch(search);
     };
     const _handleSubmit = (e) => {
@@ -161,15 +168,15 @@ const Library = () => {
         setRedirect(true)
     };
 
-// Render Loading while pulling Library Info
-
+    // Render Loading while pulling Library Info
     if (library === null) {
         return (
             <>
                 <Typography variant="h6">Loading</Typography>
             </>
         )
-    }
+    };
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -293,13 +300,13 @@ const Library = () => {
                             </div>
                             <br />
                         </GridListTile>)})) : (
-                        <Typography>No books!!</Typography>
+                        <Typography>Add a book using the navbar search feature!</Typography>
                         )}
                     </GridList> 
                     </div>
                     <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
                     </div>))) : (
-                    <Typography>No Shelves!</Typography>
+                    <Typography>You don't have any shelves yet!</Typography>
                 )}
             </Container> 
         </>

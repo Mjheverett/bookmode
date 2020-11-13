@@ -12,10 +12,9 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
-        padding: '0.8rem 1.6rem',
+        padding: '1.6rem',
         marginBottom: '2rem',
     },
     gridList: {
@@ -47,8 +46,6 @@ const useStyles = makeStyles((theme) => ({
     },  
 }));
 
-
-
 const SharingCard = () => {
     const classes = useStyles();
     const [received, setReceived] = useState([]);
@@ -58,18 +55,21 @@ const SharingCard = () => {
         axios.get(`http://localhost:3000/recommendations/received/${user.sub}`)
         .then(res => {
             const data = res.data;
-            console.log('res.data.received:', data)
+            // console.log('res.data.received:', data)
             setReceived(data)
         });
     }, [user.sub]);
 
+    // Finds screen width and updates the columns display
+    const width = window.screen.width;
+    const columns = width === 'xs' || width === 'sm' ? 1 : 2;
 
     return (
         <>
             <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Your Sharing</Link></Typography>
-                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}> 
-                {(received.map(prop=>(
+                <GridList className={classes.gridList} cols={columns} cellHeight={'auto'}> 
+                {(received.map(prop => (
                     <GridListTile cellHeight={'auto'}>
                     <br />
                     <Card className={classes.card} >
@@ -89,8 +89,11 @@ const SharingCard = () => {
                     </Card>
                     <br />
                     </GridListTile>
-                    )))}
+                )))} : (
+                    <Typography>You're don't have any reccomendations yet! <Link style={{color: '#52781e'}} to="/sharing">Send one here.</Link></Typography>
+                )
                 </GridList>
+                <br />
             </div>
         </>
     )

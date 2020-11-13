@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -39,7 +38,7 @@ const LibraryCard = () => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('The library is', data)
+                // console.log('The library is', data)
                 setLibrary(data);
             })
             .catch(err => console.log(err));
@@ -51,16 +50,21 @@ const LibraryCard = () => {
                 <Typography variant="h6">Loading</Typography>
             </>
         )
-    }
-    console.log('lib 0 is', library);
-    console.log('lib 0 Books are', library[0].Books)
+    };
+
+    // Finds screen width and updates the columns display
+    const width = window.screen.width;
+    const columns = width === 'xs' || width === 'sm' ? 1 : 2;
+    
+    // console.log('lib 0 is', library);
+    // console.log('lib 0 Books are', library[0].Books)
 
     return (
         <>
             {(library.length !== 0) ?  
                 <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography} key={library[0].id}><Link className={classes.link} to="/library">Your Main Library</Link></Typography>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}> 
+                    <GridList className={classes.gridList} cols={columns} cellHeight={'auto'}> 
                         {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
@@ -71,12 +75,14 @@ const LibraryCard = () => {
                             <br />
                             <Typography>{book.title}</Typography>
                             <br />
-                            </GridListTile>)})) : (
-                            <Typography>No books!!</Typography>
+                            </GridListTile>
+                        )})) : (
+                        <Typography>You're don't have any books yet! <Link style={{color: '#52781e'}} to="/library">Start here.</Link></Typography>
                         )}
                     </GridList> 
+                    <br />
                 </div> : (
-                <Typography>No Shelves!</Typography>
+                <Typography>You're don't have any shelves yet!</Typography>
             )}
         </>
     )

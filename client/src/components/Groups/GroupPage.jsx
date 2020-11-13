@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -81,7 +80,7 @@ const GroupPage = () => {
         axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
             .then(res => {
                 const data = res.data;
-                console.log("comment response data", data);
+                // console.log("comment response data", data);
                 setComments(data);
             })
             .catch(err => console.log(err));
@@ -122,30 +121,23 @@ const GroupPage = () => {
         setNewComment(data);
     }
 
-    const _handleAddComment = (e) => {
+    const _handleAddComment = async (e) => {
         e.preventDefault();
         const data = {
-            GroupId: groupId.id,
-            Users: [{
-                id: user.sub,
-                name: user.name
-            }],
+            userId: user.sub,
             content: newComment
         }
-        console.log("add comment data", data);
-        axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
-            .then(res => console.log("comment response", res))
+        // console.log("add comment data", data);
+        await axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
+            .then(res => console.log(res))
             .catch(err => console.log(err));
-        const newCommentData = {
-            GroupId: groupId.id,
-            Users: [{
-                id: user.sub,
-                name: user.name
-            }],
-            content: newComment,
-            createdAt: moment().format()
-        };
-        setComments([...comments, newCommentData]);    
+        await axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
+            .then(res => {
+                const data = res.data;
+                // console.log("comment response data", data);
+                setComments(data);
+            })
+            .catch(err => console.log(err));   
         setNewComment('');
     }
 
