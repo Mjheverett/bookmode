@@ -81,7 +81,7 @@ const GroupPage = () => {
         axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
             .then(res => {
                 const data = res.data;
-                console.log("comment response data", data);
+                // console.log("comment response data", data);
                 setComments(data);
             })
             .catch(err => console.log(err));
@@ -118,14 +118,14 @@ const GroupPage = () => {
             userId: user.sub,
             content: newComment
         }
-        console.log("add comment data", data);
+        // console.log("add comment data", data);
         await axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
-            .then(res => console.log("comment response", res))
+            .then(res => console.log(res))
             .catch(err => console.log(err));
         await axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
             .then(res => {
                 const data = res.data;
-                console.log("comment response data", data);
+                // console.log("comment response data", data);
                 setComments(data);
             })
             .catch(err => console.log(err));   
