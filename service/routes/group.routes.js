@@ -16,7 +16,7 @@ module.exports = app => {
     // Update a group with id
     router.put("/group/update/:id", groups.update);
     // Delete a group with id
-    router.delete("/:id", groups.delete);
+    router.delete("/delete/:id", groups.delete);
     // Add comment to Group page
     router.post("/comments/add/:groupId", groups.createComment);
     // Get all comments for a group

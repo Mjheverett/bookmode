@@ -8,9 +8,9 @@ const Reader = db.readers;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
-    const {title, imageURL } = req.body;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-    Book.findAll({ where: condition})
+    const {key} = req.query;
+    console.log('key is: ', key)
+    Book.findAll({ where: {editionKey: key}, include: [{model:Author}]})
         .then(data => {
             res.send(data);
         })

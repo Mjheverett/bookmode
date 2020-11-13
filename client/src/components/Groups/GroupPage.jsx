@@ -5,6 +5,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import moment from 'moment';
+import { Link, Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
@@ -65,6 +66,7 @@ const GroupPage = () => {
     const [comments, setComments] = useState([]);
     const groupId = useParams();
     const { user } = useAuth0();
+    const [fireRedirect, setRedirect] = useState(false);
     
     //Grabbing screen width on load. Pulling into comments classes.
     const lWidth = window.screen.width;
@@ -86,35 +88,44 @@ const GroupPage = () => {
             .catch(err => console.log(err));
     }, [groupId.id]);
 
-    const _handleJoinGroup = (e) => {
+    const _handleJoinGroup = async (e) => {
         e.preventDefault();
         const data = {
             groupId: group.id
         };
-        axios.post(`http://localhost:3000/groups/join/${user.sub}`, data)
+        await axios.post(`http://localhost:3000/groups/join/${user.sub}`, data)
             .then(res => console.log(res))
+            .catch(err => console.log(err));
+        await axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
+            .then(res => {
+                const data = res.data;
+                setGroup(data);
+            })
             .catch(err => console.log(err));
     };
 
-    const _handleLeaveGroup = (e) => {
+    const _handleLeaveGroup = async (e) => {
         e.preventDefault();
         const data = {
             groupId: group.id,
             userId: user.sub
         };
-        axios.delete(`http://localhost:3000/groups/${groupId.id}/${user.sub}`, data)
+        await axios.delete(`http://localhost:3000/groups/${groupId.id}/${user.sub}`, data)
             .then(res => console.log("leave group response", res))
+            .catch(err => console.log(err));
+        await axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
+            .then(res => {
+                const data = res.data;
+                setGroup(data);
+            })
             .catch(err => console.log(err));
     };
-    const _handleDeleteGroup = (e) => {
+    const _handleDeleteGroup = async (e) => {
         e.preventDefault();
-        const data = {
-            groupId: group.id,
-            userId: user.sub
-        };
-        axios.delete(`http://localhost:3000/groups/${groupId.id}/${user.sub}`, data)
+        await axios.delete(`http://localhost:3000/groups/delete/${groupId.id}`)
             .then(res => console.log("leave group response", res))
             .catch(err => console.log(err));
+        await setRedirect(true)
     };
 
     const _handleComment = (data) => {
@@ -156,21 +167,30 @@ const GroupPage = () => {
             <br/>
             <Typography variant="h6">{group.groupDescription}</Typography>
             <br/>
-            <form onSubmit={_handleJoinGroup}>
-                <input value={group.id} name="groupId" hidden></input>
-                <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
-            </form>
-            {(group.Users[0].id !== user.sub) ? 
-                <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
-                <input value={group.id} name="groupId" hidden></input>
+                {group.Users.find(({id})=> id === user.sub) ?
+                group.Users[0].id !== user.sub ? 
+                    <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
+                    <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Leave This Group</Button>
-            </form>
-            :
-            <form style={{marginTop: '1rem'}} onSubmit={_handleDeleteGroup}>
-                <input value={group.id} name="groupId" hidden></input>
-                <Button type="submit" color="secondary" variant="contained" size="large">Delete This Group</Button>
-            </form>}
-            
+                </form>
+                :
+                <form style={{marginTop: '1rem'}} onSubmit={_handleDeleteGroup}>
+                    <input value={group.id} name="groupId" hidden></input>
+                    <Button type="submit" color="secondary" variant="contained" size="large">Delete This Group</Button>
+                </form> 
+                
+                : 
+                <form onSubmit={_handleJoinGroup}>
+                    <input value={group.id} name="groupId" hidden></input>
+                    <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
+                </form>
+                }
+                {fireRedirect &&
+                    <Redirect 
+                        to={{
+                            pathname: '/groups',
+                        }}
+                    />}
             <br />
             <Typography variant="h6">Members</Typography>
             <div className={classes.groupsDiv}>
@@ -190,6 +210,7 @@ const GroupPage = () => {
             <div>
                 <Typography variant="h6">Comments</Typography>
             </div>
+            {group.Users.find(({id})=> id === user.sub) ?
             <Typography>
                 <form onSubmit={_handleAddComment} style={{color: '#93A1A1'}} noValidate autoComplete="off">
                     <TextField 
@@ -210,6 +231,12 @@ const GroupPage = () => {
                 </form>
                 <br />
             </Typography>
+            :
+            <>
+                <br /><Typography>
+                Join this group to be able to comment. </Typography>
+                <br />
+                </>}
             <div className={classes.groupsDiv}> 
                 <GridList  className={lWidth > 575 ? classes.gridList : classes.commentsMobile} cols={lWidth > 575 ? 2 : 1} cellHeight={'auto'} >
                 {(comments.length !== 0) ? (
@@ -229,7 +256,14 @@ const GroupPage = () => {
                                         subheader={moment(comment.createdAt).format('MMMM Do YYYY, h:mm a')}
                                     />
                                     <CardContent>
-                                        <Typography style={{color: '#002B36'}}>{comment.content}</Typography>
+                                        {comment.Books.length !==0 ? 
+                                        (
+                                            <>
+                                            <Link to={`${comment.Books[0].editionKey}`}><Typography variant="h4" color="secondary">{comment.Books[0].title}</Typography></Link>
+                                            <Typography style={{color: '#002B36'}}>{comment.content}</Typography>
+                                            </>
+                                        ) :
+                                        <Typography style={{color: '#002B36'}}>{comment.content}</Typography> }
                                     </CardContent>
                                 </Card>
                                 <br />

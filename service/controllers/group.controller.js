@@ -2,6 +2,7 @@ const db = require("../models");
 const Comment = db.comments;
 const Group = db.groups;
 const User = db.users;
+const Book = db.books;
 const userGroup = db.user_group
 const Op = db.Sequelize.Op;
 
@@ -137,7 +138,7 @@ exports.update = (req, res) => {
     };
 exports.delete = (req, res) => {
     const id = req.params.id;
-    
+
     Group.destroy({
         where: { id: id }
     })
@@ -215,7 +216,7 @@ exports.createComment = async (req, res) => {
 exports.findAllComments = async (req, res) => {
     const { groupId } = req.params;
     console.log(Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]}))
-    Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]})
+    Comment.findAll({ where: { GroupId: groupId }, include: [{model: Book}, {model:User}]})
         .then(data => {
             res.send(data);
         })
