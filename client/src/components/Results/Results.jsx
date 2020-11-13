@@ -52,7 +52,7 @@ const Results = (props) => {
     const [clicks, setClicks] = useState([])
     const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
-    const { data, query } = props.location.state;
+    const { data, query } = props.location;
     const { user } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
 

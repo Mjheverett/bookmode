@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from 'axios-https-proxy-fix'; 
 import { fade, makeStyles } from '@material-ui/core/styles';
+import { Link, Redirect } from 'react-router-dom';
 import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 // import moment from 'moment';
@@ -66,16 +67,21 @@ const BookPage = () => {
     const [book, setBook] = useState(null);
     const editionKey = useParams();
     const { user } = useAuth0();
-
+    const proxy = {
+        host: 'localhost',
+        port: 3000
+        };
     useEffect(() => {
-        console.log(editionKey)
-        axios.get(`https://openlibrary.org/works/${editionKey.editionKey}.json/`, { crossdomain: true })
+        console.log(editionKey.editionKey)
+        const url = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
+        axios.get(`http://localhost:3000/proxy?url=${url}`)
             .then(res => {
                 const data = res.data;
+                console.log(data)
                 setBook(data);
             })
             .catch(err => console.log(err));
-    }, [editionKey]);
+    }, [editionKey.editionKey]);
     const _handleAddLibrary = (title, author, imageURL, editionKey, reader) =>{
         console.log(title, author, imageURL, editionKey, reader)
         author = author.length >= 2 ? author.join(', ') : author[0]
@@ -107,10 +113,18 @@ const BookPage = () => {
             </>
         )
     }
-
+    const imgURL = `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
+            <img src={imgURL} alt="${book.covers[0]}" />
             <Typography variant="h2">{book.title}</Typography>
+            <Typography variant="h4">{!!book.description[0] ? book.description.split("(["&&"[")[0] : book.description.value}</Typography>
+            <Typography variant="overline">subjects: {book.subjects.map((subject)=>(
+                <Link to={{
+                    pathname:"/results",
+                    data: subject,
+                    query: 'subject'}}><span>{subject}, </span></Link>
+                ))}</Typography>
             {/* <br/>
             <Typography variant="h6">{boo}</Typography>
             <br/>
