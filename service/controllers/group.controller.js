@@ -195,11 +195,11 @@ exports.createComment = async (req, res) => {
         });
     
     };
-    
+
 exports.findAllComments = async (req, res) => {
     const { groupId } = req.params;
-    console.log(Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]}))
-    Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]})
+
+    Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}], order: [['createdAt', 'DESC']]})
         .then(data => {
             res.send(data);
         })
