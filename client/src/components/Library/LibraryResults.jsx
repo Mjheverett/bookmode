@@ -47,19 +47,25 @@ const LibraryResults = (props) => {
     const classes = useStyles();
     const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
-    const { search } = props.location.state;
+    const { search, shelfId } = props.location.state;
     const [anchorEl, setAnchorEl] = React.useState(null);
+    console.log("search", search);
+    console.log("shelf id", shelfId);
 
     useEffect(() => {
         (async function (){
-            await axios.get(`http://localhost:3000/library/search/${search}`)
+            const data = {
+                shelfId: shelfId,
+                search: search
+            }
+            await axios.get(`http://localhost:3000/library/search/${search}`, data)
                 .then(res => {
                     console.log("response", res);
                     const data = res.data;
                     setResults(data);
                 })
             })();
-    }, [search]);    
+    }, [search, shelfId]);    
     
     const handleClick = (event, popoverId) => {
         setPopoverId(popoverId);
@@ -89,7 +95,7 @@ const LibraryResults = (props) => {
                 <div className={classes.resultsDiv}>
                 <br/>
                     <GridList className={classes.gridList} cols={4} cellHeight={300} spacing={16}>
-                        {results.map((result) => {
+                        {/* {results.map((result) => {
                             return (
                             <GridListTile key={result.key}>
                                 <div width={'auto'} className={classes.div}>
@@ -148,7 +154,7 @@ const LibraryResults = (props) => {
                                 }
                             />
                             </GridListTile>
-                            )})}
+                            )})} */}
                     </GridList> 
                 </div>
             </Container>

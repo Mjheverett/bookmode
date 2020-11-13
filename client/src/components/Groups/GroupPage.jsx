@@ -118,7 +118,17 @@ const GroupPage = () => {
             groupId: group.id,
             userId: user.sub
         };
-        axios.post(`http://localhost:3000/groups/leave/${user.sub}`, data)
+        axios.delete(`http://localhost:3000/groups/${groupId.id}/${user.sub}`, data)
+            .then(res => console.log("leave group response", res))
+            .catch(err => console.log(err));
+    };
+    const _handleDeleteGroup = (e) => {
+        e.preventDefault();
+        const data = {
+            groupId: group.id,
+            userId: user.sub
+        };
+        axios.delete(`http://localhost:3000/groups/${groupId.id}/${user.sub}`, data)
             .then(res => console.log("leave group response", res))
             .catch(err => console.log(err));
     };
@@ -166,6 +176,16 @@ const GroupPage = () => {
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
             </form>
+            {(group.Users[0].id !== user.sub) ? 
+                <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
+                <input value={group.id} name="groupId" hidden></input>
+                <Button type="submit" color="secondary" variant="contained" size="large">Leave This Group</Button>
+            </form>
+            :
+            <form style={{marginTop: '1rem'}} onSubmit={_handleDeleteGroup}>
+                <input value={group.id} name="groupId" hidden></input>
+                <Button type="submit" color="secondary" variant="contained" size="large">Delete This Group</Button>
+            </form>}
             <br />
             <Typography variant="h6">Members</Typography>
             <div className={classes.membersDiv}>

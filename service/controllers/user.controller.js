@@ -43,6 +43,7 @@ exports.create = async (req, res) => {
     res.send(user);
     
     };
+
 exports.findAll = (req, res) => {
     User.findAll()
         .then(data => {
@@ -55,6 +56,7 @@ exports.findAll = (req, res) => {
             });
         });
     };
+
 exports.findOne = (req, res) => {
     const { userId } = req.params;
     User.findByPk(userId)
@@ -68,6 +70,7 @@ exports.findOne = (req, res) => {
             });
         });
     };
+
 exports.update = (req, res) => {
     const { userId } = req.params;
     console.log('this is a req.body:', req.body)
@@ -112,6 +115,7 @@ exports.update = (req, res) => {
                     });
                 });}
         }
+        
 exports.delete = (req, res) => {
     const { userId } = req.params;
     

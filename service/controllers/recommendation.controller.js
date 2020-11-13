@@ -24,7 +24,8 @@ exports.create = async (req, res) => {
                         err.message || "Some error occurred while creating the recommendation."
                 });
             })
-        }
+        };
+
 exports.findAllSent = async (req, res) => {
     console.log('this is what is getting sent in as the req.body: ', req.params)
     const { userId } = req.params;
@@ -40,6 +41,7 @@ exports.findAllSent = async (req, res) => {
             });
         });
     };
+    
 exports.findAllReceived = async (req, res) => {
     const { userId } = req.params;
     await Recommendation.findAll({ where: { receiverId: userId }, include: [{model: Book}, 'sender']})
