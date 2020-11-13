@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '4px',
         width: 'auto',
     },
-    groupsDiv:{
+    membersDiv:{
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
@@ -24,7 +24,16 @@ const useStyles = makeStyles((theme) => ({
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
-        // maxWidth: "600px",
+        maxWidth: "550px",
+    },
+    commentsDiv:{
+        position: 'relative',
+        borderRadius: '5px',
+        background: '#768B91',
+        textAlign: 'center',
+        color: '#002B36',
+        padding: '0.8rem 1.6rem',
+        marginBottom: '2rem',
     },
     gridList: {
         flexWrap: 'wrap',
@@ -37,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         width: '100%',
         maxWidth: "600px",
+        color: '#93A1A1',
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
@@ -156,13 +166,9 @@ const GroupPage = () => {
                 <input value={group.id} name="groupId" hidden></input>
                 <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
             </form>
-            <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
-                <input value={group.id} name="groupId" hidden></input>
-                <Button type="submit" color="secondary" variant="contained" size="large">Leave This Group</Button>
-            </form>
             <br />
             <Typography variant="h6">Members</Typography>
-            <div className={classes.groupsDiv}>
+            <div className={classes.membersDiv}>
                 <GridList className={classes.gridList} cols={1} cellHeight={'auto'}>
                     {(group.Users.length !== 0) ? (group.Users.map(user => (
                         <GridListTile cellHeight={'auto'} key={user.id}>
@@ -205,18 +211,17 @@ const GroupPage = () => {
                 <Typography variant="h6">Comments</Typography>
             </div>
             <Typography>
-                <form onSubmit={_handleAddComment} style={{color: '#93A1A1'}} noValidate autoComplete="off">
+                <form onSubmit={_handleAddComment} noValidate autoComplete="off">
                     <TextField 
                         id="filled-multiline-static"
                         className={classes.textField}
-                        placeholder="New Comment"
                         multiline
                         rows={4}
                         defaultValue="Default Value"
                         variant="filled" 
                         onChange={(event) => _handleComment(event.target.value)}
                         value={newComment}
-                        style={{color: '#93A1A1'}}
+                        // style={{color: '#fff'}}
                     />
                     <br />
                     <br />
@@ -224,7 +229,7 @@ const GroupPage = () => {
                 </form>
                 <br />
             </Typography>
-            <div className={classes.groupsDiv}> 
+            <div className={classes.commentsDiv}> 
                 <GridList  className={lWidth > 575 ? classes.gridList : classes.commentsMobile} cols={1} cellHeight={'auto'} >
                 {(comments.length !== 0) ? (
                     comments.map((comment) => {
@@ -257,7 +262,10 @@ const GroupPage = () => {
                 </GridList>
                 
             </div>
-            {/* <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography> */}
+            <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
+                <input value={group.id} name="groupId" hidden></input>
+                <Button type="submit" color="secondary" variant="outlined" size="large">Leave This Group</Button>
+            </form>
         </Container>
     )
 }
