@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -123,13 +122,15 @@ const Library = () => {
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
-// Create Shelf Functions
+
+    // Create Shelf Functions
     const _handleNameChange = (data) => {
         setShelfName(data);
     };
     const _handleDescChange = (data) => {
         setShelfDescription(data);
     };
+
     //function for adding the shelf named/described above
     const _handleCreateShelf = (e) => {
         e.preventDefault();
@@ -150,8 +151,7 @@ const Library = () => {
         setShelfDescription('');
     }
 
-// Library Search Functions
-
+    // Library Search Functions
     const _handleChange = (search) => {
         console.log(search)
         setSearch(search);
@@ -161,15 +161,15 @@ const Library = () => {
         setRedirect(true)
     };
 
-// Render Loading while pulling Library Info
-
+    // Render Loading while pulling Library Info
     if (library === null) {
         return (
             <>
                 <Typography variant="h6">Loading</Typography>
             </>
         )
-    }
+    };
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -293,13 +293,13 @@ const Library = () => {
                             </div>
                             <br />
                         </GridListTile>)})) : (
-                        <Typography>No books!!</Typography>
+                        <Typography>Add a book using the navbar search feature!</Typography>
                         )}
                     </GridList> 
                     </div>
                     <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
                     </div>))) : (
-                    <Typography>No Shelves!</Typography>
+                    <Typography>You don't have any shelves yet!</Typography>
                 )}
             </Container> 
         </>
