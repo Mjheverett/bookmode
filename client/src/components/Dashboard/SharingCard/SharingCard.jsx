@@ -61,14 +61,31 @@ const SharingCard = () => {
     }, [user.sub]);
 
     // Finds screen width and updates the columns display
-    const width = window.screen.width;
-    const columns = width === 'xs' || width === 'sm' ? 1 : 2;
+    const columnsSize = () => {
+        const width = window.screen.width;
+        let columns = 0;
+        if (width >= '1100') {
+            columns = 4;
+        }  
+        else if (width >= '800') {
+            columns = 3;
+        }  
+        else if  (width >= '550') {
+            columns = 2;
+        }
+        else if (width < '550') {
+            columns = 1;
+        }
+        else {columns = 2;
+        }
+        return columns;
+    }
 
     return (
         <>
             <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Your Sharing</Link></Typography>
-                <GridList className={classes.gridList} cols={columns} cellHeight={'auto'}> 
+                <GridList className={classes.gridList} cols={columnsSize()} cellHeight={'auto'}> 
                 {received.length !== 0 ? (received.map(prop => (
                     <GridListTile cellHeight={'auto'}>
                     <br />

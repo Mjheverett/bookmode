@@ -32,6 +32,7 @@ const Dashboard = () => {
         )
     }
 
+
     return (
         <>
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
@@ -40,7 +41,7 @@ const Dashboard = () => {
                 <Typography variant="h6">Welcome, {userData.name}</Typography>
                 <br />
                 <GridList cols={1} cellHeight={'auto'}>
-                    <GridListTile cellHeight={'auto'}>
+                    <GridListTile cols={1} cellHeight={'auto'}>
                         <LibraryCard />
                     </GridListTile>
                     <GridListTile cellHeight={'auto'}>
