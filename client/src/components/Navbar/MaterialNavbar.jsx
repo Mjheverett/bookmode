@@ -213,6 +213,7 @@ export default function PrimarySearchAppBar() {
         const newSearch = data.replace(/\s+/g, '+');
         setSearch(newSearch);
         setRedirect(true)
+        setRedirect(false)
     };
     return (
         <div className={classes.grow}>
@@ -252,7 +253,8 @@ export default function PrimarySearchAppBar() {
                             <Redirect 
                                 to={{
                                     pathname: '/results',
-                                    state: {data: search, query: query}
+                                    data: search, 
+                                    query: query
                                 }}
                             />
                         )}

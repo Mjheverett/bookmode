@@ -21,5 +21,7 @@ module.exports = app => {
     router.post("/comments/add/:groupId", groups.createComment);
     // Get all comments for a group
     router.get("/comments/:groupId", groups.findAllComments);
+    //Delete user in a specific group (aka leave a group)
+    router.delete("/:id/:userid", groups.deleteUserfromGroup);
     app.use('/groups', router);
     };

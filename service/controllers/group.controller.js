@@ -2,6 +2,7 @@ const db = require("../models");
 const Comment = db.comments;
 const Group = db.groups;
 const User = db.users;
+const userGroup = db.user_group
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
@@ -161,6 +162,29 @@ exports.delete = (req, res) => {
         .catch(err => {
         res.status(500).send({
             message: "Could not delete Shelf with id=" + id
+        });
+        });
+    };
+exports.deleteUserfromGroup = (req, res) => {
+    const {id, userid} = req.params;
+    console.log(req.params)
+    userGroup.destroy({
+        where: { GroupId: id, UserId: userid}
+    })
+        .then(num => {
+        if (num == 1) {
+            res.send({
+            message: "User in group was deleted successfully!"
+            });
+        } else {
+            res.send({
+            message: `Cannot delete usergroup with id=${id}. Maybe usergroup was not found!`
+            });
+        }
+        })
+        .catch(err => {
+        res.status(500).send({
+            message: "Could not delete usergroup with id=" + id
         });
         });
     };
