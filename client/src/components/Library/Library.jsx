@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
@@ -85,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
 const Library = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
+    const [libraryId, setLibraryId] = useState();
     const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
@@ -99,7 +102,9 @@ const Library = () => {
             .then(res => {
                 const data = res.data;
                 // console.log('library data: ', data)
+                // console.log('library id', data[0].id)
                 setLibrary(data)
+                setLibraryId(data[0].id)
             });
         axios.get(url)
             .then(res => {
@@ -190,6 +195,10 @@ const Library = () => {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
+                            value={search}
+                            endAdornment={<InputAdornment position="end">
+                                <SearchIcon style={{color: '#93A1A1'}}/>
+                            </InputAdornment>}
                             inputProps={{ 'aria-label': 'search'}}
                             onChange={(event) => _handleChange(event.target.value)} 
                         />
@@ -198,7 +207,7 @@ const Library = () => {
                         <Redirect 
                             to={{
                                 pathname: `/library/results/${search}`,
-                                state: {search: search}
+                                state: {search: search, shelfId: libraryId}
                             }}
                         />
                     )}

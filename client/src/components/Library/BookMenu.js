@@ -297,9 +297,9 @@ const CustomizedMenus = (props) => {
           </MenuItem>
             <MenuItem>
                 <Link to={{
-                                    pathname: `${book.editionKey}`,
-                                    editionKey: book.editionKey
-                                }}>
+                  pathname: `${book.editionKey}`,
+                  editionKey: book.editionKey
+                }}>
                 <ListItemIcon
                 color="secondary">
                   <MenuBookIcon fontSize="small" />

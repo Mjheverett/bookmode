@@ -86,7 +86,7 @@ const SharingCard = () => {
             <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Your Sharing</Link></Typography>
                 <GridList className={classes.gridList} cols={columnsSize()} cellHeight={'auto'}> 
-                {(received.map(prop => (
+                {received.length !== 0 ? (received.map(prop => (
                     <GridListTile cellHeight={'auto'}>
                     <br />
                     <Card className={classes.card} >
@@ -106,9 +106,9 @@ const SharingCard = () => {
                     </Card>
                     <br />
                     </GridListTile>
-                )))} : (
+                ))) : (
                     <Typography>You're don't have any reccomendations yet! <Link style={{color: '#52781e'}} to="/sharing">Send one here.</Link></Typography>
-                )
+                )}
                 </GridList>
                 <br />
             </div>

@@ -213,6 +213,7 @@ export default function PrimarySearchAppBar() {
         const newSearch = data.replace(/\s+/g, '+');
         setSearch(newSearch);
         setRedirect(true)
+        setRedirect(false)
     };
     return (
         <div className={classes.grow}>
@@ -242,19 +243,18 @@ export default function PrimarySearchAppBar() {
                                 }}
                                 value={data}
                                 endAdornment={<InputAdornment position="end">
-                                <SearchIcon style={{color: '#93A1A1'}}/>
-                            </InputAdornment>}
+                                    <SearchIcon style={{color: '#93A1A1'}}/>
+                                </InputAdornment>}
                                 inputProps={{ 'aria-label': 'search'}}
                                 onChange={(event) => _handleChange(event.target.value)}
-                                
                             />
-                            
                         </form>
                         {fireRedirect && data && (
                             <Redirect 
                                 to={{
                                     pathname: '/results',
-                                    state: {data: search, query: query}
+                                    data: search, 
+                                    query: query
                                 }}
                             />
                         )}
