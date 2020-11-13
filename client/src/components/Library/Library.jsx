@@ -84,6 +84,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const columnsSize = () => {
+    const width = window.screen.width;
+    let columns = 0;
+    if (width >= '1100') {
+        columns = 4;
+    }  
+    else if (width >= '815') {
+        columns = 3;
+    }  
+    else if  (width >= '530') {
+        columns = 2;
+    }
+    else if (width < '530') {
+        columns = 1;
+    } 
+    else {columns = 2;
+    }
+    return columns;
+}
+
 const Library = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
@@ -258,7 +278,7 @@ const Library = () => {
                     <Typography variant="h6" key={shelf.id}>{shelf.shelfName}</Typography>
                     <br />
                     <div className={classes.libraryDiv}>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                    <GridList className={classes.gridList} cols={shelf.Books.length !== 0 ?columnsSize() : 1} cellHeight={'auto'}>
                         {(shelf.Books.length !== 0) ? (shelf.Books.slice(0).reverse().map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
