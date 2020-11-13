@@ -216,9 +216,6 @@ const Library = () => {
                                 input: classes.inputInput,
                             }}
                             value={search}
-                            endAdornment={<InputAdornment position="end">
-                                <SearchIcon style={{color: '#93A1A1'}}/>
-                            </InputAdornment>}
                             inputProps={{ 'aria-label': 'search'}}
                             onChange={(event) => _handleChange(event.target.value)} 
                         />
