@@ -8,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
-import LightDarkToggle from '../LightDark/LightDarkToggle';
+
 
 const useStyles = makeStyles((theme) => ({
     typography: {
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('lg')]: {
-            width: '20ch',
+            width: '30ch',
         },
     },
     select: {
@@ -213,6 +213,7 @@ export default function PrimarySearchAppBar() {
         const newSearch = data.replace(/\s+/g, '+');
         setSearch(newSearch);
         setRedirect(true)
+        setRedirect(false)
     };
     return (
         <div className={classes.grow}>
@@ -241,20 +242,16 @@ export default function PrimarySearchAppBar() {
                                     input: classes.inputInput,
                                 }}
                                 value={data}
-                                endAdornment={<InputAdornment position="end">
-                                <SearchIcon style={{color: '#93A1A1'}}/>
-                            </InputAdornment>}
                                 inputProps={{ 'aria-label': 'search'}}
                                 onChange={(event) => _handleChange(event.target.value)}
-                                
                             />
-                            
                         </form>
                         {fireRedirect && data && (
                             <Redirect 
                                 to={{
                                     pathname: '/results',
-                                    state: {data: search, query: query}
+                                    data: search, 
+                                    query: query
                                 }}
                             />
                         )}
@@ -292,7 +289,7 @@ export default function PrimarySearchAppBar() {
                             <MoreIcon />
                         </IconButton>
                     </div>
-                    <LightDarkToggle  />    
+                      
                 </Toolbar>
                 
             </AppBar>

@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',

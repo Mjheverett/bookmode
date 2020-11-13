@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -52,7 +51,7 @@ const Results = (props) => {
     const [clicks, setClicks] = useState([])
     const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
-    const { data, query } = props.location.state;
+    const { data, query } = props.location;
     const { user } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
 

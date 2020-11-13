@@ -12,10 +12,9 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
-        padding: '0.8rem 1.6rem',
+        padding: '1.6rem',
         marginBottom: '2rem',
     },
     gridList: {
@@ -61,13 +60,33 @@ const SharingCard = () => {
         });
     }, [user.sub]);
 
+    // Finds screen width and updates the columns display
+    const columnsSize = () => {
+        const width = window.screen.width;
+        let columns = 0;
+        if (width >= '1100') {
+            columns = 4;
+        }  
+        else if (width >= '800') {
+            columns = 3;
+        }  
+        else if  (width >= '550') {
+            columns = 2;
+        }
+        else if (width < '550') {
+            columns = 1;
+        }
+        else {columns = 2;
+        }
+        return columns;
+    }
 
     return (
         <>
             <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Your Sharing</Link></Typography>
-                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}> 
-                {(received.map(prop=>(
+                <GridList className={classes.gridList} cols={columnsSize()} cellHeight={'auto'}> 
+                {received.length !== 0 ? (received.map(prop => (
                     <GridListTile cellHeight={'auto'}>
                     <br />
                     <Card className={classes.card} >
@@ -87,8 +106,11 @@ const SharingCard = () => {
                     </Card>
                     <br />
                     </GridListTile>
-                    )))}
+                ))) : (
+                    <Typography>You're don't have any reccomendations yet! <Link style={{color: '#52781e'}} to="/sharing">Send one here.</Link></Typography>
+                )}
                 </GridList>
+                <br />
             </div>
         </>
     )

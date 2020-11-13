@@ -5,6 +5,8 @@ module.exports = app => {
     router.post("/add/:userId", shelves.create);
     // Retrieve all shelves
     router.get("/:userId", shelves.findAllUser);
+    // Search main library
+    router.get("/search/:search", shelves.search);
     // Add a single book to a shelf
     router.post("/:shelfId/:bookId", shelves.findOne);
     // Update a Shelf with id
