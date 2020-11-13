@@ -68,7 +68,7 @@ const BookPage = () => {
 
     useEffect(() => {
         console.log(editionKey)
-        axios.get(`https://openlibrary.org/works/${editionKey.editionKey}.json/`, { crossdomain: true })
+        axios.get(`http://openlibrary.org/works/${editionKey.editionKey}.json/`, { crossdomain: true })
             .then(res => {
                 const data = res.data;
                 setBook(data);

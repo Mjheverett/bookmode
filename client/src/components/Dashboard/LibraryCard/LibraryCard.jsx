@@ -38,7 +38,7 @@ const LibraryCard = () => {
         axios.get(`http://localhost:3000/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('The library is', data)
+                // console.log('The library is', data)
                 setLibrary(data);
             })
             .catch(err => console.log(err));
@@ -55,6 +55,11 @@ const LibraryCard = () => {
     // Finds screen width and updates the columns display
     const width = window.screen.width;
     const columns = width === 'xs' || width === 'sm' ? 1 : 2;
+    }
+
+    // console.log('lib 0 is', library);
+    // console.log('lib 0 Books are', library[0].Books)
+
 
     return (
         <>

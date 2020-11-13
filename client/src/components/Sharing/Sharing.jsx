@@ -44,19 +44,19 @@ const Sharing = () => {
 
     //Grabbing screen width on load. Pulling into comments classes.
     const lWidth = window.screen.width;
-    console.log("screen width is",lWidth);
+    // console.log("screen width is",lWidth);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/recommendations/sent/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('res.data.sent:', data)
+                // console.log('res.data.sent:', data)
                 setSent(data)
             });
         axios.get(`http://localhost:3000/recommendations/received/${user.sub}`)
         .then(res => {
             const data = res.data;
-            console.log('res.data.received:', data)
+            // console.log('res.data.received:', data)
             setReceived(data)
         });
     }, [user.sub]);
