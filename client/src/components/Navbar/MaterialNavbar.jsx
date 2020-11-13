@@ -205,6 +205,7 @@ export default function PrimarySearchAppBar() {
     );
     
     const _handleChange = (data) => {
+        setRedirect(false);
         setData(data);
     };
 
@@ -212,7 +213,7 @@ export default function PrimarySearchAppBar() {
         e.preventDefault();
         const newSearch = data.replace(/\s+/g, '+');
         setSearch(newSearch);
-        setRedirect(true)
+        setRedirect(true);
     };
     return (
         <div className={classes.grow}>
