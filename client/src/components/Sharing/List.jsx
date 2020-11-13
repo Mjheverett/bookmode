@@ -38,11 +38,11 @@ const BigList = (props) => {
   
   return (
     <>
-      <GridList  className={lWidth > 575 ? classes.gridList : classes.commentsMobile} cols={lWidth > 575 ? 2 : 1} cellHeight={'auto'} >
+      <GridList  className={lWidth > 730 ? classes.gridList : classes.commentsMobile} cols={lWidth > 730 ? 2 : 1} cellHeight={'auto'}>
         {!!sent ? (sent.map(prop=>(
         <GridListTile cellHeight={'auto'}>
           <br />
-          <Card className={classes.card} >
+          <Card className={classes.card}>
               <CardHeader
                   avatar={
                   <Avatar className={classes.avatar}>
