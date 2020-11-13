@@ -55,6 +55,9 @@ const LibraryCard = () => {
     // Finds screen width and updates the columns display
     const width = window.screen.width;
     const columns = width === 'xs' || width === 'sm' ? 1 : 2;
+    
+    // console.log('lib 0 is', library);
+    // console.log('lib 0 Books are', library[0].Books)
 
     return (
         <>

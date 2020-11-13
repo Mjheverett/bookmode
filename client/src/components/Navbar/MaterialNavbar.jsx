@@ -8,7 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
-import LightDarkToggle from '../LightDark/LightDarkToggle';
+
 
 const useStyles = makeStyles((theme) => ({
     typography: {
@@ -292,7 +292,7 @@ export default function PrimarySearchAppBar() {
                             <MoreIcon />
                         </IconButton>
                     </div>
-                    <LightDarkToggle  />    
+                      
                 </Toolbar>
                 
             </AppBar>
