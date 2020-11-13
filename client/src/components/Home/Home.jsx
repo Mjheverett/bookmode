@@ -15,7 +15,7 @@ const Home = () => {
                 <Grid container direction="row" justify="space-evenly" alignItems="center">
                     <Grid>
                         <Typography variant="h2">for book enthusiasts</Typography>
-                        <Typography variant="h6">a niche social app that is private, simple, and efficienct.</Typography>
+                        <Typography variant="h6">a niche social app that is private, simple, and efficient.</Typography>
                         <br />
                         <AuthenticationButton />
                         <SignupButton />

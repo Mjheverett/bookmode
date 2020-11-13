@@ -33,6 +33,7 @@ exports.create = async (req, res) => {
     const author = await Author.create({
             authorName: authorName
         })
+    await author.addBook(book)
     // let newReader=[]
     // if (!!newReader){
     //     newReader = await readerName.split(',')
