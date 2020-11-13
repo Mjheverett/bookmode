@@ -69,12 +69,35 @@ exports.findOne = async (req, res) => {
     };
 
 exports.search = async (req, res) => {
-    const { shelfId } = req.body;
+    const { shelfId, userId } = req.body;
 
-    const shelf = await Shelf.findOne({where : { id : shelfId }})
-    console.log(shelf)
-    
-    
+    await Shelf.findAll({ 
+        where: {
+            id: shelfId
+        },
+        include: [{
+            model: User, 
+            where: { 
+                id: userId
+            }},
+            {
+                model: Book, 
+                include: [
+                    {model: Author},
+                    {model: Reader}
+                ]
+            }
+        ], 
+        order: [['id', 'ASC']]})
+        .then(data => {
+                res.send(data);
+            })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving shelves."
+            });
+        });
     };
 
 exports.update = (req, res) => {

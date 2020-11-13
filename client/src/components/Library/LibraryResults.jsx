@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, GridListTileBar, Typography, Popover, IconButton }  from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
@@ -49,16 +49,18 @@ const LibraryResults = (props) => {
     const [results, setResults] = useState(null);
     const { search, shelfId } = props.location.state;
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const { user } = useAuth0();
     console.log("search", search);
     console.log("shelf id", shelfId);
 
     useEffect(() => {
         (async function (){
             const data = {
-                shelfId: shelfId,
-                search: search
+                shelfId: 2,
+                search: search,
+                userId: user.sub
             }
-            await axios.get(`http://localhost:3000/library/search/${search}`, data)
+            axios.get(`http://localhost:3000/library/search/${search}`, data)
                 .then(res => {
                     console.log("response", res);
                     const data = res.data;
