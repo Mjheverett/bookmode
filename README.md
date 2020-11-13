@@ -47,7 +47,10 @@ This project was built using:
 * Material UI
 
 <!-- Installation -->
-## How to get started
+## How to Get Started
+
+### Docker Environment
+Bookmode requires the Bookmode and Bookmode-api images to deploy, as well as a Postgres, SQLite, or MySQL database.
 
 ### Dev Environment
 
