@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        boxShadow: 'inset -12px -12px 30px #A5C3CB, inset 12px 12px 30px #475357',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -45,19 +44,19 @@ const Sharing = () => {
 
     //Grabbing screen width on load. Pulling into comments classes.
     const lWidth = window.screen.width;
-    console.log("screen width is",lWidth);
+    // console.log("screen width is",lWidth);
 
     useEffect(() => {
         axios.get(`http://localhost:3000/recommendations/sent/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                console.log('res.data.sent:', data)
+                // console.log('res.data.sent:', data)
                 setSent(data)
             });
         axios.get(`http://localhost:3000/recommendations/received/${user.sub}`)
         .then(res => {
             const data = res.data;
-            console.log('res.data.received:', data)
+            // console.log('res.data.received:', data)
             setReceived(data)
         });
     }, [user.sub]);
