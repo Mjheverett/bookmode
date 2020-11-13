@@ -19,6 +19,7 @@ exports.findAll = (req, res) => {
             });
         });
     };
+
 exports.findAllUser = async (req, res) => {
     const { userId } = req.params;
     const userInstance = await User.findOne({where: { id: userId}})
@@ -35,6 +36,7 @@ exports.findAllUser = async (req, res) => {
             });
         });
     };
+
 exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
@@ -67,6 +69,7 @@ exports.create = async (req, res) => {
         });
     
     };
+
 exports.joinOne = async (req, res) => {
     const { userId } = req.params;
     const { groupId } = req.body;
@@ -84,6 +87,7 @@ exports.joinOne = async (req, res) => {
             });
         });
     };
+
 exports.leaveOne = async (req, res) => {
     const { userId } = req.params;
     const { groupId } = req.body;
@@ -102,6 +106,7 @@ exports.leaveOne = async (req, res) => {
             });
         });
     };
+
 exports.findOne = (req, res) => {
     const { groupId } = req.params;
     Group.findOne({ where: { id: groupId }, include: [{model: User}]})
@@ -114,6 +119,7 @@ exports.findOne = (req, res) => {
             });
         });
     };
+
 exports.update = (req, res) => {
     const id = req.params.id;
     Group.update(req.body, {
@@ -136,6 +142,7 @@ exports.update = (req, res) => {
         });
         });
     };
+
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -213,10 +220,10 @@ exports.createComment = async (req, res) => {
         });
     
     };
+
 exports.findAllComments = async (req, res) => {
     const { groupId } = req.params;
-    console.log(Comment.findAll({ where: { GroupId: groupId }, include: [{model: User}]}))
-    Comment.findAll({ where: { GroupId: groupId }, include: [{model: Book}, {model:User}]})
+    Comment.findAll({ where: { GroupId: groupId }, include: [{model: Book}, {model:User}], order: [['createdAt', 'DESC']]})
         .then(data => {
             res.send(data);
         })

@@ -52,19 +52,38 @@ const LibraryCard = () => {
         )
     };
 
-    // Finds screen width and updates the columns display
-    const width = window.screen.width;
-    const columns = width === 'xs' || width === 'sm' ? 1 : 2;
     
-    // console.log('lib 0 is', library);
-    // console.log('lib 0 Books are', library[0].Books)
+    // Finds screen width and updates the columns display
+    const columnsSize = () => {
+        const width = window.screen.width;
+        let columns = 0;
+        if (width >= '1100') {
+            columns = 5;
+        }  
+        else if (width >= '800') {
+            columns = 4;
+        }  
+        else if  (width >= '600') {
+            columns = 3;
+        }
+        else if (width >= '450') {
+            columns = 2;
+        } 
+        else if (width < '450') {
+            columns = 1;
+        }
+        else {columns = 2;
+        }
+        return columns;
+    }
+    
 
     return (
         <>
             {(library.length !== 0) ?  
                 <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography} key={library[0].id}><Link className={classes.link} to="/library">Your Main Library</Link></Typography>
-                    <GridList className={classes.gridList} cols={columns} cellHeight={'auto'}> 
+                    <GridList className={classes.gridList} cols={library[0].Books.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}> 
                         {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>

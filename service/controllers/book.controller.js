@@ -21,6 +21,7 @@ exports.findAll = (req, res) => {
             });
         });
     };
+
 exports.create = async (req, res) => {
     //Validate request
     console.log('this is what is getting sent in as the req.body: ', req.body)
@@ -55,7 +56,8 @@ exports.create = async (req, res) => {
                     err.message || "Some error occurred while creating the book."
             });
         })
-    }
+    };
+
 exports.findOne = (req, res) => {
     const id = req.params.id;
     Book.findByPk(id)
@@ -68,6 +70,7 @@ exports.findOne = (req, res) => {
         });
         });
     };
+    
 exports.update = (req, res) => {
     const id = req.params.id;
     Book.update(req.body, {
@@ -90,6 +93,7 @@ exports.update = (req, res) => {
         });
         });
     };
+    
 exports.delete = (req, res) => {
     const id = req.params.id;
     

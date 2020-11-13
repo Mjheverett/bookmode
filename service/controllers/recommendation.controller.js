@@ -63,6 +63,7 @@ exports.findAllSent = async (req, res) => {
             });
         });
     };
+    
 exports.findAllReceived = async (req, res) => {
     const { userId } = req.params;
     await Recommendation.findAll({ where: { receiverId: userId }, include: [{model: Book}, 'sender']})

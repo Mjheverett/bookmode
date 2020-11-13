@@ -12,11 +12,22 @@ const useStyles = makeStyles((theme) => ({
         color: 'primary',
     },
     groupBar: {
-        background: '#52781e',
         margin: theme.spacing(2),
         padding: theme.spacing(2),
+        borderRadius: '4px',
+        width: 'auto',
     },
-    groupsDiv:{
+    membersDiv:{
+        position: 'relative',
+        borderRadius: '5px',
+        background: '#768B91',
+        textAlign: 'center',
+        color: '#002B36',
+        padding: '0.8rem 1.6rem',
+        marginBottom: '2rem',
+        maxWidth: "550px",
+    },
+    commentsDiv:{
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
@@ -26,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '2rem',
     },
     gridList: {
-        flexWrap: 'nowrap',
+        flexWrap: 'wrap',
         transform: 'translateZ(0)',
     },
     margin: {
@@ -36,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         width: '100%',
         maxWidth: "600px",
+        color: '#93A1A1',
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
@@ -45,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: '#52781e',
     },
+    avatarAdmin: {
+        backgroundColor: '#244B00',
+    },
     card: {
         width: 'auto',
         margin: theme.spacing(2),
@@ -52,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: fade(theme.palette.common.white, 0.15),
         color: '#002B36',
         textAlign: 'left',
+        fontSize: '1rem',
     },
     commentsMobile: {
         display: 'inlineBlock',
@@ -193,14 +209,39 @@ const GroupPage = () => {
                     />}
             <br />
             <Typography variant="h6">Members</Typography>
-            <div className={classes.groupsDiv}>
-                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+            <div className={classes.membersDiv}>
+                <GridList className={classes.gridList} cols={1} cellHeight={'auto'}>
                     {(group.Users.length !== 0) ? (group.Users.map(user => (
-                        <GridListTile className={classes.groupBar} cellHeight={'auto'} key={user.id}>
-                        <Typography variant="h6" style={{color: '#fff'}}>{user.name}</Typography>
+                        <GridListTile cellHeight={'auto'} key={user.id}>
                         {!!user.user_group.isAdmin ?
-                        <Typography style={{color: '#fff'}}>(admin)</Typography>
-                        : <Typography style={{color: '#fff'}}>(member)</Typography> }
+                        <>  
+                            <Card className={classes.card} style={{background: '#52781e'}}>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar className={classes.avatarAdmin}>
+                                            {user.name[0]}
+                                        </Avatar>
+                                    }
+                                        title={user.name}
+                                        subheader='Group Admin'
+                                />
+                            </Card>
+                        </>
+                        : 
+                        <>  
+                            <Card className={classes.card}>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar className={classes.avatar}>
+                                            {user.name[0]}
+                                        </Avatar>
+                                    }
+                                        title={user.name}
+                                        subheader='Member'
+                                />
+                            </Card>
+                        </>
+                        }
                     </GridListTile>
                     ))) : (
                         <Typography>You're not part of any groups!</Typography>
@@ -212,18 +253,17 @@ const GroupPage = () => {
             </div>
             {group.Users.find(({id})=> id === user.sub) ?
             <Typography>
-                <form onSubmit={_handleAddComment} style={{color: '#93A1A1'}} noValidate autoComplete="off">
+                <form onSubmit={_handleAddComment} noValidate autoComplete="off">
                     <TextField 
                         id="filled-multiline-static"
                         className={classes.textField}
-                        placeholder="New Comment"
                         multiline
                         rows={4}
                         defaultValue="Default Value"
                         variant="filled" 
                         onChange={(event) => _handleComment(event.target.value)}
                         value={newComment}
-                        style={{color: '#93A1A1'}}
+                        // style={{color: '#fff'}}
                     />
                     <br />
                     <br />
@@ -277,7 +317,10 @@ const GroupPage = () => {
                 </GridList>
                 
             </div>
-            <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
+            <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
+                <input value={group.id} name="groupId" hidden></input>
+                <Button type="submit" color="secondary" variant="outlined" size="large">Leave This Group</Button>
+            </form>
         </Container>
     )
 }

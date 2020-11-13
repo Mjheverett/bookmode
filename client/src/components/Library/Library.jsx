@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
@@ -82,9 +84,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const columnsSize = () => {
+    const width = window.screen.width;
+    let columns = 0;
+    if (width >= '1100') {
+        columns = 4;
+    }  
+    else if (width >= '815') {
+        columns = 3;
+    }  
+    else if  (width >= '530') {
+        columns = 2;
+    }
+    else if (width < '530') {
+        columns = 1;
+    } 
+    else {columns = 2;
+    }
+    return columns;
+}
+
 const Library = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
+    const [libraryId, setLibraryId] = useState();
     const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
@@ -100,7 +123,9 @@ const Library = () => {
             .then(res => {
                 const data = res.data;
                 // console.log('library data: ', data)
+                // console.log('library id', data[0].id)
                 setLibrary(data)
+                setLibraryId(data[0].id)
             });
         axios.get(url)
             .then(res => {
@@ -197,6 +222,7 @@ const Library = () => {
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
+                            value={search}
                             inputProps={{ 'aria-label': 'search'}}
                             onChange={(event) => _handleChange(event.target.value)} 
                         />
@@ -205,7 +231,7 @@ const Library = () => {
                         <Redirect 
                             to={{
                                 pathname: `/library/results/${search}`,
-                                state: {search: search}
+                                state: {search: search, shelfId: libraryId}
                             }}
                         />
                     )}
@@ -259,7 +285,7 @@ const Library = () => {
                     <Typography variant="h6" key={shelf.id}>{shelf.shelfName}</Typography>
                     <br />
                     <div className={classes.libraryDiv}>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                    <GridList className={classes.gridList} cols={shelf.Books.length !== 0 ?columnsSize() : 1} cellHeight={'auto'}>
                         {(shelf.Books.length !== 0) ? (shelf.Books.slice(0).reverse().map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
