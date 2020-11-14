@@ -85,7 +85,7 @@ const SharingCard = () => {
         <>
             <div className={classes.dashboardDiv}>
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Your Sharing</Link></Typography>
-                <GridList className={classes.gridList} cols={columnsSize()} cellHeight={'auto'}> 
+                <GridList className={classes.gridList} cols={received.length !==0 ? columnsSize() : 1} cellHeight={'auto'}> 
                 {received.length !== 0 ? (received.map(prop => (
                     <GridListTile cellHeight={'auto'}>
                     <br />

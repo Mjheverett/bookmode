@@ -4,6 +4,7 @@ import { Card, CardHeader, GridList, GridListTile, CardContent } from '@material
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
+import { Link, Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -37,11 +38,11 @@ const BigList = (props) => {
   
   return (
     <>
-      <GridList  className={lWidth > 575 ? classes.gridList : classes.commentsMobile} cols={lWidth > 575 ? 2 : 1} cellHeight={'auto'} >
+      <GridList  className={lWidth > 730 ? classes.gridList : classes.commentsMobile} cols={lWidth > 730 ? 2 : 1} cellHeight={'auto'}>
         {!!sent ? (sent.map(prop=>(
         <GridListTile cellHeight={'auto'}>
           <br />
-          <Card className={classes.card} >
+          <Card className={classes.card}>
               <CardHeader
                   avatar={
                   <Avatar className={classes.avatar}>
@@ -52,13 +53,15 @@ const BigList = (props) => {
                   subheader={moment(prop.createdAt).format('MMMM Do YYYY, h:mm a')}
               />
               <CardContent>
-                  <Typography variant="h6" style={{color: '#002B36'}}>{prop.Book.title}</Typography>
+                  <Link to={`${prop.Book.editionKey}`}><Typography color="secondary" variant="h6">{prop.Book.title}</Typography></Link>
                   <Typography style={{color: '#002B36'}}>{prop.comment}</Typography>
               </CardContent>
           </Card>
           <br />
           </GridListTile>
-        ))): (received.map(prop=>(
+        )))
+        : 
+        (received.map(prop=>(
         <GridListTile cellHeight={'auto'}>
           <br />
           <Card className={classes.card} >
@@ -72,7 +75,7 @@ const BigList = (props) => {
                   subheader={moment(prop.createdAt).format('MMMM Do YYYY, h:mm a')}
               />
               <CardContent>
-                  <Typography variant="h6" style={{color: '#002B36'}}>{prop.Book.title}</Typography>
+              <Link to={`${prop.Book.editionKey}`}><Typography color="secondary" variant="h6">{prop.Book.title}</Typography></Link>
                   <Typography style={{color: '#002B36'}}>{prop.comment}</Typography>
               </CardContent>
           </Card>

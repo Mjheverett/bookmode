@@ -84,6 +84,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const columnsSize = () => {
+    const width = window.screen.width;
+    let columns = 0;
+    if (width >= '1100') {
+        columns = 4;
+    }  
+    else if (width >= '815') {
+        columns = 3;
+    }  
+    else if  (width >= '530') {
+        columns = 2;
+    }
+    else if (width < '530') {
+        columns = 1;
+    } 
+    else {columns = 2;
+    }
+    return columns;
+}
+
 const Library = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
@@ -94,6 +114,7 @@ const Library = () => {
     const [search, setSearch] = useState();
     const [fireRedirect, setRedirect] = useState(false);
     const [users, setUsers] = useState([]);
+    const [groups, setGroups] = useState([]);
     const { user } = useAuth0();
     const url = `http://localhost:3000/users`
     //gets shelves and respective books/authors
@@ -111,6 +132,12 @@ const Library = () => {
                 const data = res.data;
                 // console.log('res.data:', data)
                 setUsers(data)
+            });
+        axios.get(`http://localhost:3000/groups/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                // console.log('res.data:', data)
+                setGroups(data)
             });
     }, [user.sub, url]);
 
@@ -258,7 +285,7 @@ const Library = () => {
                     <Typography variant="h6" key={shelf.id}>{shelf.shelfName}</Typography>
                     <br />
                     <div className={classes.libraryDiv}>
-                    <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
+                    <GridList className={classes.gridList} cols={shelf.Books.length !== 0 ?columnsSize() : 1} cellHeight={'auto'}>
                         {(shelf.Books.length !== 0) ? (shelf.Books.slice(0).reverse().map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
@@ -273,7 +300,7 @@ const Library = () => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <CustomizedMenus users={users} book={book} shelves={library.slice(1)}/>}
+                                    <CustomizedMenus users={users} groups={groups} book={book} shelves={library.slice(1)}/>}
                             />
                             <Typography>{book.title}</Typography>
                             <div>

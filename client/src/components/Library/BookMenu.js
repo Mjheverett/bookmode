@@ -39,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
   noLabel: {
     marginTop: theme.spacing(3),
   },
+  recommendDetails: {
+    color: '#52781e',
+    margin: '0, auto',
+    
+    
+  }
 }));
 
 function rand() {
@@ -108,7 +114,7 @@ const StyledMenu = withStyles({
 // }))(MenuItem);
 
 const CustomizedMenus = (props) => {
-  const {shelves, users, book} = props
+  const {shelves, users, book, groups} = props
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [modalStyle] = useState(getModalStyle);
@@ -117,7 +123,7 @@ const CustomizedMenus = (props) => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
- 
+  const [groupName, setGroupName] = useState([]);
   const [personName, setPersonName] = useState([]);
   const [content, setContent] = useState(null);
   const { user } = useAuth0();
@@ -126,6 +132,9 @@ const CustomizedMenus = (props) => {
 
   const handleChangeName = (event) => {
     setPersonName(event.target.value);
+  };
+  const handleChangeGroup = (event) => {
+    setGroupName(event.target.value);
   };
 
   const handleChangeContent = (event) => {
@@ -162,11 +171,16 @@ const CustomizedMenus = (props) => {
   const handleCreateRec= (e) => {
     e.preventDefault();
     setOpen(false);
+    console.log(personName)
+    console.log(groupName)
     const data = {
-        receiverName: personName[0],
+
+        receiverName: personName[0] || groupName[0],
         bookId: book.id,
         content: content,
-        senderId: user.sub
+        senderId: user.sub,
+        isGroup: !!groupName ? true : false
+
     };
     console.log(data)
     axios.post(`http://localhost:3000/recommendations/add`, data)
@@ -179,7 +193,7 @@ const CustomizedMenus = (props) => {
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Who would you like to recommend {book.title} to?</h2>
       <form onSubmit={e => handleCreateRec(e)}>
-        <InputLabel id="demo-mutiple-chip-label">Name</InputLabel>
+        <InputLabel id="demo-mutiple-chip-label">Send to individual(s)</InputLabel>
         <Select
           labelId="demo-mutiple-chip-label"
           id="demo-mutiple-chip"
@@ -199,6 +213,29 @@ const CustomizedMenus = (props) => {
           {users.map((user) => (
             <MenuItem key={user.name} value={user.name} style={getStyles(user.name, personName, theme)}>
               {user.name}
+            </MenuItem>
+          ))}
+        </Select>
+        <InputLabel id="demo-mutiple-chip-label">Send group(s)</InputLabel>
+        <Select
+          labelId="demo-mutiple-chip-label"
+          id="demo-mutiple-chip"
+          multiple
+          value={groupName}
+          onChange={handleChangeGroup}
+          input={<Input id="select-multiple-chip" />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} className={classes.chip} />
+              ))}
+            </div>
+          )}
+          MenuProps={MenuProps}
+        >
+          {groups.map((group) => (
+            <MenuItem key={group.groupName} value={group.groupName} style={getStyles(group.groupName, personName, theme)}>
+              {group.groupName}
             </MenuItem>
           ))}
         </Select>
@@ -279,7 +316,7 @@ const CustomizedMenus = (props) => {
       >
         <MoreVertIcon fontSize="large"/>
       </IconButton>
-      <StyledMenu
+      <StyledMenu className={classes.recommendDetails}
           anchorEl={mobileMoreAnchorEl}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           id={mobileMenuId}
@@ -288,26 +325,26 @@ const CustomizedMenus = (props) => {
           open={isMobileMenuOpen}
           onClose={handleMobileMenuClose}
       >
-          <MenuItem onClick={handleOpenModal}>
-            <ListItemIcon
+          <MenuItem onClick={handleOpenModal} className={classes.recommendDetails}>
+            <ListItemIcon style={{color: '#52781e'}}
             color="secondary">
               <SendIcon fontSize="small" />
             </ListItemIcon>
-              <ListItemText primary="Send recommendation" />
+              <ListItemText primary="Send Recommendation" />
           </MenuItem>
-            <MenuItem>
+            <MenuItem className={classes.recommendDetails}>
                 <Link to={{
                   pathname: `${book.editionKey}`,
                   editionKey: book.editionKey
                 }}>
                 <ListItemIcon
                 color="secondary">
-                  <MenuBookIcon fontSize="small" />
+                  <MenuBookIcon style={{color: '#52781e'}} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="See book details" />
+                <ListItemText style={{color: '#52781e'}} primary="See book details" />
                 </Link>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">
+            <MenuItem className={classes.recommendDetails} onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">
                 <IconButton
                     aria-label="account of current user"
                     color="secondary"

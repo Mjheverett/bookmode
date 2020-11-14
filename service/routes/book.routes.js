@@ -3,13 +3,13 @@ module.exports = app => {
         var router = require("express").Router();
     // Create a new Book
     router.post("/add/:userId", books.create);
-    // Retrieve all shelves
-    router.get("/", books.findAll);
-    // Retrieve a single Shelf with id
+    // Retrieve all books
+    router.get("/:key?", books.findAll);
+    // Retrieve a single book with id
     router.get("/:id", books.findOne);
-    // Update a Shelf with id
+    // Update a book with id
     router.put("/:id", books.update);
-    // Delete a Shelf with id
+    // Delete a book with id
     router.delete("/:id", books.delete);
     app.use('/results', router);
     };
