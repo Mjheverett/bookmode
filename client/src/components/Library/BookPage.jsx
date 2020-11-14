@@ -65,12 +65,8 @@ const BookPage = () => {
     const classes = useStyles();
     const [book, setBook] = useState(null);
     const editionKey = useParams();
+    const [details, setDetails] = useState(null);
     const { user } = useAuth0();
-    const proxy = {
-        host: 'localhost',
-        port: 3000
-        };
-        
     useEffect(() => {
         console.log(editionKey.editionKey)
         const url = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
@@ -81,7 +77,32 @@ const BookPage = () => {
                 setBook(data);
             })
             .catch(err => console.log(err));
+        axios.get(`http://localhost:3000/results?key=/works/${editionKey.editionKey}`)
+            .then(res => {
+                const data = res.data;
+                console.log(data)
+                setDetails(data);
+            })
+            .catch(err => console.log(err));
     }, [editionKey.editionKey]);
+     const getData = async () => {
+        console.log(editionKey.editionKey)
+        const url = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
+        await axios.get(`http://localhost:3000/proxy?url=${url}`)
+            .then(res => {
+                const data = res.data;
+                console.log(data)
+                setBook(data);
+            })
+            .catch(err => console.log(err));
+        await axios.get(`http://localhost:3000/results?title=${book.title}`)
+            .then(res => {
+                const data = res.data;
+                console.log(data)
+                setBook(data);
+            })
+            .catch(err => console.log(err));
+     }
     const _handleAddLibrary = (title, author, imageURL, editionKey, reader) =>{
         console.log(title, author, imageURL, editionKey, reader)
         author = author.length >= 2 ? author.join(', ') : author[0]
@@ -106,7 +127,7 @@ const BookPage = () => {
             .catch(err => console.log(err));
     };
     // return while waiting on axios, then render updated page
-    if (book === null) {
+    if (book === null || details === null) {
         return (
             <>
                 <Typography variant="h6">Loading</Typography>
@@ -116,45 +137,21 @@ const BookPage = () => {
     const imgURL = `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
-            <img src={imgURL} alt="${book.covers[0]}" />
+            <img src={imgURL} alt='${book.covers[0]}' />
             <Typography variant="h2">{book.title}</Typography>
-            <Typography variant="h4">{!!book.description[0] ? book.description.split("(["&&"[")[0] : book.description.value}</Typography>
+            <Typography variant="h4"><Link to={{
+                    pathname:"/results",
+                    data: details[0].Authors[0].authorName,
+                    query: 'author'}}>
+                        {details[0].Authors[0].authorName}
+                        </Link> </Typography>
+            <Typography variant="h5">{!!book.description[0] ? book.description.split("(["&&"["&&"(")[0] : book.description.value}</Typography>
             <Typography variant="overline">subjects: {book.subjects.map((subject)=>(
                 <Link to={{
                     pathname:"/results",
                     data: subject,
                     query: 'subject'}}><span>{subject}, </span></Link>
                 ))}</Typography>
-            {/* <br/>
-            <Typography variant="h6">{boo}</Typography>
-            <br/>
-            <form onSubmit={_handleAddLibrary}>
-                <input value={group.id} name="groupId" hidden></input>
-                <Button type="submit" color="secondary" variant="contained" size="large">Join This Group</Button>
-            </form>
-            <form style={{marginTop: '1rem'}} onSubmit={_handleDeleteBook}>
-                <input value={book.id} name="bookId" hidden></input>
-                <Button type="submit" color="secondary" variant="contained" size="large">Leave This Group</Button>
-            </form>
-            <br />
-            <Typography variant="h6">Members</Typography>
-            <div className={classes.groupsDiv}>
-                <GridList className={classes.gridList} cols={2} cellHeight={'auto'}>
-                    {(group.Users.length !== 0) ? (group.Users.map(user => (
-                        <GridListTile className={classes.groupBar} cellHeight={'auto'} key={user.id}>
-                        <Typography variant="h6" style={{color: '#fff'}}>{user.name}</Typography>
-                        {!!user.user_group.isAdmin ?
-                        <Typography style={{color: '#fff'}}>(admin)</Typography>
-                        : <Typography style={{color: '#fff'}}>(member)</Typography> }
-                    </GridListTile>
-                    ))) : (
-                        <Typography>You're not part of any groups!</Typography>
-                    )};
-                </GridList> 
-            </div>
-            <div>
-                <Typography variant="h6">Comments</Typography>
-            </div> */}
         </Container>
     )
 }

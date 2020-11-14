@@ -58,6 +58,8 @@ db.users.hasMany(db.recommendations);
 db.recommendations.belongsTo(db.users, {as: "sender"})
 db.recommendations.belongsTo(db.users, {as: "receiver"})
 db.books.hasMany(db.recommendations);
+db.comments.belongsToMany(db.books, { through: 'comments_books' });
+db.books.belongsToMany(db.comments, { through: 'comments_books' });
 db.groups.hasMany(db.comments);
 db.comments.belongsTo(db.groups);
 db.comments.belongsToMany(db.users, { through: 'user_comments' });

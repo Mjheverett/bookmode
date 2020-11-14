@@ -114,6 +114,7 @@ const Library = () => {
     const [search, setSearch] = useState();
     const [fireRedirect, setRedirect] = useState(false);
     const [users, setUsers] = useState([]);
+    const [groups, setGroups] = useState([]);
     const { user } = useAuth0();
     const url = `http://localhost:3000/users`
     //gets shelves and respective books/authors
@@ -131,6 +132,12 @@ const Library = () => {
                 const data = res.data;
                 // console.log('res.data:', data)
                 setUsers(data)
+            });
+        axios.get(`http://localhost:3000/groups/${user.sub}`)
+            .then(res => {
+                const data = res.data;
+                // console.log('res.data:', data)
+                setGroups(data)
             });
     }, [user.sub, url]);
 
@@ -293,7 +300,7 @@ const Library = () => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <CustomizedMenus users={users} book={book} shelves={library.slice(1)}/>}
+                                    <CustomizedMenus users={users} groups={groups} book={book} shelves={library.slice(1)}/>}
                             />
                             <Typography>{book.title}</Typography>
                             <div>
