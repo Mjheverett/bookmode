@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
     },
     gridList: {
-        flexWrap: 'nowrap',
+        flexWrap: 'wrap',
         transform: 'translateZ(0)',
     },
     typography: {
@@ -281,7 +281,7 @@ const Library = () => {
                     <GridList className={classes.gridList} cols={shelf.Books.length !== 0 ?columnsSize() : 1} cellHeight={'auto'}>
                         {(shelf.Books.length !== 0) ? (shelf.Books.slice(0).reverse().map(book => { 
                             return (
-                            <GridListTile cellHeight={'auto'} key={book.id}>
+                            <GridListTile cellHeight={'auto'} key={book.id} >
                             <br />
                             <div width={'auto'} className={classes.div}>
                                 <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
@@ -330,10 +330,10 @@ const Library = () => {
                         )}
                     </GridList> 
                     </div>
-                    <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
                     </div>))) : (
                     <Typography>You don't have any shelves yet!</Typography>
                 )}
+                <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
             </Container> 
         </>
     )
