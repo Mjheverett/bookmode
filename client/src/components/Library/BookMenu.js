@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
@@ -42,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
   recommendDetails: {
     color: '#52781e',
     margin: '0, auto',
-    
-    
   }
 }));
 
@@ -102,16 +99,6 @@ const StyledMenu = withStyles({
   />
 ));
 
-// const StyledMenuItem = withStyles((theme) => ({
-//   root: {
-//     '&:focus': {
-//       backgroundColor: theme.palette.primary.main,
-//       '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-//         color: theme.palette.common.white,
-//       },
-//     },
-//   },
-// }))(MenuItem);
 
 const CustomizedMenus = (props) => {
   const {shelves, users, book} = props
@@ -302,25 +289,25 @@ const CustomizedMenus = (props) => {
               <ListItemText primary="Send Recommendation" />
           </MenuItem>
             <MenuItem className={classes.recommendDetails}>
-                <Link to={{
-                  pathname: `${book.editionKey}`,
-                  editionKey: book.editionKey
-                }}>
                 <ListItemIcon
                 color="secondary">
                   <MenuBookIcon style={{color: '#52781e'}} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText style={{color: '#52781e'}} primary="See book details" />
-                </Link>
+                <ListItemText style={{color: '#52781e'}} primary="See book details"><Link to={{
+                  pathname: `${book.editionKey}`,
+                  editionKey: book.editionKey
+                }}/>
+                </ListItemText> 
             </MenuItem>
             <MenuItem className={classes.recommendDetails} onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">
                 <IconButton
                     aria-label="account of current user"
                     color="secondary"
+                    style={{paddingLeft: '0'}}
                 >
                     <CollectionsBookmarkIcon />
                 </IconButton>
-                <ListItemText primary="Sort book into a different shelf" />
+                <ListItemText style={{paddingLeft: '18px'}} primary="Sort book into a different shelf" />
             </MenuItem>
         </StyledMenu>
             {renderMenu}
