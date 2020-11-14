@@ -39,6 +39,12 @@ const useStyles = makeStyles((theme) => ({
   noLabel: {
     marginTop: theme.spacing(3),
   },
+  recommendDetails: {
+    color: '#52781e',
+    margin: '0, auto',
+    
+    
+  }
 }));
 
 function rand() {
@@ -279,7 +285,7 @@ const CustomizedMenus = (props) => {
       >
         <MoreVertIcon fontSize="large"/>
       </IconButton>
-      <StyledMenu
+      <StyledMenu className={classes.recommendDetails}
           anchorEl={mobileMoreAnchorEl}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           id={mobileMenuId}
@@ -288,26 +294,26 @@ const CustomizedMenus = (props) => {
           open={isMobileMenuOpen}
           onClose={handleMobileMenuClose}
       >
-          <MenuItem onClick={handleOpenModal}>
-            <ListItemIcon
+          <MenuItem onClick={handleOpenModal} className={classes.recommendDetails}>
+            <ListItemIcon style={{color: '#52781e'}}
             color="secondary">
               <SendIcon fontSize="small" />
             </ListItemIcon>
-              <ListItemText primary="Send recommendation" />
+              <ListItemText primary="Send Recommendation" />
           </MenuItem>
-            <MenuItem>
+            <MenuItem className={classes.recommendDetails}>
                 <Link to={{
                   pathname: `${book.editionKey}`,
                   editionKey: book.editionKey
                 }}>
                 <ListItemIcon
                 color="secondary">
-                  <MenuBookIcon fontSize="small" />
+                  <MenuBookIcon style={{color: '#52781e'}} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText primary="See book details" />
+                <ListItemText style={{color: '#52781e'}} primary="See book details" />
                 </Link>
             </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">
+            <MenuItem className={classes.recommendDetails} onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">
                 <IconButton
                     aria-label="account of current user"
                     color="secondary"

@@ -70,6 +70,7 @@ const BookPage = () => {
         host: 'localhost',
         port: 3000
         };
+        
     useEffect(() => {
         console.log(editionKey.editionKey)
         const url = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
