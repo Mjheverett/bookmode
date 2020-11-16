@@ -11,15 +11,14 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 import { Link } from 'react-router-dom';
-import { IconButton, MenuItem, Menu, Modal, Chip, Input, InputLabel, Select, TextField, Button } from '@material-ui/core';
+import { IconButton, MenuItem, Menu, Modal, Chip, Input, InputLabel, Select, TextField, Button, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: 400,
+    borderRadius: '4px',
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
   formControl: {
@@ -178,7 +177,8 @@ const CustomizedMenus = (props) => {
 //modal template to render 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Who would you like to recommend {book.title} to?</h2>
+      <Typography variant="h6">Who would you like to recommend <strong style={{color: '#52781e'}}>{book.title}</strong> to?</Typography>
+      <br />
       <form onSubmit={e => handleCreateRec(e)}>
         <InputLabel id="demo-mutiple-chip-label">Send to individual(s)</InputLabel>
         <Select
@@ -203,6 +203,8 @@ const CustomizedMenus = (props) => {
             </MenuItem>
           ))}
         </Select>
+        <br />
+        <br />
         <InputLabel id="demo-mutiple-chip-label">Send group(s)</InputLabel>
         <Select
           labelId="demo-mutiple-chip-label"
