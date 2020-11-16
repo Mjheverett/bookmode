@@ -142,6 +142,7 @@ const Groups = () => {
                 <br />
                 <GroupsList list={"User"} groups={userGroups} />
                 <GroupsList list={"All"} groups={allGroups} />
+                <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
             </Container>
         </>
     )
