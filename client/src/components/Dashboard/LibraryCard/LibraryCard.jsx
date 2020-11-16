@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        textAlign: 'center',
+        textAlign: 'left',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
         marginBottom: '2rem',
@@ -90,7 +90,7 @@ const LibraryCard = () => {
                             <div width={'auto'} className={classes.div}>
                                 <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
-                            <Link to ={book.editionKey} style={{color: '#002B36'}}><Typography variant="h6" >{book.title}</Typography></Link>
+                            <Link to ={book.editionKey} className={classes.link}><Typography variant="h6" >{book.title}</Typography></Link>
                             <Typography>{book.Authors[0].authorName}</Typography>
                             <br />
                             </GridListTile>
