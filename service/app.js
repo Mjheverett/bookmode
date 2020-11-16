@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(express.static("./public"));
 
+require('dotenv').config();
+
 require("./routes/book.routes")(app);
 require("./routes/group.routes")(app);
 require("./routes/recommendation.routes")(app);
