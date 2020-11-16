@@ -48,6 +48,7 @@ const LibraryResults = (props) => {
     const { search, shelfId } = props.location.state;
     // const [anchorEl, setAnchorEl] = React.useState(null);
     const { user } = useAuth0();
+    const url = process.env.REACT_APP_API_URL;
     console.log("search", search);
     console.log("shelf id", shelfId);
 
@@ -58,7 +59,7 @@ const LibraryResults = (props) => {
                 search: search,
                 userId: user.sub
             }
-            axios.get(`http://localhost:3000/library/search/${search}`, data)
+            axios.get(`${url}/library/search/${search}`, data)
                 .then(res => {
                     console.log("response", res);
                     const data = res.data;

@@ -136,10 +136,11 @@ export default function PrimarySearchAppBar() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
     const handleSelect = (event) => {
         setQuery(event.target.value);
-        };
-        
+    };
+    
     // Material UI - Menu
     const menuId = 'primary-search-account-menu';
     const renderMenu = (

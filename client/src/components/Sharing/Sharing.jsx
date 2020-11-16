@@ -41,15 +41,16 @@ const Sharing = () => {
     const [sent, setSent] = useState([]);
     const [received, setReceived] = useState([]);
     const { user } = useAuth0();
-    
+    const url = process.env.REACT_APP_API_URL;
+
     useEffect(() => {
-        axios.get(`http://localhost:3000/recommendations/sent/${user.sub}`)
+        axios.get(`${url}/recommendations/sent/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 // console.log('res.data.sent:', data)
                 setSent(data)
             });
-        axios.get(`http://localhost:3000/recommendations/received/${user.sub}`)
+        axios.get(`${url}/recommendations/received/${user.sub}`)
         .then(res => {
             const data = res.data;
             // console.log('res.data.received:', data)

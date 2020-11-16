@@ -9,6 +9,7 @@ import { Container, GridList, GridListTile, Typography }  from '@material-ui/cor
 const Dashboard = () => {
     const { user } = useAuth0();
     const [ userData, setUserData ] = useState(null);
+    const url = process.env.REACT_APP_API_URL;
     
     useEffect(() => {
         const data = {
@@ -16,7 +17,7 @@ const Dashboard = () => {
             name: user.name,
             email: user.email
         };
-        axios.post(`http://localhost:3000/users/add`, data)
+        axios.post(`${url}/users/add`, data)
             .then(res => {
                 const data = res.data;
                 setUserData(data);
