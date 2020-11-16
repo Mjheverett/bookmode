@@ -318,10 +318,6 @@ const GroupPage = () => {
                 </GridList>
                 
             </div>
-            <form style={{marginTop: '1rem'}} onSubmit={_handleLeaveGroup}>
-                <input value={group.id} name="groupId" hidden></input>
-                <Button type="submit" color="secondary" variant="outlined" size="large">Leave This Group</Button>
-            </form>
         </Container>
     )
 }

@@ -136,7 +136,6 @@ const Groups = () => {
                         </label>
                         <br/>
                         <Button type="submit" color="secondary" variant="contained" size="large">Create New Group</Button>
-                        <Button type="button" color="secondary" variant="outlined" size="large" className={classes.margin}>Cancel</Button>
                     </form>
                 </Typography>
                 <br />
