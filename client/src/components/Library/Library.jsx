@@ -107,7 +107,6 @@ const Library = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
     const [libraryId, setLibraryId] = useState();
-    const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
     const [search, setSearch] = useState();
@@ -134,7 +133,7 @@ const Library = () => {
                 const data = res.data;
                 setGroups(data)
             });
-    }, [user.sub, url, library]);
+    }, [user.sub, library]);
 
     // popover with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -144,7 +143,6 @@ const Library = () => {
  
     };
     const handleClose = () => {
-        setPopoverId(null);
         setAnchorEl(null);
     };
 
@@ -309,7 +307,7 @@ const Library = () => {
                             </div>
                             <br />
                         </GridListTile>)})) : (
-                        <Typography>Add a book using the navbar search feature!</Typography>
+                        <Typography>Add a book from your library by using the book menu!</Typography>
                         )}
                     </GridList> 
                     </div>

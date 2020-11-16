@@ -45,6 +45,7 @@ db.shelves = require('./shelves.model')(sequelize, Sequelize);
 db.users = require('./users.model')(sequelize, Sequelize);
 db.user_group = require('./user_group.model')(sequelize, Sequelize);
 db.comments = require('./comment.model')(sequelize, Sequelize);
+db.shelves_books = require('./shelves_books.model')(sequelize, Sequelize);
 
 db.authors.belongsToMany(db.books, { through: 'authors_books' });
 db.books.belongsToMany(db.authors, { through: 'authors_books' });

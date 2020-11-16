@@ -3,6 +3,7 @@ const Book = db.books;
 const Author = db.authors;
 const Shelf = db.shelves;
 const User = db.users;
+const shelvesBooks = db.shelves_books;
 const Reader = db.readers;
 
 const Op = db.Sequelize.Op;
@@ -97,7 +98,9 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
     const shelfId = req.params.shelfId
-    Book.destroy({ where: {id: id}, include: [{model: Shelf, where: {id: shelfId}}]})
+    console.log('this changed: ',req.params.id)
+    shelvesBooks.destroy({ where: { BookId: id, ShelfId: shelfId}
+    })
         .then(num => {
         if (num == 1) {
             res.send({

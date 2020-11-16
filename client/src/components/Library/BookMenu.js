@@ -114,15 +114,15 @@ const CustomizedMenus = (props) => {
   
   
 
-  const handleChangeName = (event) => {
-    setPersonName(event.target.value);
+  const _handleChangeName = (name) => {
+    setPersonName(name);
   };
   const handleChangeGroup = (event) => {
     setGroupName(event.target.value);
   };
 
-  const handleChangeContent = (event) => {
-    setContent(event.target.value);
+  const handleChangeContent = (comment) => {
+    setContent(comment);
   };
 
   // const handleChangeMultiple = (event) => {
@@ -137,7 +137,6 @@ const CustomizedMenus = (props) => {
   // };
 
   const handleClick = (bookId, shelfId) => {
-    console.log("bookId: ",bookId, "shelf id: ", shelfId);
   axios.post(`http://localhost:3000/library/${shelfId}/${bookId}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
@@ -152,18 +151,15 @@ const CustomizedMenus = (props) => {
     setOpen(false);
   };
 
-  const handleCreateRec= (e) => {
-    e.preventDefault();
+  const handleCreateRec= () => {
     setOpen(false);
     const data = {
-
         receiverName: personName[0] || groupName[0],
         bookId: book.id,
         content: content,
         senderId: user.sub,
-        isGroup: !!groupName ? true : false
-
-    };
+        isGroup: !!groupName[0] ? true : false
+    }
     axios.post(`http://localhost:3000/recommendations/add`, data)
         .then(res => console.log(res))
         .catch(err => console.log(err));
@@ -174,14 +170,14 @@ const CustomizedMenus = (props) => {
     <div style={modalStyle} className={classes.paper}>
       <Typography variant="h6">Who would you like to recommend <strong style={{color: '#52781e'}}>{book.title}</strong> to?</Typography>
       <br />
-      <form onSubmit={e => handleCreateRec(e)}>
+      <form onSubmit={handleCreateRec}>
         <InputLabel id="demo-mutiple-chip-label">Send to individual(s)</InputLabel>
         <Select
           labelId="demo-mutiple-chip-label"
           id="demo-mutiple-chip"
           multiple
           value={personName}
-          onChange={handleChangeName}
+          onChange={(event) => _handleChangeName(event.target.value)}
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => (
             <div className={classes.chips}>
@@ -218,13 +214,13 @@ const CustomizedMenus = (props) => {
           MenuProps={MenuProps}
         >
           {groups.map((group) => (
-            <MenuItem key={group.groupName} value={group.groupName} style={getStyles(group.groupName, personName, theme)}>
+            <MenuItem key={group.groupName} value={group.groupName} style={getStyles(group.groupName, groupName, theme)}>
               {group.groupName}
             </MenuItem>
           ))}
         </Select>
         <TextField
-          onChange={handleChangeContent}
+          onChange={(event) => handleChangeContent(event.target.value)}
           value={content}
           label="Add a comment?"
           id="standard-start-adornment"
@@ -247,10 +243,6 @@ const CustomizedMenus = (props) => {
     axios.delete(`http://localhost:3000/results/${book.id}/${book.shelves_books.ShelfId}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
-  axios.post(`http://localhost:3000/library/${book.shelves_books.ShelfId}/${book.id}`)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-  
   }
     
   const handleMobileMenuClose = () => {

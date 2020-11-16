@@ -3,7 +3,7 @@ const Comment = db.comments;
 const Group = db.groups;
 const User = db.users;
 const Book = db.books;
-const userGroup = db.user_group
+const userGroup = db.user_group;
 const Op = db.Sequelize.Op;
 
 exports.findAll = (req, res) => {
