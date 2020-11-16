@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        textAlign: 'center',
+        textAlign: 'left',
         color: '#002B36',
         padding: '1.6rem',
         marginBottom: '2rem',
