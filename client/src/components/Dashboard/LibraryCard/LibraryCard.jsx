@@ -10,6 +10,15 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
+        textAlign: 'left',
+        color: '#002B36',
+        padding: '0.8rem 1.6rem',
+        marginBottom: '2rem',
+    },
+    bookDiv:{
+        position: 'relative',
+        borderRadius: '5px',
+        background: '#768B91',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -81,28 +90,30 @@ const LibraryCard = () => {
 
     return (
         <>
+            <Typography variant="h6"><Link to="/library">Your Main Library</Link></Typography>
+            <br/>
             {(library.length !== 0) ?  
                 <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography} key={library[0].id}><Link className={classes.link} to="/library">Your Main Library</Link></Typography>
                     <GridList className={classes.gridList} cols={library[0].Books.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}> 
                         {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
                             return (
+                                <div className={classes.bookDiv}>
                             <GridListTile cellHeight={'auto'} key={book.id}>
-                            <br />
                             <div width={'auto'} className={classes.div}>
                                 <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
-                            <br />
-                            <Typography>{book.title}</Typography>
+                            <Link to ={book.editionKey} className={classes.link}><Typography variant="h6" >{book.title}</Typography></Link>
+                            <Typography>{book.Authors[0].authorName}</Typography>
                             <br />
                             </GridListTile>
+                            </div>
                         )})) : (
                         <Typography>You're don't have any books yet! <Link style={{color: '#52781e'}} to="/library">Start here.</Link></Typography>
                         )}
                     </GridList> 
                     <br />
                 </div> : (
-                <Typography>You're don't have any shelves yet!</Typography>
+                <Typography>You don't have any shelves yet!</Typography>
             )}
         </>
     )

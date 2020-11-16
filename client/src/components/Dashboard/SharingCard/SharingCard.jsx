@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        textAlign: 'center',
+        textAlign: 'left',
         color: '#002B36',
         padding: '1.6rem',
         marginBottom: '2rem',
@@ -71,10 +71,10 @@ const SharingCard = () => {
         else if (width >= '800') {
             columns = 3;
         }  
-        else if  (width >= '550') {
+        else if  (width >= '600') {
             columns = 2;
         }
-        else if (width < '550') {
+        else if (width < '600') {
             columns = 1;
         }
         else {columns = 2;
@@ -84,8 +84,9 @@ const SharingCard = () => {
 
     return (
         <>
+            <Typography variant="h6"><Link to="/sharing">Your Sharing</Link></Typography>
+            <br/>
             <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/sharing">Your Sharing</Link></Typography>
                 <GridList className={classes.gridList} cols={received.length !==0 ? columnsSize() : 1} cellHeight={'auto'}> 
                 {received.length !== 0 ? (received.map(prop => (
                     <GridListTile cellHeight={'auto'}>
@@ -101,14 +102,14 @@ const SharingCard = () => {
                             subheader={moment(prop.createdAt).format('MMMM Do YYYY, h:mm a')}
                         />
                         <CardContent>
-                            <Typography variant="h6" style={{color: '#002B36'}}>{prop.Book.title}</Typography>
+                        <Link to={`${prop.Book.editionKey}`}><Typography color="secondary" variant="h6">{prop.Book.title}</Typography></Link>
                             <Typography style={{color: '#002B36'}}>{prop.comment}</Typography>
                         </CardContent>
                     </Card>
                     <br />
-                    </GridListTile>
+                  </GridListTile>
                 ))) : (
-                    <Typography>You're don't have any reccomendations yet! <Link style={{color: '#52781e'}} to="/sharing">Send one here.</Link></Typography>
+                    <Typography>You're don't have any recommendations yet! <Link style={{color: '#52781e'}} to="/sharing">Send one here.</Link></Typography>
                 )}
                 </GridList>
                 <br />

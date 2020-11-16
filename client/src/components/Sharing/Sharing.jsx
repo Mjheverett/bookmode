@@ -43,10 +43,6 @@ const Sharing = () => {
     const { user } = useAuth0();
     const url = process.env.REACT_APP_API_URL;
 
-    //Grabbing screen width on load. Pulling into comments classes.
-    const lWidth = window.screen.width;
-    // console.log("screen width is",lWidth);
-
     useEffect(() => {
         axios.get(`${url}/recommendations/sent/${user.sub}`)
             .then(res => {
