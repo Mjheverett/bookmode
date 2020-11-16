@@ -10,6 +10,15 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
+        textAlign: 'left',
+        color: '#002B36',
+        padding: '0.8rem 1.6rem',
+        marginBottom: '2rem',
+    },
+    groupDiv:{
+        position: 'relative',
+        borderRadius: '5px',
+        background: '#768B91',
         textAlign: 'center',
         color: '#002B36',
         padding: '0.8rem 1.6rem',
@@ -79,6 +88,7 @@ const GroupsCard = () => {
                 <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/groups">Your Groups</Link></Typography>
                 <GridList className={classes.gridList} cols={groups.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}>
                     {(groups.length !== 0) ? (groups.map((group) => (
+                        <div className={classes.groupDiv}>
                         <GridListTile cellHeight={'auto'} key={group.id}>
                             <br />
                             <Typography variant="h6" className={classes.typography}><Link className={classes.link} to={`/groups/${group.id}`}>{group.groupName}</Link></Typography>
@@ -86,6 +96,7 @@ const GroupsCard = () => {
                             <Typography>{group.groupDescription}</Typography>
                             <br />
                         </GridListTile>
+                        </div>
                     ))) : (
                     <Typography>You're not part of any groups! <Link style={{color: '#52781e'}} to="/groups">Join here.</Link></Typography>
                     )}
