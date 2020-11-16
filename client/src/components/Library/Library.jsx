@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import image from '../../images/book_cover.png';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -109,26 +108,29 @@ const Library = () => {
     const [libraryId, setLibraryId] = useState();
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
-    const [search, setSearch] = useState();
-    const [fireRedirect, setRedirect] = useState(false);
+    // const [search, setSearch] = useState();
+    // const [fireRedirect, setRedirect] = useState(false);
     const [users, setUsers] = useState([]);
     const [groups, setGroups] = useState([]);
     const { user } = useAuth0();
-    const url = `http://localhost:3000/users`
+
+    const url = process.env.REACT_APP_API_URL;
+    const usersUrl = `${url}/users`
+
     //gets shelves and respective books/authors
     useEffect(() => {
-        axios.get(`http://localhost:3000/library/${user.sub}`)
+        axios.get(`${url}/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 setLibrary(data)
                 setLibraryId(data[0].id)
             });
-        axios.get(url)
+        axios.get(usersUrl)
             .then(res => {
                 const data = res.data;
                 setUsers(data)
             });
-        axios.get(`http://localhost:3000/groups/${user.sub}`)
+        axios.get(`${url}/groups/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 setGroups(data)
@@ -165,18 +167,18 @@ const Library = () => {
             shelfName: name,
             shelfDescription: description
         };
-        await axios.post(`http://localhost:3000/library/add/${user.sub}`, data)
+        await axios.post(`${url}/library/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
         setShelfName('');
         setShelfDescription('');
-        await axios.get(`http://localhost:3000/library/${user.sub}`)
+        await axios.get(`${url}/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 // console.log('library data: ', data)
                 setLibrary(data)
             });
-        await axios.get(url)
+        await axios.get(usersUrl)
             .then(res => {
                 const data = res.data;
                 // console.log('res.data:', data)
@@ -184,15 +186,15 @@ const Library = () => {
             });
     }
 
-    // Library Search Functions
-    const _handleChange = (search) => {
-        // console.log(search)
-        setSearch(search);
-    };
-    const _handleSubmit = (e) => {
-        e.preventDefault();
-        setRedirect(true)
-    };
+    // // Library Search Functions
+    // const _handleChange = (search) => {
+    //     // console.log(search)
+    //     setSearch(search);
+    // };
+    // const _handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setRedirect(true)
+    // };
 
     // Render Loading while pulling Library Info
     if (library === null) {
@@ -208,7 +210,7 @@ const Library = () => {
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Library</Typography>
                 <br/>
-                <div className={classes.librarySearch}>
+                {/* <div className={classes.librarySearch}>
                     <form onSubmit={e => _handleSubmit(e)}>
                         <InputBase style={{color: '#93A1A1', paddingLeft: '6px'}}
                             placeholder="Search your library..."
@@ -229,7 +231,7 @@ const Library = () => {
                             }}
                         />
                     )}
-                </div>
+                </div> */}
                 <br/>
                 <Typography variant="h6">
                     Are you a fan of creating shelves?

@@ -34,7 +34,6 @@ const BigList = (props) => {
 
   //Grabbing screen width on load. Pulling into comments classes.
   const lWidth = window.screen.width;
-  // console.log("screen width is",lWidth);
   
   return (
     <>{!!sent ?

@@ -54,24 +54,25 @@ const Results = (props) => {
     const { data, query } = props.location;
     const { user } = useAuth0();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         (async function (){
             let url;
             if (query === 'all') {
-                url = `http://openlibrary.org/search.json?q=${data}&limit=50`;
+                url = `https://openlibrary.org/search.json?q=${data}&limit=50`;
             }
             if (query === 'title') {
-                url = `http://openlibrary.org/search.json?title=${data}&limit=50`;
+                url = `https://openlibrary.org/search.json?title=${data}&limit=50`;
             }
             if (query === 'author') {
-                url = `http://openlibrary.org/search.json?author=${data}&limit=50`;
+                url = `https://openlibrary.org/search.json?author=${data}&limit=50`;
             }
             if (query === 'subject') {
-                url = `http://openlibrary.org/search.json?subject=${data}&limit=50`;
+                url = `https://openlibrary.org/search.json?subject=${data}&limit=50`;
             }
             if (query === 'ISBN') {
-                url = `http://openlibrary.org/search.json?ISBN=${data}&limit=50`;
+                url = `https://openlibrary.org/search.json?ISBN=${data}&limit=50`;
             }
             await axios.get(url)
                 .then(res => {
@@ -110,7 +111,7 @@ const Results = (props) => {
             readerName: reader, 
             editionKey: editionKey
         };
-        axios.post(`http://localhost:3000/results/add/${user.sub}`, data)
+        axios.post(`${url}/results/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
@@ -193,7 +194,7 @@ const Results = (props) => {
                                 }}
                                 titlePosition ={'top'}
                                 actionIcon={
-                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg`, result.key, !!result.contributor ? !!checkRegex(result.contributor).length ? checkRegex(result.contributor).join(', ') : null : null)}>
+                                    <IconButton aria-label={`${result.key}`} onClick={() => _handleAddLibrary(result.key, result.title, result.author_name, `https://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg`, result.key, !!result.contributor ? !!checkRegex(result.contributor).length ? checkRegex(result.contributor).join(', ') : null : null)}>
                                     {/*makes sure that the correct icon is displayed for clicked or not clicked*/}
                                     {clicks.includes(result.key) ? <BookmarkIcon fontSize="large" className={classes.title} /> : <BookmarkBorderIcon fontSize="large" className={classes.title} />}
                                     </IconButton> }

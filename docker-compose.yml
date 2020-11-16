@@ -5,14 +5,13 @@ services:
         image: postgres:12.1
         ports:
             - "5432:5432"
-        environment:
-            POSTGRES_PASSWORD: mypassword
         volumes:
             - ./postgresql/data:/var/lib/postgresql/data
     service:
         build:
             context: ./service
-            dockerfile: Dockerfile.dev
+            dockerfile: Dockerfile
+        image: mjheverett/bookmode-api:latest
         volumes:
             - /app/node_modules
             - ./service/config:/app/config
@@ -21,7 +20,8 @@ services:
     client:
         build:
             context: ./client
-            dockerfile: Dockerfile.dev
+            dockerfile: Dockerfile
+        image: mjheverett/bookmode-client:latest
         volumes:
             - /app/node_modules
             - ./client:/app

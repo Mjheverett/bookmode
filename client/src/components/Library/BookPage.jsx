@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios-https-proxy-fix'; 
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { Link} from 'react-router-dom';
-import { Container, Typography}  from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Link  } from 'react-router-dom';
+import { Container, Typography }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import image from '../../images/book_cover.png';
 // import moment from 'moment';
@@ -35,17 +35,19 @@ const BookPage = () => {
     const editionKey = useParams();
     const [details, setDetails] = useState(null);
     const { user } = useAuth0();
+    const url = process.env.REACT_APP_API_URL;
+    
     useEffect(() => {
         console.log(editionKey.editionKey)
         const url = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
-        axios.get(`http://localhost:3000/proxy?url=${url}`)
+        axios.get(`${url}/proxy?url=${url}`)
             .then(res => {
                 const data = res.data;
                 console.log(data)
                 setBook(data);
             })
             .catch(err => console.log(err));
-        axios.get(`http://localhost:3000/results?key=/works/${editionKey.editionKey}`)
+        axios.get(`${url}/results?key=/works/${editionKey.editionKey}`)
             .then(res => {
                 const data = res.data;
                 console.log(data)
@@ -56,14 +58,14 @@ const BookPage = () => {
      const getData = async () => {
         console.log(editionKey.editionKey)
         const url = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
-        await axios.get(`http://localhost:3000/proxy?url=${url}`)
+        await axios.get(`${url}/proxy?url=${url}`)
             .then(res => {
                 const data = res.data;
                 console.log(data)
                 setBook(data);
             })
             .catch(err => console.log(err));
-        await axios.get(`http://localhost:3000/results?title=${book.title}`)
+        await axios.get(`${url}/results?title=${book.title}`)
             .then(res => {
                 const data = res.data;
                 console.log(data)
@@ -81,7 +83,7 @@ const BookPage = () => {
             readerName: reader, 
             editionKey: editionKey
         };
-        axios.post(`http://localhost:3000/results/add/${user.sub}`, data)
+        axios.post(`${url}/results/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
@@ -90,7 +92,7 @@ const BookPage = () => {
         const data = {
             editionKey
         };
-        axios.post(`http://localhost:3000/books/delete/${user.sub}`, data)
+        axios.post(`${url}/books/delete/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };

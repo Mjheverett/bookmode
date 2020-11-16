@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { AppBar, Toolbar, IconButton, InputBase, Select, MenuItem, Menu, Typography } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import './Navbar.css';
@@ -138,10 +136,11 @@ export default function PrimarySearchAppBar() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
     const handleSelect = (event) => {
         setQuery(event.target.value);
-        };
-        
+    };
+    
     // Material UI - Menu
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
