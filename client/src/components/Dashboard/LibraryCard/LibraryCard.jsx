@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        textAlign: 'left',
+        textAlign: 'center',
         color: '#002B36',
         padding: '1.6rem',
         marginBottom: '2rem',
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: '#002B36',
         padding: '1.6rem',
+        
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -41,7 +42,6 @@ const LibraryCard = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
     const { user } = useAuth0();
-    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         axios.get(`${url}/library/${user.sub}`)
@@ -86,36 +86,31 @@ const LibraryCard = () => {
         return columns;
     }
     
-
-    return (
-        <>
-            <Typography variant="h6"><Link to="/library">Your Main Library</Link></Typography>
-            <br/>
-            {(library.length !== 0) ?  
-                <div className={classes.dashboardDiv}>
-                    <GridList className={classes.gridList} cols={library[0].Books.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}> 
-                        {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
-                            return (
-                            <div className={classes.bookDiv}>
-                                <br/>
-                                <GridListTile cellHeight={'auto'} key={book.id}>
-                                <div width={'auto'} className={classes.div}>
-                                    <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
-                                </div>
-                                <Link to ={book.editionKey} className={classes.link}><Typography variant="h6" >{book.title}</Typography></Link>
-                                <Typography>{book.Authors[0].authorName}</Typography>
-                                </GridListTile>
-                                <br />
+console.log('lib 0 is', library[0])
+return (
+    <>
+        <Typography variant="h6"><Link to="/library">Your Main Library</Link></Typography>
+        <br/>
+        {(library.length !== 0) ?  
+            <div className={classes.dashboardDiv}>
+                <GridList className={classes.gridList} cols={library[0].Books.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}> 
+                    {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
+                        return (
+                        <GridListTile cellHeight={'auto'} key={book.id}>
+                            <div width={'auto'} className={classes.div}>
+                                <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
-                        )})) : (
-                        <Typography>You're don't have any books yet! <Link style={{color: '#52781e'}} to="/library">Start here.</Link></Typography>
-                        )}
-                    </GridList> 
-                </div> : (
-                <Typography>You don't have any shelves yet!</Typography>
-            )}
-        </>
-    )
+                            <Link to ={book.editionKey} className={classes.link}><Typography variant="h6" >{book.title}</Typography></Link>
+                            <Typography>{book.Authors[0].authorName}</Typography>
+                            </GridListTile>
+                            )})) : (
+                    <Typography>You're don't have any books yet! <Link style={{color: '#52781e'}} to="/library">Start here.</Link></Typography>
+                    )}
+                </GridList> 
+            </div> : (
+            <Typography>You don't have any shelves yet!</Typography>
+        )}
+    </>
+)
 }
-
 export default LibraryCard;
