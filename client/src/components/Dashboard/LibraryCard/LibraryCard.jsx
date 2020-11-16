@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         background: '#768B91',
         textAlign: 'center',
         color: '#002B36',
-        padding: '0.8rem 1.6rem',
+        padding: '1.6rem',
         marginBottom: '2rem',
     },
     bookDiv:{
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
         background: '#768B91',
         textAlign: 'center',
         color: '#002B36',
-        padding: '0.8rem 1.6rem',
-        marginBottom: '2rem',
+        padding: '1.6rem',
+        
     },
     gridList: {
         flexWrap: 'nowrap',
