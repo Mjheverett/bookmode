@@ -70,10 +70,10 @@ const SharingCard = () => {
         else if (width >= '800') {
             columns = 3;
         }  
-        else if  (width >= '550') {
+        else if  (width >= '600') {
             columns = 2;
         }
-        else if (width < '550') {
+        else if (width < '600') {
             columns = 1;
         }
         else {columns = 2;
