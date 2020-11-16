@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link  } from 'react-router-dom';
 import { Container, Typography }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
+import image from '../../images/book_cover.png';
 // import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
@@ -103,9 +104,7 @@ const BookPage = () => {
             </>
         )
     }
-    
-    const imgURL = `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
-    
+    const imgURL = !!book.covers[0] ? `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg` : image
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">{book.title}</Typography>
@@ -122,7 +121,7 @@ const BookPage = () => {
                     query: 'author'}}>
                         {details[0].Authors[0].authorName}
                         </Link> </Typography>
-            <Typography>{!!book.description ? !!book.description[0] ? book.description.split("(["&&"["&&"(SOU")[0] : book.description.value: `This book does not have a description available.`}</Typography>
+            <Typography>{!!book.description ? !!book.description[0] ? book.description.split("(["||"["||"(SOU")[0] : book.description.value: `This book does not have a description available.`}</Typography>
             <br />
             <br />
             <Typography className={classes.typography}>Subjects: {book.subjects.map((subject)=>(

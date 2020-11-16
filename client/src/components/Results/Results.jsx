@@ -139,7 +139,7 @@ const Results = (props) => {
                             return (
                             <GridListTile key={result.key} style={{padding: '2rem'}}>
                                 <div width={'auto'} className={classes.div}>
-                                    <img src={!!result.cover_i ? `https://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg` : image}
+                                    <img src={!!result.cover_i && result.cover_i !== -1 ? `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg` : image}
                                     alt={result.cover_i} style={{height: '139px'}}/>
                                 </div>
                                 <br />

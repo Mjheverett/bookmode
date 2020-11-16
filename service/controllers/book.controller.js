@@ -3,6 +3,7 @@ const Book = db.books;
 const Author = db.authors;
 const Shelf = db.shelves;
 const User = db.users;
+const shelvesBooks = db.shelves_books;
 const Reader = db.readers;
 
 const Op = db.Sequelize.Op;
@@ -10,7 +11,7 @@ const Op = db.Sequelize.Op;
 exports.findAll = (req, res) => {
     const {key} = req.query;
     console.log('key is: ', key)
-    Book.findAll({ where: {editionKey: key}, include: [{model:Author}]})
+    Book.findAll({ where: {editionKey: key}, include: [{model: Author}]})
         .then(data => {
             res.send(data);
         })
@@ -96,9 +97,9 @@ exports.update = (req, res) => {
     
 exports.delete = (req, res) => {
     const id = req.params.id;
-    
-    Book.destroy({
-        where: { id: id }
+    const shelfId = req.params.shelfId
+    console.log('this changed: ',req.params.id)
+    shelvesBooks.destroy({ where: { BookId: id, ShelfId: shelfId}
     })
         .then(num => {
         if (num == 1) {

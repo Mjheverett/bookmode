@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import image from '../../images/book_cover.png';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -105,7 +106,6 @@ const Library = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
     const [libraryId, setLibraryId] = useState();
-    const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
     // const [search, setSearch] = useState();
@@ -122,33 +122,29 @@ const Library = () => {
         axios.get(`${url}/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                // console.log('library data: ', data)
-                // console.log('library id', data[0].id)
                 setLibrary(data)
                 setLibraryId(data[0].id)
             });
         axios.get(usersUrl)
             .then(res => {
                 const data = res.data;
-                // console.log('res.data:', data)
                 setUsers(data)
             });
         axios.get(`${url}/groups/${user.sub}`)
             .then(res => {
                 const data = res.data;
-                // console.log('res.data:', data)
                 setGroups(data)
             });
-    }, [user.sub, url]);
+    }, [user.sub, library]);
 
     // popover with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event, popoverId) => {
-        setPopoverId(popoverId);
         setAnchorEl(event.currentTarget);
+        window.location.href=popoverId
+ 
     };
     const handleClose = () => {
-        setPopoverId(null);
         setAnchorEl(null);
     };
 
@@ -276,7 +272,6 @@ const Library = () => {
                         </label>
                         <br/>
                         <Button type="submit" color="secondary" aria-describedby={id} variant="contained" size="large">Create New Shelf</Button>
-                        <Button type="button" color="secondary" aria-describedby={id} variant="outlined" size="large" className={classes.margin}>Cancel</Button>
                     </form>
                 </Typography>
                 <br />
@@ -291,9 +286,9 @@ const Library = () => {
                             <GridListTile cellHeight={'auto'} key={book.id} >
                             <br />
                             <div width={'auto'} className={classes.div}>
-                                <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
+                            <img src={!!book.coverURL ? book.coverURL : image}
+                                    alt={book.title} style={{height: '139px'}}/>
                             </div>
-                            <br />
                             <GridListTileBar
                                 classes={{
                                     root: classes.titleBarTop,
@@ -302,38 +297,19 @@ const Library = () => {
                                 actionIcon={
                                     <CustomizedMenus users={users} groups={groups} book={book} shelves={library.slice(1)}/>}
                             />
-                            <Typography>{book.title}</Typography>
+                            <Typography variant="h6">{book.title}</Typography>
+                            <Typography>
+                            {book.Authors[0].authorName}
+                                    </Typography>
                             <div>
-                            <br />
-                                <Button color="secondary" aria-describedby={book.id} variant="contained" size="large" onClick={(e) => handleClick(e, book.id)}>
+
+                                <Button color="secondary" aria-describedby={book.id} variant="contained" size="large" onClick={(e) => handleClick(e, book.editionKey)}>
                                     More Information
                                 </Button>
-                                <Popover
-                                    id={book.id}
-                                    open={popoverId === book.id}
-                                    anchorEl={anchorEl}
-                                    className={classes.root}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                >
-                                    <Typography className={classes.typography}>
-                                        Title: {book.title}
-                                    </Typography>
-                                    <Typography className={classes.typography}>
-                                        Author: {book.Authors[0].authorName}
-                                    </Typography>
-                                </Popover>
                             </div>
                             <br />
                         </GridListTile>)})) : (
-                        <Typography>Add a book using the navbar search feature!</Typography>
+                        <Typography>Add a book from your library by using the book menu!</Typography>
                         )}
                     </GridList> 
                     </div>

@@ -7,10 +7,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SendIcon from '@material-ui/icons/Send';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutline from '@material-ui/icons/Delete';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
-import { Link } from 'react-router-dom';
 import { IconButton, MenuItem, Menu, Modal, Chip, Input, InputLabel, Select, TextField, Button, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -117,15 +115,15 @@ const CustomizedMenus = (props) => {
   
   
 
-  const handleChangeName = (event) => {
-    setPersonName(event.target.value);
+  const _handleChangeName = (name) => {
+    setPersonName(name);
   };
   const handleChangeGroup = (event) => {
     setGroupName(event.target.value);
   };
 
-  const handleChangeContent = (event) => {
-    setContent(event.target.value);
+  const handleChangeContent = (comment) => {
+    setContent(comment);
   };
 
   // const handleChangeMultiple = (event) => {
@@ -140,7 +138,6 @@ const CustomizedMenus = (props) => {
   // };
 
   const handleClick = (bookId, shelfId) => {
-    console.log("bookId: ",bookId, "shelf id: ", shelfId);
   axios.post(`${url}/library/${shelfId}/${bookId}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
@@ -155,27 +152,15 @@ const CustomizedMenus = (props) => {
     setOpen(false);
   };
 
-  const handleCreateRec= (e) => {
-    e.preventDefault();
+  const handleCreateRec= () => {
     setOpen(false);
-    console.log(personName)
-    console.log(groupName)
     const data = {
-
         receiverName: personName[0] || groupName[0],
         bookId: book.id,
         content: content,
         senderId: user.sub,
-        isGroup: !!groupName ? true : false
-
-    };
-  const handleRemoveBook = (e) => {
-    e.preventDefault();
-    const data ={
-      
+        isGroup: !!groupName[0] ? true : false
     }
-  }
-    console.log(data)
     axios.post(`${url}/recommendations/add`, data)
         .then(res => console.log(res))
         .catch(err => console.log(err));
@@ -186,14 +171,14 @@ const CustomizedMenus = (props) => {
     <div style={modalStyle} className={classes.paper}>
       <Typography variant="h6">Who would you like to recommend <strong style={{color: '#52781e'}}>{book.title}</strong> to?</Typography>
       <br />
-      <form onSubmit={e => handleCreateRec(e)}>
+      <form onSubmit={handleCreateRec}>
         <InputLabel id="demo-mutiple-chip-label">Send to individual(s)</InputLabel>
         <Select
           labelId="demo-mutiple-chip-label"
           id="demo-mutiple-chip"
           multiple
           value={personName}
-          onChange={handleChangeName}
+          onChange={(event) => _handleChangeName(event.target.value)}
           input={<Input id="select-multiple-chip" />}
           renderValue={(selected) => (
             <div className={classes.chips}>
@@ -230,13 +215,13 @@ const CustomizedMenus = (props) => {
           MenuProps={MenuProps}
         >
           {groups.map((group) => (
-            <MenuItem key={group.groupName} value={group.groupName} style={getStyles(group.groupName, personName, theme)}>
+            <MenuItem key={group.groupName} value={group.groupName} style={getStyles(group.groupName, groupName, theme)}>
               {group.groupName}
             </MenuItem>
           ))}
         </Select>
         <TextField
-          onChange={handleChangeContent}
+          onChange={(event) => handleChangeContent(event.target.value)}
           value={content}
           label="Add a comment?"
           id="standard-start-adornment"
@@ -256,11 +241,7 @@ const CustomizedMenus = (props) => {
   };
 
   const _handleDeleteBook = () => {
-    const data = {
-      id: book.id,
-      shelfId: book.shelves_books.ShelfId
-    }
-    axios.delete(`http://localhost:3000/library/book/${data.id}`, data)
+    axios.delete(`http://localhost:3000/results/${book.id}/${book.shelves_books.ShelfId}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }
@@ -308,7 +289,7 @@ const CustomizedMenus = (props) => {
           aria-controls={mobileMenuId}
           aria-haspopup="true"
           onClick={handleMobileMenuOpen}
-          color="secondary"
+          color='#002B36'
       >
         <MoreVertIcon fontSize="large"/>
       </IconButton>
@@ -326,17 +307,14 @@ const CustomizedMenus = (props) => {
             color="secondary">
               <SendIcon fontSize="small" />
             </ListItemIcon>
-              <ListItemText primary="Send Recommendation" />
+              <ListItemText primary="Send recommendation" />
           </MenuItem>
-            <MenuItem className={classes.recommendDetails}>
+            <MenuItem className={classes.recommendDetails} onClick={_handleDeleteBook}>
                 <ListItemIcon
                 color="secondary">
-                  <MenuBookIcon style={{color: '#52781e'}} fontSize="small" />
+                  <DeleteOutline style={{color: '#52781e'}} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText style={{color: '#52781e'}} primary="See book details"><Link to={{
-                  pathname: `${book.editionKey}`,
-                  editionKey: book.editionKey
-                }}/>
+                <ListItemText style={{color: '#52781e'}} primary="Remove book from this shelf">
                 </ListItemText> 
             </MenuItem>
             <MenuItem className={classes.recommendDetails} onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">

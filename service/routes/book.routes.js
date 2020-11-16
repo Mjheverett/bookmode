@@ -10,6 +10,6 @@ module.exports = app => {
     // Update a book with id
     router.put("/:id", books.update);
     // Delete a book with id
-    router.delete("/:id", books.delete);
+    router.delete("/:id/:shelfId", books.delete);
     app.use('/results', router);
     };
