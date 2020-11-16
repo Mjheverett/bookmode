@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios-https-proxy-fix'; 
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { Link, Redirect } from 'react-router-dom';
-import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Link  } from 'react-router-dom';
+import { Container, Typography }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 // import moment from 'moment';
 
@@ -101,7 +101,9 @@ const BookPage = () => {
             </>
         )
     }
+    
     const imgURL = `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
+    
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <Typography variant="h2">{book.title}</Typography>
