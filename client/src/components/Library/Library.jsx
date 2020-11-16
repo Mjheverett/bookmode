@@ -135,15 +135,15 @@ const Library = () => {
                 const data = res.data;
                 setGroups(data)
             });
-    }, [user.sub, library]);
+    }, [user.sub]);
 
     // popover with information about each book.
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event, popoverId) => {
         setAnchorEl(event.currentTarget);
         window.location.href=popoverId
- 
     };
+    
     const handleClose = () => {
         setAnchorEl(null);
     };
