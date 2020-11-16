@@ -52,6 +52,7 @@ const GroupsCard = () => {
     };
 
     // Finds screen width and updates the columns display
+
     const columnsSize = () => {
         const width = window.screen.width;
         let columns = 0;
@@ -71,7 +72,7 @@ const GroupsCard = () => {
         }
         return columns;
     }
-
+    
     
     return (
         <>
