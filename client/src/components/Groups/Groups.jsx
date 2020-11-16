@@ -43,16 +43,17 @@ const Groups = () => {
     const [userGroups, setUserGroups] = useState([]);
     const [allGroups, setAllGroups] = useState([]);
     const { user } = useAuth0();
+    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         (async function (){
-            axios.get(`http://localhost:3000/groups/${user.sub}`)
+            axios.get(`${url}/groups/${user.sub}`)
                 .then(res => {
                     const data = res.data;
                     // console.log('res.data:', data)
                     setUserGroups(data)
                 })
-            axios.get(`http://localhost:3000/groups/`)
+            axios.get(`${url}/groups/`)
                 .then(res => {
                     const data = res.data;
                     // console.log('res.data:', data)
@@ -75,18 +76,18 @@ const Groups = () => {
             groupName: name,
             groupDescription: description
         };
-        await axios.post(`http://localhost:3000/groups/add/${user.sub}`, data)
+        await axios.post(`${url}/groups/add/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
         setGroupName('');
         setGroupDescription('');
-        await axios.get(`http://localhost:3000/groups/${user.sub}`)
+        await axios.get(`${url}/groups/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 // console.log('res.data:', data)
                 setUserGroups(data)
             })
-        await axios.get(`http://localhost:3000/groups/`)
+        await axios.get(`${url}/groups/`)
             .then(res => {
                 const data = res.data;
                 // console.log('res.data:', data)

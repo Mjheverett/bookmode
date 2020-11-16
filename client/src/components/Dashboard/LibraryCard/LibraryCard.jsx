@@ -33,9 +33,10 @@ const LibraryCard = () => {
     const classes = useStyles();
     const [library, setLibrary] = useState(null);
     const { user } = useAuth0();
+    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/library/${user.sub}`)
+        axios.get(`${url}/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 // console.log('The library is', data)

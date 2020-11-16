@@ -33,9 +33,10 @@ const GroupsCard = () => {
     const classes = useStyles();
     const [groups, setGroups] = useState(null);
     const { user } = useAuth0();
+    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/groups/${user.sub}`)
+        axios.get(`${url}/groups/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 setGroups(data);
