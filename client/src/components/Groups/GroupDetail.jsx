@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GroupDetail = (props) => {
     const classes = useStyles();
-    const { group, list } = props;
+    const { group } = props;
 
     return (
         <>
@@ -29,12 +29,6 @@ const GroupDetail = (props) => {
                     <Typography variant="h6" className={classes.typography}><Link className={classes.link} to={`/groups/${group.id}`}>{group.groupName}</Link></Typography>
                     <Typography>{group.groupDescription}</Typography>
                     <br />
-                    {/* {(list !== 'User') ? (
-                        <Button color="secondary" variant="contained" size="large">
-                            Join Group
-                        </Button> */}
-                    {/* ) : null
-                    } */}
                 </GridListTile>
             <br />
         </>

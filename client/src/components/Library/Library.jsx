@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import SearchIcon from '@material-ui/icons/Search';
 import { Container, GridList, GridListTile, GridListTileBar, Popover, Typography, Button, InputBase }  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import CustomizedMenus from './BookMenu';
@@ -111,8 +108,8 @@ const Library = () => {
     const [popoverId, setPopoverId] = useState(null);
     const [name, setShelfName] = useState('');
     const [description, setShelfDescription] = useState('');
-    const [search, setSearch] = useState();
-    const [fireRedirect, setRedirect] = useState(false);
+    // const [search, setSearch] = useState();
+    // const [fireRedirect, setRedirect] = useState(false);
     const [users, setUsers] = useState([]);
     const [groups, setGroups] = useState([]);
     const { user } = useAuth0();
@@ -190,15 +187,15 @@ const Library = () => {
             });
     }
 
-    // Library Search Functions
-    const _handleChange = (search) => {
-        // console.log(search)
-        setSearch(search);
-    };
-    const _handleSubmit = (e) => {
-        e.preventDefault();
-        setRedirect(true)
-    };
+    // // Library Search Functions
+    // const _handleChange = (search) => {
+    //     // console.log(search)
+    //     setSearch(search);
+    // };
+    // const _handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     setRedirect(true)
+    // };
 
     // Render Loading while pulling Library Info
     if (library === null) {
@@ -214,7 +211,7 @@ const Library = () => {
             <Container maxWidth="lg" style={{marginTop: '2rem'}}>
                 <Typography variant="h2">Library</Typography>
                 <br/>
-                <div className={classes.librarySearch}>
+                {/* <div className={classes.librarySearch}>
                     <form onSubmit={e => _handleSubmit(e)}>
                         <InputBase style={{color: '#93A1A1', paddingLeft: '6px'}}
                             placeholder="Search your library..."
@@ -235,7 +232,7 @@ const Library = () => {
                             }}
                         />
                     )}
-                </div>
+                </div> */}
                 <br/>
                 <Typography variant="h6">
                     Are you a fan of creating shelves?
