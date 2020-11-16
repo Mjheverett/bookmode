@@ -176,6 +176,12 @@ const CustomizedMenus = (props) => {
         isGroup: !!groupName ? true : false
 
     };
+  const handleRemoveBook = (e) => {
+    e.preventDefault();
+    const data ={
+      
+    }
+  }
     console.log(data)
     axios.post(`http://localhost:3000/recommendations/add`, data)
         .then(res => console.log(res))

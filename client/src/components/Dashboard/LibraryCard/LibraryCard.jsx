@@ -87,12 +87,11 @@ const LibraryCard = () => {
                         {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
                             return (
                             <GridListTile cellHeight={'auto'} key={book.id}>
-                            <br />
                             <div width={'auto'} className={classes.div}>
                                 <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
                             </div>
-                            <br />
-                            <Typography>{book.title}</Typography>
+                            <Link to ={book.editionKey} style={{color: '#002B36'}}><Typography variant="h6" >{book.title}</Typography></Link>
+                            <Typography>{book.Authors[0].authorName}</Typography>
                             <br />
                             </GridListTile>
                         )})) : (
