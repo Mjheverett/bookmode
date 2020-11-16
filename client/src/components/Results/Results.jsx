@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
     },
     gridList: {
-        flexWrap: 'nowrap',
+        flexWrap: 'wrap',
         transform: 'translateZ(0)',
     },
     titleBar: {
@@ -132,15 +132,17 @@ const Results = (props) => {
             <br />
                 <div className={classes.resultsDiv}>
                 <br/>
-                    <GridList className={classes.gridList} cols={3} cellHeight={240} spacing={16}>
+                    <GridList className={classes.gridList} cols={3} cellHeight={'275'} spacing={16}>
                         {results.map((result) => {
 
                             return (
-                            <GridListTile key={result.key}>
+                            <GridListTile key={result.key} style={{padding: '2rem'}}>
                                 <div width={'auto'} className={classes.div}>
                                     <img src={!!result.cover_i ? `http://covers.openlibrary.org/b/id/${result.cover_i}-M.jpg` : image}
                                     alt={result.cover_i} style={{height: '139px'}}/>
                                 </div>
+                                <br />
+                                <br />
                                 <GridListTileBar
                                 title={result.title}
                                 subtitle= {<span>by: {!!result.author_name ? result.author_name.length !==1 ? result.author_name.join(', ') : result.author_name : `no author listed`} </span>}
@@ -200,7 +202,6 @@ const Results = (props) => {
                             )})}
                     </GridList> 
                 </div>
-                <Typography style={{textAlign: 'end'}}>Scroll for More <span class="fas fa-long-arrow-alt-right"></span></Typography>
             </Container>
         </>
     );

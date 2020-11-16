@@ -33,8 +33,8 @@ const GroupDetail = (props) => {
                         <Button color="secondary" variant="contained" size="large">
                             Join Group
                         </Button> */}
-                    ) : null
-                    }
+                    {/* ) : null
+                    } */}
                 </GridListTile>
             <br />
         </>
