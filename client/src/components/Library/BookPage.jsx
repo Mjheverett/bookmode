@@ -145,7 +145,7 @@ const BookPage = () => {
                     query: 'author'}}>
                         {details[0].Authors[0].authorName}
                         </Link> </Typography>
-            <Typography variant="h5">{!!book.description[0] ? book.description.split("(["&&"["&&"(")[0] : book.description.value}</Typography>
+            <Typography variant="h5">{!!book.description[0] ? book.description.split("(["&&"["&&"(SOU")[0] : book.description.value}</Typography>
             <Typography variant="overline">subjects: {book.subjects.map((subject)=>(
                 <Link to={{
                     pathname:"/results",
