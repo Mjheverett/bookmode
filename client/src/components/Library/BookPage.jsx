@@ -39,8 +39,8 @@ const BookPage = () => {
     
     useEffect(() => {
         console.log(editionKey.editionKey)
-        const url = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
-        axios.get(`${url}/proxy?url=${url}`)
+        const urlOut = `http://openlibrary.org/works/${editionKey.editionKey}.json/`
+        axios.get(`${url}/proxy?url=${urlOut}`)
             .then(res => {
                 const data = res.data;
                 console.log(data)

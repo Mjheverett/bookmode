@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
-        textAlign: 'left',
+        textAlign: 'center',
         color: '#002B36',
         padding: '1.6rem',
         marginBottom: '2rem',
@@ -105,11 +105,11 @@ return (
                             <Typography>{book.Authors[0].authorName}</Typography>
                             </GridListTile>
                             )})) : (
-                    <Typography>You don't have any books yet! <Link style={{color: '#52781e'}} to="/library">Start here.</Link></Typography>
+                    <Typography style={{textAlign: 'left'}}>You don't have any books yet! <Link style={{color: '#52781e', textAlign: 'left'}} to="/library">Start here.</Link></Typography>
                     )}
                 </GridList> 
             </div> : (
-            <Typography>You don't have any shelves yet!</Typography>
+            <Typography style={{textAlign: 'left'}}>You don't have any shelves yet!</Typography>
         )}
     </>
 )
