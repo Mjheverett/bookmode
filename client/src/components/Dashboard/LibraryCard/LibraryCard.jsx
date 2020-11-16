@@ -44,7 +44,7 @@ const LibraryCard = () => {
     const { user } = useAuth0();
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/library/${user.sub}`)
+        axios.get(`${url}/library/${user.sub}`)
             .then(res => {
                 const data = res.data;
                 // console.log('The library is', data)
