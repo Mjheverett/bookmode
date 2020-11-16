@@ -85,8 +85,9 @@ const GroupsCard = () => {
     
     return (
         <>
+            <Typography variant="h6"><Link to="/groups">Your Groups</Link></Typography>
+            <br/>
             <div className={classes.dashboardDiv}>
-                <Typography variant="h6" className={classes.typography}><Link className={classes.link} to="/groups">Your Groups</Link></Typography>
                 <GridList className={classes.gridList} cols={groups.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}>
                     {(groups.length !== 0) ? (groups.map((group) => (
                         <div className={classes.groupDiv}>
