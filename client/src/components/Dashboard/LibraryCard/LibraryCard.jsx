@@ -86,7 +86,7 @@ const LibraryCard = () => {
         return columns;
     }
     
-
+console.log('lib 0 is', library[0])
     return (
         <>
             <Typography variant="h6"><Link to="/library">Your Main Library</Link></Typography>
