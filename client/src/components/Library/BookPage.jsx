@@ -8,56 +8,23 @@ import { useAuth0 } from '@auth0/auth0-react';
 // import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
-    inputRoot: {
-        color: 'primary',
-    },
-    groupBar: {
-        background: '#52781e',
-        margin: theme.spacing(2),
-        padding: theme.spacing(2),
-    },
-    groupsDiv:{
+    detailDiv:{
         position: 'relative',
         borderRadius: '5px',
         background: '#768B91',
         textAlign: 'center',
         color: '#002B36',
-        padding: '0.8rem 1.6rem',
+        padding: '3rem',
         marginBottom: '2rem',
     },
-    gridList: {
-        flexWrap: 'nowrap',
-        transform: 'translateZ(0)',
-    },
-    margin: {
-        margin: theme.spacing(2),
-    },
-    textField: {
-        position: 'relative',
-        width: '100%',
-        maxWidth: "600px",
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.15),
-        },
-    },
-    avatar: {
-        backgroundColor: '#52781e',
-    },
-    card: {
-        width: 'auto',
-        margin: theme.spacing(2),
+    typography: {
         padding: theme.spacing(2),
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        alignItems: 'center',
         color: '#002B36',
-        textAlign: 'left',
+        backgroundColor: '#768B91',
     },
-    commentsMobile: {
-        display: 'inlineBlock',
-        width: '100%',
-        
-        
+    link: {
+        color: '#002B36',
     },
 }));
 
@@ -137,21 +104,30 @@ const BookPage = () => {
     const imgURL = `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
-            <img src={imgURL} alt='${book.covers[0]}' />
             <Typography variant="h2">{book.title}</Typography>
-            <Typography variant="h4"><Link to={{
+            <br/>
+            <Typography variant="h6">Book Details</Typography>
+            <br/>
+            <div className={classes.detailDiv}>
+            <img src={imgURL} alt='${book.covers[0]}' />
+            <br />
+            <br />
+            <Typography className={classes.typography} variant="h6"><Link className={classes.link} to={{
                     pathname:"/results",
                     data: details[0].Authors[0].authorName,
                     query: 'author'}}>
                         {details[0].Authors[0].authorName}
                         </Link> </Typography>
-            <Typography variant="h5">{!!book.description ? !!book.description[0] ? book.description.split("(["&&"["&&"(SOU")[0] : book.description.value: `this book does not have a description available`}</Typography>
-            <Typography variant="overline">subjects: {book.subjects.map((subject)=>(
-                <Link to={{
+            <Typography>{!!book.description ? !!book.description[0] ? book.description.split("(["&&"["&&"(SOU")[0] : book.description.value: `This book does not have a description available.`}</Typography>
+            <br />
+            <br />
+            <Typography className={classes.typography}>Subjects: {book.subjects.map((subject)=>(
+                <Link className={classes.link} to={{
                     pathname:"/results",
                     data: subject,
                     query: 'subject'}}><span>{subject}, </span></Link>
                 ))}</Typography>
+            </div>
         </Container>
     )
 }
