@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         background: '#768B91',
         textAlign: 'left',
         color: '#002B36',
-        padding: '0.8rem 1.6rem',
+        padding: '1.6rem',
         marginBottom: '2rem',
     },
     bookDiv:{
@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme) => ({
         background: '#768B91',
         textAlign: 'center',
         color: '#002B36',
-        padding: '0.8rem 1.6rem',
-        marginBottom: '2rem',
+        padding: '1.6rem',
     },
     gridList: {
         flexWrap: 'nowrap',
@@ -97,21 +96,21 @@ const LibraryCard = () => {
                     <GridList className={classes.gridList} cols={library[0].Books.length !== 0 ? columnsSize() : 1} cellHeight={'auto'}> 
                         {(library[0].Books.length !== 0) ? (library[0].Books.map(book => { 
                             return (
-                                <div className={classes.bookDiv}>
-                            <GridListTile cellHeight={'auto'} key={book.id}>
-                            <div width={'auto'} className={classes.div}>
-                                <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
-                            </div>
-                            <Link to ={book.editionKey} className={classes.link}><Typography variant="h6" >{book.title}</Typography></Link>
-                            <Typography>{book.Authors[0].authorName}</Typography>
-                            <br />
-                            </GridListTile>
+                            <div className={classes.bookDiv}>
+                                <br/>
+                                <GridListTile cellHeight={'auto'} key={book.id}>
+                                <div width={'auto'} className={classes.div}>
+                                    <img src={book.coverURL} alt={book.title} style={{height: '139px'}}/>
+                                </div>
+                                <Link to ={book.editionKey} className={classes.link}><Typography variant="h6" >{book.title}</Typography></Link>
+                                <Typography>{book.Authors[0].authorName}</Typography>
+                                </GridListTile>
+                                <br />
                             </div>
                         )})) : (
                         <Typography>You're don't have any books yet! <Link style={{color: '#52781e'}} to="/library">Start here.</Link></Typography>
                         )}
                     </GridList> 
-                    <br />
                 </div> : (
                 <Typography>You don't have any shelves yet!</Typography>
             )}
