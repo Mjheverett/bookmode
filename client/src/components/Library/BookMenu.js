@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import clsx from "clsx";
@@ -7,10 +7,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SendIcon from '@material-ui/icons/Send';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteOutline from '@material-ui/icons/Delete';
 import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
-import { Link } from 'react-router-dom';
 import { IconButton, MenuItem, Menu, Modal, Chip, Input, InputLabel, Select, TextField, Button, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -157,8 +155,6 @@ const CustomizedMenus = (props) => {
   const handleCreateRec= (e) => {
     e.preventDefault();
     setOpen(false);
-    console.log(personName)
-    console.log(groupName)
     const data = {
 
         receiverName: personName[0] || groupName[0],
@@ -168,13 +164,6 @@ const CustomizedMenus = (props) => {
         isGroup: !!groupName ? true : false
 
     };
-  const handleRemoveBook = (e) => {
-    e.preventDefault();
-    const data ={
-      
-    }
-  }
-    console.log(data)
     axios.post(`http://localhost:3000/recommendations/add`, data)
         .then(res => console.log(res))
         .catch(err => console.log(err));
@@ -255,13 +244,13 @@ const CustomizedMenus = (props) => {
   };
 
   const _handleDeleteBook = () => {
-    const data = {
-      id: book.id,
-      shelfId: book.shelves_books.ShelfId
-    }
-    axios.delete(`http://localhost:3000/library/book/${data.id}`, data)
+    axios.delete(`http://localhost:3000/results/${book.id}/${book.shelves_books.ShelfId}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
+  axios.post(`http://localhost:3000/library/${book.shelves_books.ShelfId}/${book.id}`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  
   }
     
   const handleMobileMenuClose = () => {
@@ -307,7 +296,7 @@ const CustomizedMenus = (props) => {
           aria-controls={mobileMenuId}
           aria-haspopup="true"
           onClick={handleMobileMenuOpen}
-          color="secondary"
+          color='#002B36'
       >
         <MoreVertIcon fontSize="large"/>
       </IconButton>
@@ -325,17 +314,14 @@ const CustomizedMenus = (props) => {
             color="secondary">
               <SendIcon fontSize="small" />
             </ListItemIcon>
-              <ListItemText primary="Send Recommendation" />
+              <ListItemText primary="Send recommendation" />
           </MenuItem>
-            <MenuItem className={classes.recommendDetails}>
+            <MenuItem className={classes.recommendDetails} onClick={_handleDeleteBook}>
                 <ListItemIcon
                 color="secondary">
-                  <MenuBookIcon style={{color: '#52781e'}} fontSize="small" />
+                  <DeleteOutline style={{color: '#52781e'}} fontSize="small" />
                 </ListItemIcon>
-                <ListItemText style={{color: '#52781e'}} primary="See book details"><Link to={{
-                  pathname: `${book.editionKey}`,
-                  editionKey: book.editionKey
-                }}/>
+                <ListItemText style={{color: '#52781e'}} primary="Remove book from this shelf">
                 </ListItemText> 
             </MenuItem>
             <MenuItem className={classes.recommendDetails} onClick={handleProfileMenuOpen} aria-controls={menuId} aria-haspopup="true" color="secondary">

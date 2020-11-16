@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios-https-proxy-fix'; 
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Link, Redirect } from 'react-router-dom';
-import { Container, Typography, GridList, GridListTile, Button, TextField, Card, CardHeader, CardContent, Avatar}  from '@material-ui/core';
+import { Link} from 'react-router-dom';
+import { Container, Typography}  from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
+import image from '../../images/book_cover.png';
 // import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
@@ -134,7 +135,7 @@ const BookPage = () => {
             </>
         )
     }
-    const imgURL = `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`
+    const imgURL = !!book.covers[0] ? `http://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg` : image
     return (
         <Container maxWidth="lg" style={{marginTop: '2rem'}}>
             <img src={imgURL} alt='${book.covers[0]}' />
@@ -145,7 +146,7 @@ const BookPage = () => {
                     query: 'author'}}>
                         {details[0].Authors[0].authorName}
                         </Link> </Typography>
-            <Typography variant="h5">{!!book.description ? !!book.description[0] ? book.description.split("(["&&"["&&"(SOU")[0] : book.description.value: `this book does not have a description available`}</Typography>
+            <Typography variant="h5">{!!book.description ? !!book.description[0] ? book.description.split("(["||"["||"(SO")[0] : book.description.value: `this book does not have a description available`}</Typography>
             <Typography variant="overline">subjects: {book.subjects.map((subject)=>(
                 <Link to={{
                     pathname:"/results",

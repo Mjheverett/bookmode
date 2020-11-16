@@ -10,7 +10,7 @@ const Op = db.Sequelize.Op;
 exports.findAll = (req, res) => {
     const {key} = req.query;
     console.log('key is: ', key)
-    Book.findAll({ where: {editionKey: key}, include: [{model:Author}]})
+    Book.findAll({ where: {editionKey: key}, include: [{model: Author}]})
         .then(data => {
             res.send(data);
         })
@@ -96,10 +96,8 @@ exports.update = (req, res) => {
     
 exports.delete = (req, res) => {
     const id = req.params.id;
-    
-    Book.destroy({
-        where: { id: id }
-    })
+    const shelfId = req.params.shelfId
+    Book.destroy({ where: {id: id}, include: [{model: Shelf, where: {id: shelfId}}]})
         .then(num => {
         if (num == 1) {
             res.send({
