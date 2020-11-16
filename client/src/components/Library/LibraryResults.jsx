@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, GridList, GridListTile, GridListTileBar, Typography, Popover, IconButton }  from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
+import { Container, GridList, Typography }  from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     resultsDiv:{
@@ -45,11 +43,12 @@ const useStyles = makeStyles((theme) => ({
 
 const LibraryResults = (props) => {
     const classes = useStyles();
-    const [popoverId, setPopoverId] = useState(null);
+    // const [popoverId, setPopoverId] = useState(null);
     const [results, setResults] = useState(null);
     const { search, shelfId } = props.location.state;
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    // const [anchorEl, setAnchorEl] = React.useState(null);
     const { user } = useAuth0();
+    const url = process.env.REACT_APP_API_URL;
     console.log("search", search);
     console.log("shelf id", shelfId);
 
@@ -60,24 +59,24 @@ const LibraryResults = (props) => {
                 search: search,
                 userId: user.sub
             }
-            axios.get(`http://localhost:3000/library/search/${search}`, data)
+            axios.get(`${url}/library/search/${search}`, data)
                 .then(res => {
                     console.log("response", res);
                     const data = res.data;
                     setResults(data);
                 })
             })();
-    }, [search, shelfId]);    
+    }, [search, shelfId, user.sub]);    
     
-    const handleClick = (event, popoverId) => {
-        setPopoverId(popoverId);
-        setAnchorEl(event.currentTarget);
-    };
+    // const handleClick = (event, popoverId) => {
+    //     setPopoverId(popoverId);
+    //     setAnchorEl(event.currentTarget);
+    // };
 
-    const handleClose = () => {
-        setPopoverId(null);
-        setAnchorEl(null);
-    };
+    // const handleClose = () => {
+    //     setPopoverId(null);
+    //     setAnchorEl(null);
+    // };
 
     if (search === null) {
         return (

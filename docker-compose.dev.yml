@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+    postgres:
+        image: postgres:12.1
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./postgresql/data:/var/lib/postgresql/data
+    service:
+        build:
+            context: ./service
+            dockerfile: Dockerfile.dev
+        image: mjheverett/bookmode-api:dev
+        volumes:
+            - /app/node_modules
+            - ./service/config:/app/config
+        ports:
+            - "3000:3000"
+    client:
+        build:
+            context: ./client
+            dockerfile: Dockerfile.dev
+        image: mjheverett/bookmode-client:dev
+        volumes:
+            - /app/node_modules
+            - ./client:/app
+        ports:
+            - "8080:8080"

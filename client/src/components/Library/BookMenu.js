@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles';
 import clsx from "clsx";
@@ -113,6 +113,7 @@ const CustomizedMenus = (props) => {
   const [personName, setPersonName] = useState([]);
   const [content, setContent] = useState(null);
   const { user } = useAuth0();
+  const url = process.env.REACT_APP_API_URL;
   
   
 
@@ -140,7 +141,7 @@ const CustomizedMenus = (props) => {
 
   const handleClick = (bookId, shelfId) => {
     console.log("bookId: ",bookId, "shelf id: ", shelfId);
-  axios.post(`http://localhost:3000/library/${shelfId}/${bookId}`)
+  axios.post(`${url}/library/${shelfId}/${bookId}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
   };
@@ -175,7 +176,7 @@ const CustomizedMenus = (props) => {
     }
   }
     console.log(data)
-    axios.post(`http://localhost:3000/recommendations/add`, data)
+    axios.post(`${url}/recommendations/add`, data)
         .then(res => console.log(res))
         .catch(err => console.log(err));
   }

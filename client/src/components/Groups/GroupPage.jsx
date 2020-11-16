@@ -83,19 +83,20 @@ const GroupPage = () => {
     const groupId = useParams();
     const { user } = useAuth0();
     const [fireRedirect, setRedirect] = useState(false);
+    const url = process.env.REACT_APP_API_URL;
     
     //Grabbing screen width on load. Pulling into comments classes.
     const lWidth = window.screen.width;
     // console.log("screen width is",lWidth);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
+        axios.get(`${url}/groups/group/${groupId.id}`)
             .then(res => {
                 const data = res.data;
                 setGroup(data);
             })
             .catch(err => console.log(err));
-        axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
+        axios.get(`${url}/groups/comments/${groupId.id}`)
             .then(res => {
                 const data = res.data;
                 // console.log("comment response data", data);
@@ -109,10 +110,10 @@ const GroupPage = () => {
         const data = {
             groupId: group.id
         };
-        await axios.post(`http://localhost:3000/groups/join/${user.sub}`, data)
+        await axios.post(`${url}/groups/join/${user.sub}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
-        await axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
+        await axios.get(`${url}/groups/group/${groupId.id}`)
             .then(res => {
                 const data = res.data;
                 setGroup(data);
@@ -126,10 +127,10 @@ const GroupPage = () => {
             groupId: group.id,
             userId: user.sub
         };
-        await axios.delete(`http://localhost:3000/groups/${groupId.id}/${user.sub}`, data)
+        await axios.delete(`${url}/groups/${groupId.id}/${user.sub}`, data)
             .then(res => console.log("leave group response", res))
             .catch(err => console.log(err));
-        await axios.get(`http://localhost:3000/groups/group/${groupId.id}`)
+        await axios.get(`${url}/groups/group/${groupId.id}`)
             .then(res => {
                 const data = res.data;
                 setGroup(data);
@@ -138,7 +139,7 @@ const GroupPage = () => {
     };
     const _handleDeleteGroup = async (e) => {
         e.preventDefault();
-        await axios.delete(`http://localhost:3000/groups/delete/${groupId.id}`)
+        await axios.delete(`${url}/groups/delete/${groupId.id}`)
             .then(res => console.log("leave group response", res))
             .catch(err => console.log(err));
         await setRedirect(true)
@@ -155,10 +156,10 @@ const GroupPage = () => {
             content: newComment
         }
         // console.log("add comment data", data);
-        await axios.post(`http://localhost:3000/groups/comments/add/${groupId.id}`, data)
+        await axios.post(`${url}/groups/comments/add/${groupId.id}`, data)
             .then(res => console.log(res))
             .catch(err => console.log(err));
-        await axios.get(`http://localhost:3000/groups/comments/${groupId.id}`)
+        await axios.get(`${url}/groups/comments/${groupId.id}`)
             .then(res => {
                 const data = res.data;
                 // console.log("comment response data", data);

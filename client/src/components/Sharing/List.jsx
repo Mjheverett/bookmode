@@ -4,7 +4,7 @@ import { Card, CardHeader, GridList, GridListTile, CardContent } from '@material
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -34,7 +34,6 @@ const BigList = (props) => {
 
   //Grabbing screen width on load. Pulling into comments classes.
   const lWidth = window.screen.width;
-  // console.log("screen width is",lWidth);
   
   return (
     <>

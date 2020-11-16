@@ -71,6 +71,7 @@ const Profile = () => {
     const [ userEmail, setEmail ] = useState(null);
     const [userInfo, setUser ] = useState(null);
     const { logout } = useAuth0();
+    const url = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         (async function (){
@@ -78,7 +79,7 @@ const Profile = () => {
                 id: user.sub,    
             };
             console.log("user sub is", user.sub)
-            await axios.get(`http://localhost:3000/users/${user.sub}`, data)
+            await axios.get(`${url}/users/${user.sub}`, data)
                 .then(res => {
                     const data = res.data;
                     console.log('data is:', data)
@@ -96,7 +97,7 @@ const Profile = () => {
             name,
             email
         };
-        axios.put(`http://localhost:3000/users/${user.sub}`, data)
+        axios.put(`${url}/users/${user.sub}`, data)
             .then(res => {
                 const updateData = res.data;
                 setUser(updateData);
