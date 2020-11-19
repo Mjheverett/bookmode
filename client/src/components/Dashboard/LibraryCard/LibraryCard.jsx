@@ -105,11 +105,11 @@ return (
                             <Typography>{book.Authors[0].authorName}</Typography>
                             </GridListTile>
                             )})) : (
-                    <Typography>You're don't have any books yet! <Link style={{color: '#52781e'}} to="/library">Start here.</Link></Typography>
+                    <Typography style={{textAlign: 'left'}}>You don't have any books yet! <Link style={{color: '#52781e', textAlign: 'left'}} to="/library">Start here.</Link></Typography>
                     )}
                 </GridList> 
             </div> : (
-            <Typography>You don't have any shelves yet!</Typography>
+            <Typography style={{textAlign: 'left'}}>You don't have any shelves yet!</Typography>
         )}
     </>
 )

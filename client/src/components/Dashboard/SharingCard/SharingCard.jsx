@@ -109,7 +109,7 @@ const SharingCard = () => {
                     <br />
                   </GridListTile>
                 ))) : (
-                    <Typography>You're don't have any recommendations yet! <Link style={{color: '#52781e'}} to="/sharing">Send one here.</Link></Typography>
+                    <Typography>You don't have any recommendations yet! <Link style={{color: '#52781e'}} to="/sharing">Send one here.</Link></Typography>
                 )}
                 </GridList>
                 <br />
