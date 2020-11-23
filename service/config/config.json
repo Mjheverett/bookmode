@@ -6,6 +6,13 @@
     "host": "lallah.db.elephantsql.com",
     "dialect": "postgres"
   },
+  "docker": {
+    "username": "postgres",
+    "password": null,
+    "database": "postgres",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
   "test": {
     "username": "kjoxpigv",
     "password": "PPePqyIB6HhXnXGIOawegIb75ZcqBlLG",
