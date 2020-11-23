@@ -38,7 +38,7 @@ const BigList = (props) => {
   return (
     <>{!!sent ?
       <GridList  className={lWidth > 730 ? classes.gridList : classes.commentsMobile} cols={lWidth > 730 ? 2 : 1} cellHeight={'auto'}>
-         {sent.map(prop=>(
+        {sent.map(prop => (
         <GridListTile cellHeight={'auto'}>
           <br />
           <Card className={classes.card}>
