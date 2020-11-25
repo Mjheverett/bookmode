@@ -52,6 +52,33 @@ This project was built using:
 ### Docker Environment
 Bookmode requires the Bookmode and Bookmode-api images to deploy, as well as a Postgres, SQLite, or MySQL database.
 
+* Currently configured to work with Postgres. Generic configuration for use with all Sequlize compatible databases coming soon.
+
+## Deploy
+
+Bookmode can be deployed locally or on a server using npm and a postgres database connection.
+
+* Clone the repository to desired location locally or on a server.
+* Install Dependencies inside /, /client, and /service:
+```sh
+npm install
+
+cd client
+npm install
+
+cd service
+npm install
+```
+* Run build on React client component
+```sh
+cd client
+npm run build
+```
+
+* Run locally using npm or direct static site path to /client/build
+
+* Follow Dev Environment commands to run client and service...
+
 ### Dev Environment
 
 Commands needed to run Bookmode in dev environment:
@@ -88,6 +115,12 @@ export NODE_ENV=test
 ```sh
 export NODE_ENV=production
 ```
+
+Create Postgres database locally:
+* Setup a Postgres database either locally or at an accessible address.
+
+Configure /service/config/config.json:
+* Setup the desired Postgres connection in the json file to match the NODE_ENV being used.
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
