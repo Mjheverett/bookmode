@@ -13,7 +13,6 @@ services:
         build:
             context: ./service
             dockerfile: Dockerfile
-        image: mjheverett/bookmode-api:latest
         volumes:
             - /app/node_modules
             - ./service/config:/app/config
@@ -23,7 +22,6 @@ services:
         build:
             context: ./client
             dockerfile: Dockerfile
-        image: mjheverett/bookmode-client:latest
         volumes:
             - /app/node_modules
             - ./client:/app

@@ -8,9 +8,7 @@
     "docker:down": "docker-compose -p bookmode down",
     "docker:up": "docker-compose -p bookmode up",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress:open": "cypress open",
-    "dev": "npm run --prefix client start && npm run --prefix service dev",
-    "deploy-production": "scp -r ./* matthew@134.209.116.250:/var/www/mjheverett.tech/html"
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
