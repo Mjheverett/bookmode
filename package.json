@@ -7,8 +7,7 @@
     "docker:build": "docker-compose -p bookmode build",
     "docker:down": "docker-compose -p bookmode down",
     "docker:up": "docker-compose -p bookmode up",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress:open": "cypress open"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -25,8 +24,5 @@
     "pg": "^8.4.2",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5"
-  },
-  "devDependencies": {
-    "cypress": "^5.6.0"
   }
 }
