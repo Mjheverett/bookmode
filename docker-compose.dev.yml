@@ -1,12 +1,6 @@
 version: '3.7'
 
 services:
-    postgres:
-        image: postgres:12.1
-        ports:
-            - "5432:5432"
-        volumes:
-            - ./postgresql/data:/var/lib/postgresql/data
     service:
         build:
             context: ./service

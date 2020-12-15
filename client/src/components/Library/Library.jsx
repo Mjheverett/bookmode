@@ -117,6 +117,8 @@ const Library = () => {
     const url = process.env.REACT_APP_API_URL;
     const usersUrl = `${url}/users`
 
+    console.log("url", url);
+
     //gets shelves and respective books/authors
     useEffect(() => {
         axios.get(`${url}/library/${user.sub}`)

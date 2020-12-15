@@ -17,9 +17,11 @@ const Dashboard = () => {
             name: user.name,
             email: user.email
         };
+        console.log("create user data", data);
         axios.post(`${url}/users/add`, data)
             .then(res => {
                 const data = res.data;
+                console.log("post res data", data);
                 setUserData(data);
             })
             .catch(err => console.log(err));
